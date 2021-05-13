@@ -1,0 +1,451 @@
+LP_P1 transcrição livre	GLOSAS_P1	M1_ClassGram	Come_P1Literal	M1_Constituintes
+Cultura, Arte, Teatro.	CULTURA	N		
+	ARTE	N		
+	TEATRO	N		
+No século 17 houve um grande desenvolvimento artístico, religioso, político e social.	SÉCULO	N		
+	17	NUM		
+	TER-MUITO	V		V_TRAN(D)(3s)
+	ARTE	N		ARG_INT
+	IGREJA	N		ARG_INT
+	POLÍTICA	N		ARG_INT
+	SOCIAL	N		ARG_INT
+	DINHEIRO	ADJ		ARG_INT
+	DESENVOLVIMENTO	N		ARG_INT
+Foi muito importante.	VALOR	N		ARG_INT
+	TER-MUITO	V		V_TRAN(D)(3s)
+Porque o Estado e a Religião investiu financeiramente um pouco.	PORQUE	ADV		ARG_EXT
+	ELE	PRO		ARG_EXT
+	ESTADO	N		ARG_EXT
+	TAMBÉM	ADV		ARG_EXT
+	IGREJA	N		ARG_EXT
+	INVESTIR	V		V_TRAN(D)(3s)
+	POUCO	ADJ		ARG_INT
+	DINHEIRO	N		ARG_INT
+	PAGAR	V		ARG_INT
+Isto foi bom.	ELE	PRO		ARG_EXT
+	BOM	ADJ		V_⌀COP PRED
+Aproveitou-se o dinheiro para o desenvolvimento	APROVEITAR	V		ARG_EXT[-] V TRAN(D)(3s)
+	DINHEIRO	N		ARG_INT
+	DESENVOLVER	V		ARG_INT
+Primeiro em Arte, segundo em coisas que consideravam muito belas.	UM	NUM		ARG_INT
+	ARTE	N		ARG_INT
+	DOIS	NUM		ARG_INT
+	COISAS	N		ARG_INT
+	BONITO	ADJ		ARG_INT
+	ADMIRAR	V		ARG_EXT[-] V_TRAN(D)(3pl)
+Século 16.	16	NUM		
+Porque é que houve uma mudança?	MUDAR	N	INT	ARG_INT
+	SABER	V		V_TRAN(D)(3s)
+	PORQUE	ADV_INT		CONST_INT
+Porque houve vários conflitos e problemas ligados à Igreja.	PORQUE	ADV		ARG_INT
+	ELE	PRO		ARG_INT
+	SER	V		V_COP(3s)
+	CONFLITO	N		ARG_INT
+	PROBLEMA	N		ARG_INT
+	PROBLEMA	N		ARG_INT
+	IGREJA	N		ARG_INT
+	LIGADO	ADJ		ARG_INT
+Porque a Igreja e o Papa ostentavam muita riqueza.	PORQUE	ADV		ARG_EXT
+	ELE	PRO		ARG_EXT
+	IGREJA	N		ARG_EXT
+	PAPA	N		ARG_EXT
+	DINHEIRO	N		V_⌀COP PRED
+	MUITO-RICO	V		V_⌀COP PRED
+Um homem M...	UM	NUM		
+	HOMEM	N		
+	M	N		
+Não sei.	NÃO-SABER	V		ARG_EXT[-] V_INTR(D)(1s)
+Corta, fim.	CORTA	V		ARG_EXT[-] V_INTR(3S)
+FIM	FIM	N		
+Século 16	SÉCULO	N		
+	16	NUM		
+Houve alterações porquê?	MUDAR	V	INT	ARG_EXT[-] V_TRAN(D)(3s)
+	PORQUÊ?	ADV_INT		
+Porque dentro de Itália o Papa levava uma vida boa, de riqueza.	PORQUE	ADV		ARG_EXT
+	ELE	PRO		ARG_EXT
+	DENTRO	ADV		ARG_EXT
+	ITÁLIA	N		ARG_EXT
+	PAPA	N		ARG_EXT
+	DINHEIRO	N		ARG_EXT
+	MUITO-RICO	N		V_⌀COP PRED
+	BOA	ADJ		V_⌀COP PRED
+	VIDA	N		V_⌀COP PRED
+Como podia fazer isso se tinha feito voto de pobreza?	COMO-SER-CAPAZ-FAZER-ISSO	ADV	INT	
+	ELE	PRO		ARG_EXT
+	SER	V		V_COP(3s)
+	VOTO	N		ARG_INT
+	FAZER	V		ARG_EXT[-] V_TRAN(D)(3s)
+	VOTO	N		ARG_INT
+	POBRE	N		ARG_INT
+	COMO-SER-CAPAZ-FAZER-ISSO	ADV		
+Um homem chamado Lutero revoltou-se contra esta situação.	UM	NUM		ARG_EXT
+	HOMEM	N		ARG_EXT
+	NOME	N		ARG_EXT
+	LUTERO	N		ARG_EXT
+	O	N		ARG_EXT
+	FOGO	INTERJ		ARG_EXT
+	FICAR-ZANGADO	V		V_⌀COP PRED
+Desobedeceu e escreveu um documento vasto como se estivesse a alterar a Bíblia.	DESOBEDECER	V		ARG_EXT V_INTR(3s)
+	ESCREVER	V		ARG_EXT[-] V1
+	PAPEL	N		ARG_EXT[-] V1
+	COMPLETO	ADJ		ARG_INT
+	IGUAL	ADJ		ARG_INT
+	COMO-SE-TIVESSE	???		ARG_INT
+	MUDAR	V		ARG_EXT V_TRAN(D)(3s)
+	BÍBLIA	N		ARG_INT
+	MAIS-OU-MENOS	ADV		
+Enviou este documento a várias pessoas em segredo.	ENVIAR-CARTA	V		ARG_EXT[-] V_TRAN(D)(3S) ARG_INT(2)
+O Papa descobriu e ficou furioso.	NÃO-DIZER-NADA	V		ARG_EXT[-] NEG-V_TRAN(D)(3s)
+	ELE	PRO		ARG_EXT
+	PAPA	N		ARG_EXT
+	DESCOBRIR	V		V_TRAN(D)(3s)
+	FICAR-ZANGADO	V		
+Esse problema veio provocar as alterações neste século.	PROBLEMA	N		ARG_EXT
+	PROBLEMA	N		ARG_EXT
+	SER-ISSO	V		V_COP
+	DAR	V		V_TRAN(D)(3s)
+	SÉCULO	N		
+Também a economia teve alterações e enriqueceu pouco a pouco	MUDANÇA	N		ARG_INT(2)
+	TAMBÉM	ADV		ARG_EXT
+	COMÉRCIO	N		ARG_EXT
+	MUDAR	V		V_TRAN(D)(3s)
+	COISAS	N		ARG_INT
+	DINHEIRO	N		ARG_INT
+	RICO	ADJ		ARG_INT
+	POUCO-POUCO	ADV		
+Os descobrimentos e também o ouro.	BARCO	N		ARG_EXT V_TRAN[-]
+	DESCOBRIMENTO	N		ARG_EXT V_TRAN[-]
+	TAMBÉM	ADV		ARG_EXT V_TRAN[-]
+	DINHEIRO	N		ARG_EXT V_TRAN[-]
+	OURO	N		ARG_EXT V_TRAN[-]
+2- a Arte desenvolveu-se, a economia melhorou.	DOIS	NUM		
+	ARTE	N		
+	DESENVOLVIMENTO	N		
+	ECONOMIA	N		
+	GANHAR-MUITO	V		V_TRAN(D)
+	BEM	ADJ		V_TRAN(D)
+Também a Arte e os livros disseminaram-se	TAMBÉM	ADV		ARG_EXT
+	ARTE	N		ARG_EXT
+	DOIS	NUM		ARG_EXT
+	HAVER	V		V_COP
+	LIVRO	N		ARG_EXT
+	ESPANDIR	V		V_TRAN(D)(3pl)
+O Papa para controlar alguma coisa que dissesse mal, proibiu tudo.	ELE	PRO		ARG_EXT
+	PAPA	N		ARG_EXT
+	CONTROLAR	V		V_TRANS[D](3s)
+	ALGUMA-COISA	N		ARG_INT
+	SE	CONJ		ARG_INT
+	ESPALHAR	V		
+	FALAR	V		
+	TEMA	N		
+	PAPA	N		ARG_EXT
+	QUALQUER-COISA	N		ARG_INT
+	NÃO-PODER/PROIBIDO	V		V_TRAN(D)(3s)
+Para controlar.	CONTROLE	N		ARG_INT
+	TER	V		ARG_EXT[-] V_TRAN(D)(3s)
+Dentro da Igreja havia muitos problemas.	DENTRO	ADV		ARG_EXT
+	IGREJA	N		ARG_EXT
+	HAVER	V		V_TRAN(D)(3s)
+	CONFUSÃO	N		ARG_INT
+	PROBLEMA	N		ARG_INT
+Porque Lutero se tinha revoltado.	PORQUE	CONJ		ARG_EXT
+	ELE	PRO		ARG_EXT
+	LUTERO	N		ARG_EXT
+	SER	V		V_COP
+	REVOLTAR	V		V_INTR(3s)
+Porque descobriu que o Papa estava rico.	PORQUE	CONJ		ARG_EXT[-]
+	DESCOBRIR	V		 V_TRAN(D)(3sg)
+	PAPA	N		ARG_EXT
+	DINHEIRO	N		V_⌀COP PRED
+	RICO	ADJ		V_⌀COP PRED
+Como era possível ele amar Cristo? Era estranho!	COMO-SER-POSSÍVEL-ISSO	INT	INT	
+	ELE	PRO		ARG_EXT
+	PAPA	N		ARG_EXT
+	AMAR	V		 V_TRAN(D)(3sg)
+	JESUS	N		ARG_INT
+Não era correto.	NÃO	ADV	NEG	ARG_EXT[-] NEG-V_COP(3s)
+	NÃO-ESTAR-CERTO	V 		ARG_EXT[-] NEG-V_COP(3s)
+	NÃO	ADV		ARG_EXT[-] NEG-V_COP(3s)
+Escreveu um documento e enviou a todas as pessoas.	ESCREVER	V		ARG_EXT[-] V_INTR(3S)
+	PAPEL	N		ARG_INT
+	DIVULGAR	V		ARG_EXT[-] V_TRAN(D)(3s)
+	TODOS	N		ARG_INT
+As pessoas ficaram chocadas.	PESSOA	N		ARG_EXT
+	SURPREENDER	V		V_INTR(3pl)
+Duvidavam de qual dos dois teria razão, o Papa ou ele?	DUVIDAR	V	INT	V_TRAN(D)(3pl)
+	MELHOR	ADJ		ARG_EXT V_⌀COP PRED
+	PAPA	N		ARG_EXT V_⌀COP PRED
+	OU	CONJ		ARG_EXT V_⌀COP PRED
+	ELE	PRO		ARG_EXT V_⌀COP PRED
+	VERDADEIRO	V		ARG_EXT V_⌀COP PRED
+	DUVIDAR	V		ARG_EXT[-] V_TRAN(D)(3pl)
+	QUAL-DOIS?	PRON. INT.		
+Este problema destruiu a sociedade e houve uma revolução.	PROBLEMA	N		ARG_EXT
+	ORIGINAR	V		V_TRAN(D)(3s)
+	BOCADINHO	ADV		V_TRAN(D)(3s)
+	DESTRUIÇÃO	N		ARG_INT
+	SOCIEDADE	N		ARG_INT
+	MUDANÇA	N		ARG_INT
+O Papa ao ver a reação das pessoas passou a controlar de forma radical, primeiro a Arte, segundo a literatura, terceiro outras coisas.	TAMBÉM	ADV		ARG_EXT
+	ELE	PRO		ARG_EXT
+	PAPA	N		ARG_EXT
+	AI-É!	INTERJ		ARG_EXT
+	DECIDIR-DRÁSTICO	V		V_TRAN(D)(3s)
+	CONTROLAR	V		V_TRAN(D)(3s)
+	ARTE	N		ARG_INT
+	DOIS	NUM		ARG_INT
+	LIVRO	N		ARG_INT
+	TRÊS	NUM		ARG_INT
+	COISAS	N		ARG_INT
+	CONTROLE	V		ARG_EXT V_TRAN(infinitivo) ARG_INT[-]
+	FISCALIZAR/CONTROLAR	V		ARG_EXT V_TRAN(infinitivo) ARG_INT[-]
+Começou a produzir-se na clandestinidade.	ELES	PRO		ARG_EXT
+	CALADO	ADJ		ARG_EXT
+	NÃO-DIZER-NADA	V		V_TRAN(D)3s)
+	ESCONDIDOS	ADJ		V_TRAN(D)3s)
+Fim.	FIM	N		
+No período do século 16 e 17, o Rei pensou e teve uma ideia.	SÉCULO	N		
+	16	NUM		
+	TAMBÉM	ADV		
+	PERÍODO	N		
+	ELE 	PRO		ARG_EXT
+	REI	N		ARG_EXT
+	PENSAR	V		V_TRAN(D)3s)
+	IDEIA	N		ARG_INT
+Que ideia?	IDEIA	N	INT	
+	O-QUE-SER?	PRO. INT.		INTERROG-V_⌀COP
+Assim, o Rei soberano mandou que todos evitassem acompanhá-lo.	SER-ISSO	CONJ		ARG_EXT
+	REI	N		ARG_EXT
+	ELE-PRÓPRIO	N		ARG_EXT
+	CHEFE	N		ARG_EXT
+	MANDAR	V		V_TRAN(D)(3s) ARG_INT(ORACAO)
+	TUDO	PRO. INDEF.		ARG_EXT
+	IGUAL/COMO?	CONJUN		ARG_INT
+	JUNTO	ADJ		ARG_INT
+	NÃO 	NEG		V_TRAN(D)(3pl) 
+	EVITAR	V		V_TRAN(D)(3pl) 
+Ficassem fora	FORA	ADV		ARG_Ext[-] V_⌀COP PRED
+O único objetivo do Rei era ser como Deus e todos obedecerem-lhe.	UNICO	ADJ		ARG_EXT
+	REI	N		ARG_EXT
+	OBJETIVO	N		ARG_EXT
+	COMO-SE-FOSSE	CONJ-VERBO		V_⌀COP PRED
+	ELE	PRO		V_⌀COP PRED
+	DEUS	N		V_⌀COP PRED
+	APONTAR-CÉU	N		V_⌀COP PRED
+	VENERADO	ADJ		V_⌀COP PRED
+Era o Rei quem tinha mais importância.	ELE	PRO		ARG_EXT
+	[PRIMEIRO_ELE]	NUM		ARG_EXT
+	VALOR	N		ARG_INT
+	[ELE_SER]	PRON		V_TRAN(D)(3sg)
+Período entre o século 16 e 17.	SÉCULO	N		
+	16	NUM		
+	17	NUM		
+	PERÍODO	N		
+No sistema económico, por exemplo, a economia mercantil em conjunto a agricultura desenvolverama economia	SISTEMA	N		ARG_EXT(3s)
+	ECONÓMICO	ADJ		ARG_EXT(3s)
+	POR-EXEMPLO	CONJ		ARG_EXT(3s)
+	ECONOMIA	N		ARG_EXT(3s)
+	DOIS	NUM		ARG_EXT(3s)
+	TERRA	N		ARG_EXT(3s)
+	AGRICULTURA	N		ARG_EXT(3s)
+	TUDO-JUNTO	QUANT		ARG_EXT(3s)
+	DINHEIRO	N		ARG_INT[D]
+	DESENVOLVER	V		V_TRAN(D)(3s)
+Porque a política tentou alterar um pouco o sistema económico.	PORQUE	CONJ		ARG_EXT(3s)
+	POLÍTICA	N		ARG_EXT(3s)
+	TENTAR	V		V_TRAN(D)(3s)
+	ALTERAR	V		V_TRAN(D)(3s)
+	BOCADINHO	N		ARG_INT[D]
+	DIFERENTE	ADJ		ARG_INT[D]
+	SISTEMA	N		ARG_INT[D]
+	ECONÓMICO	ADJ		ARG_INT[D]
+O sistema é hierárquico. 	SISTEMA	N		ARG_EXT
+	LISTA HIERARQUICO	ADJ		V_⌀COP PRED
+A ordem é rainha, rei e sua família.	ORDEM	N		ARG_EXT
+	MULHER	N		V_⌀COP PRED
+	REI	N		V_⌀COP PRED
+	HOMEM	N		V_⌀COP PRED
+	REI	N		V_⌀COP PRED
+	FAMÍLIA	N		V_⌀COP PRED
+Mas estava no topo da hierarquia, a seguir os militares e por último o povo.	MAS	CONJ		V_⌀COP PRED
+	PRIMEIRO	NUM		V_⌀COP PRED
+	[NO-TOPO]	N/ADV?		V_⌀COP PRED
+	[A-SEGUIR]	ADV/QUANT?		V_⌀COP PRED
+	JUNTO	N		V_⌀COP PRED
+	[A-SEGUIR]	ADV/QUANT?		V_⌀COP PRED
+	SOLDADOS	N		V_⌀COP PRED
+	[A-SEGUIR]	ADV/QUANT?		V_⌀COP PRED
+	POVO	N		V_⌀COP PRED
+	ÚLTIMO	ADJ		V_⌀COP PRED
+O Rei tinha um sistema hierarquico muito rígido.	REI	N		ARG_EXT
+	TER	V		V_TRAN(D)(3sg)
+	1	NUM		V_TRAN(D)(3sg)
+	SISTEMA	N		ARG_INT
+	SER	V		ARG_INT
+	ORDEM	N		ARG_INT
+	DELIMITAÇÃO	N		ARG_INT
+	CERTO	ADJ		ARG_INT
+O Rei era o soberano.	ELE	PRO		ARG_EXT
+	REI	N		ARG_EXT
+	TER-MUITO	V-ADJ		V_TRAN(3s)
+	IMPORTANTE	ADJ		ARG_INT
+	CHEFE	N		ARG_INT
+Primeiro privilegiou o grupo social da Burguesia, segundo... a Nobreza.	PRIMEIRO	NUM/ADV?		ARG_EXT
+	ELE	PRO		ARG_EXT
+	QUERER	V		V_TRAN(D)(3sg)
+	ISSO	PRO		ARG_INT
+	GRUPO	N		ARG_EXT
+	SER	V		V_COP(3sg)
+	BURGUESIA	N		ARG_INT
+	DOIS	NUM		ARG_INT
+	NOBREZA	N		ARG_INT
+Os dois grupos juntos tinham boas condições de vida, boas roupas, uma vida boa.	DOIS-JUNTO	ADV		ARG_EXT
+	TER	V		V_COP(3pL)
+	CARA	N		ARG_INT
+	LIMPO	ADJ		ARG_INT
+	ROUPA	N		ARG_INT
+	LIMPO	ADJ		ARG_INT
+	CRINOLINA	N		ARG_INT
+	BOA	ADJ		ARG_INT
+	VIDA	N		ARG_INT
+	MUITO-BOM	ADJ		ARG_INT
+Ele, a mulher, os filhos e os idosos.	ELE	PRO		
+	MULHER	N		
+	FAMÍLIA	N		
+	CERTO	ADJ		
+	ORDEM	N		
+Porque se ele fizesse mal as coisas o dinheiro faltaria	PORQUE	CONJ		ARG_EXT
+	SE	CONJ		ARG_EXT
+	ELE	PRO		ARG_EXT
+	FAZER	V		V_TRAN(D)(3sg)
+	MAL	ADV		ARG_INT(Obl)
+	DINHEIRO	N		ARG_INT
+	NÃO-DAR	V		ARG_EXT[-] V_TRAN(D)(3sg)
+Todos evitavam mostrar.	TODOS	N		ARG_EXT
+	AFLITO	N		ARG_EXT
+	EVITAR	V		V_INTR(3pl)
+Mostravam-se sorridentes.	CARA-SORRIR	N-V		ARG_EXT[-] V_INTR(3pl)
+Para o rei, eram bons e simpáticos.	REI	N		ARG_INT(Obl)
+	BOM	ADJ		V_⌀COP PRED
+	MUITO-SIMPÁTICO	ADV-ADJ		V_⌀COP PRED
+Divertiam-se em festas,  mostrando a riqueza das suas casas, tudo.	FESTA	N		ARG_INT(Obl)
+	DIVERTIR	V		ARG_EXT[-] V_INTR
+	DAR 	V		ARG_EXT[-] V_TRAN(D)(3sg) ARG_INT[-]
+	DINHEIRO	N		ARG_INT
+	CASA	N		ARG_INT
+	APONTAR	PRO		ARG_INT
+	TUDO	PRO		ARG_INT
+Período entre o século 16 e 17.	SÉCULO	N		
+	16	NUM		
+	17	NUM		
+	PERÍODO	N		
+O Rei mandou um grupo acompanhar e fiscalizar livros, 2- poemas, controlar qualquer coisa que fosse divulgada.	REI	N		ARG_EXT
+	MANDAR	V		V_TRAN(D)(3sg)
+	GRUPO	N		ARG_INT
+	ACOMPANHAR	V		ARG_EXT[-] V_TRAN(D)(3sg) ARG_INT[-]
+	FISCALIZAR	V		ARG_EXT[-]
+	LIVRO	N		ARG_INT
+	DOIS	NUM		ARG_INT
+	POEMA	N		ARG_INT
+	TRÊS	NUM		ARG_INT
+	QUALQUER	PRO		ARG_INT
+Ler os livros, os textos, fiscalizá-los	DIVULGAÇÃO	N		ARG_INT
+	CONTROLAR	V		ARG_EXT[-] V_TRAN(D)(3pl)
+	VER	V		ARG_EXT[-] V_TRAN(D)(3pl)
+	LIVRO	N		ARG_INT
+	TEXTO	N		ARG_INT
+se os textos falassem de Ciência ou de outras coisas proibidas	SE	CONJ		ARG_EXT
+	TEXTO	N		ARG_EXT
+	FALAR	V		V_TRAN(D)(3sg)
+	CIÊNCIA	N		ARG_INT
+	OU	CONJ		ARG_INT
+	FALAR	V		ARG_EXT[-] V_TRAN(D)(3pl)
+	FORA-CONTEXTO/IRRELEVANTE	ADV?		ARG_INT
+Os autores eram castigados ou condinados à morte, era horrível.	SEM-MAIS-NEM-MENOS 	ADV.		ARG_EXT[-] V_PARTPASS
+	IGUAL	BENG		ARG_EXT[-] V_PARTPASS
+	CASTIGADO	V		ARG_EXT[-] V_PARTPASS
+	OU	CONJ		ARG_EXT[-] V_PARTPASS
+	DECAPITADO	V		ARG_EXT[-] V_PARTPASS
+	OU	CONJ		ARG_EXT[-] V_PARTPASS
+	HORRÍVEL	ADJ		V_⌀COP PRED
+	COISA	N		V_⌀COP PRED
+	HORRÍVEL	ADJ		V_⌀COP PRED
+Eram também obrigados a controlar a Arte.	OBRIGADO	V/ADJ		ARG_EXT[-] V_⌀COP PRED
+	CONTROLAR	V		ARG_EXT V_TRAN(D)(3pl)
+	TAMBÉM	ADV		ARG_INT
+	ARTE	N		ARG_INT
+Se a Arte representava nús ou temas contra Cristo os artistas eram logo mortos ou espulsos.	SE	CONJ		ARG_EXT
+	ARTE	N		ARG_EXT
+	NU	ADJ		ARG_EXT
+	OU	CONJ		ARG_EXT
+	CONTRA	ADV		ARG_EXT
+	JESUS	N		ARG_EXT
+	QUALQUER	PRO		ARG_EXT
+	SEM-MAIS-NEM-MENOS	ADV		V_TRAN(D)(3sg)
+	MATAR	V		V_TRAN(D)(3sg)
+	OU	CONJ		V_TRAN(D)(3sg)
+	EXPULSAR	V		ARG_EXT[-] V_TRAN(D)(3sg)
+	OU	CONJ		ARG_EXT[-] V_TRAN(D)(3sg)
+	FAZER	V		ARG_EXT[-] V_TRAN(D)(3sg)
+	MAL	ADV		ARG_EXT[-] V_TRAN(D)(3sg)
+A segunda proibição era a liberdade artística, havia um grande controle..	PROIBIR	N	NEG	ARG_EXT
+	DOIS	NUM		ARG_EXT
+	ARTE	N		ARG_EXT
+	À-VONTADE	ADV		ARG_EXT
+	MOSTRAR	V		V_TRAN(D)(3sg) NEG
+	NÃO	ADV		V_TRAN(D)(3sg) NEG
+	CONTROLE	N		ARG_INT
+	TER-DEMASIADO	V-ADJ		ARG_EXT[-] V_TRAN(D)
+	SOFRER	V		ARG_EXT[-] V_INTR(3sg)
+	ASSIM	ADV		ARG_EXT[-] V_INTR(3sg)
+Guerra dos 30 anos entre 1618 e 1648	GUERRA	N		ARG_EXT
+	30	NUM		ARG_EXT
+	ANO	N		ARG_EXT
+	DURAR	V		V_TRAN(D)(3sg)
+	1618	NUM		ARG_INT
+	ATÉ	PREP		ARG_INT
+	1648	NUM		ARG_INT
+Foi um período de guerras por causa da Arte e da religão protestante.	PERÍODO	N		ARG_EXT
+	HAVER-GUERRA	V		ARG_EXT
+	POR-CAUSA	V/PREP?		V_COP
+	RELIGIÃO	N		ARG_INT
+	OUTRO	PRO		ARG_INT
+	PROTESTANTES	N		ARG_INT
+Era ligada à igreja mas diferente da religião católica.	LIGADO	V		ARG_EXT[-] V_TRAN(D)(3sg)
+	IGREJA	N		ARG_INT
+	SIM	ADV		ARG_INT
+	MAS	CONJ		ARG_INT
+	DIFERENTE	ADJ		V_⌀COP PRED
+	CATÓLICA	N		ARG_INT
+Porque não aceitavam a riqueza dos Católicos, a falta de respeito à Bíblia que ensinava de forma diferente.	PORQUE	CONJ	NEG	ARG_EXT[-] V_TRAN(D)(3pl) NEG
+	ACEITAR	V		ARG_EXT[-] V_TRAN(D)(3pl) NEG
+	NÃO	ADV		ARG_EXT[-] V_TRAN(D)(3pl) NEG
+	IGUAL	BENG		ARG_INT
+	CATÓLICA	N		ARG_INT
+	DINHEIRO	N		ARG_INT
+	RICO	ADJ		ARG_INT
+	NÃO-CERTO	V		NEG-V_⌀COP PRED
+	FALTA	V		ARG_EXT
+	RESPEITO	N		ARG_INT
+	BÍBLIA	N		ARG_INT
+	APONTAR	PRO		ARG_INT
+	ENSINAR	N		ARG_INT
+	DIFERENTE	ADJ		V_⌀COP PRED
+As duas religiões eram inimigas porque eram diferentes.	DOIS	NUM		ARG_EXT
+	INIMIGO	ADJ		V_⌀COP PRED
+	PORQUE	CONJ		V_⌀COP PRED
+	RELIGIÃO	N		ARG_EXT
+	BOCADINHO	N		ARG_EXT
+	DIFERENTE	ADJ		V_⌀COP PRED
+Isso fez com que entrassem em conflito, em guerra durante 30 anos.	SER-ISSO	V		ARG_EXT[-] V_TRAN(INT)(3pl)
+	COMBATER	V		ARG_EXT[-] V_TRAN(INT)(3pl)
+	COMBATER-AO-LONGO-TEMPO	V		ARG_EXT[-] V_TRAN(INT)(3pl)
+	30	NUM		ARG_EXT[-] V_TRAN(INT)(3pl)
+	ANO	N		ARG_EXT[-] V_TRAN(INT)(3pl)
+	DURAR	ADV		ARG_EXT[-] V_TRAN(INT)(3pl)
+	DECORRER-TEMPO	N		ARG_EXT[-] V_TRAN(INT)(3pl)
+A Suécia e a França entraram em conflito.	APONTAR	PRO		ARG_EXT
+	SUÉCIA	N		ARG_EXT
+	APONTAR	PRO		ARG_EXT
+	FRANÇA	N		ARG_EXT
+	CONFLITO	N		V_⌀COP PRED
