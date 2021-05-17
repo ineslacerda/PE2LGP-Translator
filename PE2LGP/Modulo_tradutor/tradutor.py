@@ -540,6 +540,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-sentence = "não queres?"
-freeling_model, palavras_glosas, freq_dic = tradutor_main()
-translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
+#sentence = "não queres?"
+#freeling_model, palavras_glosas, freq_dic = tradutor_main()
+#translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
