@@ -64,8 +64,10 @@ class silabizer():
         for index in range(0,len(chars)):
             if chars[index] in self.mapping.keys():
                 chars[index] = self.mapping[chars[index]]
-            else:
+            elif index>1:
                 chars[index] = ""
+            elif index <= 1:
+                chars[index] = "C"
         chars = ''.join(chars)
         return [chars]
         
