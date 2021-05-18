@@ -65,7 +65,7 @@ class silabizer():
             if chars[index] in self.mapping.keys():
                 chars[index] = self.mapping[chars[index]]
             else:
-                chars[index] = "C"
+                chars[index] = ""
         chars = ''.join(chars)
         return [chars]
         
