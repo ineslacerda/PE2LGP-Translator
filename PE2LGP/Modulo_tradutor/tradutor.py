@@ -14,8 +14,12 @@ from escolhaRegra import distancia, escolher_regra_melhor
 from freq_json import freq, abrir_freq
 sys.path.append('../Modulo_construcao_regras')
 from freeling import load_freeling
-# from phonemizer.phonemize import phonemize
+from phonemizer.phonemize import phonemize
+import unidecode
 import time
+import pyphen
+
+from separate_syllables import silabizer
 
 def update_elemento_sintatico(i, frase, gesto, classe_gesto):
 	"""
@@ -502,10 +506,43 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
 	traducao_lgp = " ".join(frase_lgp)
-	# fonemas = phonemize(traducao_lgp, language="pt-pt", backend="espeak")
-	# fonemas = fonemas.split(" ")
-	# fonemas = list(filter(None, fonemas))
-	dictionary = {'glosas': frase_lgp} #  'fonemas': fonemas
+
+	print("frase_lgp")
+	print(traducao_lgp)
+
+	fonemas = phonemize(traducao_lgp, language="pt-pt", backend="espeak")
+	print(fonemas)
+	table = {
+			ord('ɐ'): 'a',
+			ord('ʎ'): 'l',
+			ord('Ʒ'): 'j',
+			ord('ɲ'): 'j',
+			ord('ɛ'): 'e',
+			ord('ɹ'): 'r',
+			ord('ɾ'): 'r',
+			ord('ʁ'): 'r',
+			ord('ʃ'): 'es',
+			ord('ɔ'): 'o',
+			ord('ʊ'): 'u',
+			ord('ŋ'): 'n',
+		}
+		
+	fonemas = fonemas.translate(table)
+	fonemas = unidecode.unidecode(fonemas)
+	fonemas = fonemas.split(" ")
+	fonemas = list(filter(None, fonemas))
+
+	# syllables = find_syllables(fonemas)
+
+	visemas = []
+	silabas = silabizer()
+	for glosa in fonemas:
+		glosa = glosa.lower()
+		visemas.append(silabas(glosa))
+
+	# print(syllables)
+
+	dictionary = {'glosas': frase_lgp, 'fonemas': visemas} #  'fonemas': fonemas
 	if exprFaciais:
 		dictionary['exprFaciais'] = exprFaciais
 
@@ -515,6 +552,36 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 	return dictionary
 
+def find_syllables(frase_lgp):
+	syllables_split = []
+	for glosa in frase_lgp:
+		syllables = []
+		print(glosa)
+		vowels = 'aeiouy'
+		if glosa[0] in vowels and glosa[1] not in vowels and glosa[2] in vowels:
+			syllables.append(glosa[0])
+			glosa = glosa[1:len(glosa)]
+		syllables, glosa = find_syllables_aux(glosa, syllables, vowels)
+		print(syllables)
+		print(glosa)
+		if glosa.endswith('le'):
+			glosa = glosa.split("le")
+		else:
+			syllables[len(syllables)-1] += glosa
+		print(syllables)
+		syllables_split.append(str(syllables))
+	return syllables_split
+	
+	print(syllables_split)
+
+def find_syllables_aux(glosa, syllables, vowels):
+	for index in range(1,len(glosa)):
+		if len(glosa) != 0 and glosa[index] in vowels and glosa[index-1] not in vowels:
+			syllables.append(glosa[0:index+1])
+			glosa = glosa[index+1:len(glosa)]
+			print(syllables)
+			return find_syllables_aux(glosa, syllables, vowels)
+	return syllables, glosa
 
 def tradutor_main():
 	"""
@@ -540,6 +607,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-#sentence = "não queres?"
-#freeling_model, palavras_glosas, freq_dic = tradutor_main()
-#translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
+# sentence = "a rainha come na cozinha e trabalha no escritório"
+# freeling_model, palavras_glosas, freq_dic = tradutor_main()
+# translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
