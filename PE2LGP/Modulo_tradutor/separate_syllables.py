@@ -43,7 +43,7 @@ class silabizer():
         self.mapping = {'a': 'A', 'i': 'E', 'e': 'A', 'o': 'O', 'u': 'U', 'b': 'B', 'm': 'B', 'p': 'B', 'f': 'F', 'v': 'F'}
         
     def split(self, chars):
-        rules  = [('cccc',2), ('xcc',1), ('ccx',2), ('csc',2), ('xc',1), ('cc',1), ('vcc',2), ('sc',1), ('cs',1), ('vc',1), ('vs',1)]
+        rules  = [('cccc',2), ('xcc',1), ('ccx',2), ('csc',2), ('xc',1), ('cc',1), ('vcc',2), ('sc',1), ('cs',1), ('vc',1), ('vs',1), ('ccvv', 3)]
         for split_rule, where in rules:
             first, second = chars.split_by(split_rule,where)
             if second:
@@ -68,6 +68,8 @@ class silabizer():
                 chars[index] = ""
             elif index <= 1:
                 chars[index] = "C"
+            if index > 0 and chars[index-1] == chars[index]:
+                chars[index] = ""
         chars = ''.join(chars)
         return [chars]
         

@@ -521,7 +521,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			ord('ɹ'): 'r',
 			ord('ɾ'): 'r',
 			ord('ʁ'): 'r',
-			ord('ʃ'): 'es',
+			ord('ʃ'): 's',
 			ord('ɔ'): 'o',
 			ord('ʊ'): 'u',
 			ord('ŋ'): 'n',
@@ -531,6 +531,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 	fonemas = unidecode.unidecode(fonemas)
 	fonemas = fonemas.split(" ")
 	fonemas = list(filter(None, fonemas))
+
+	print(fonemas)
 
 	# syllables = find_syllables(fonemas)
 
@@ -607,6 +609,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "a rainha come na cozinha e trabalha no escritório"
+# sentence = "crianças andam"
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
