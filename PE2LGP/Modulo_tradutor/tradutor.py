@@ -17,7 +17,7 @@ from freeling import load_freeling
 from phonemizer.phonemize import phonemize
 import unidecode
 import time
-import pyphen
+# import pyphen
 
 from separate_syllables import silabizer
 
