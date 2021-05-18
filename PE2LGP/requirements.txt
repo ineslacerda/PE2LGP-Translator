@@ -4,3 +4,5 @@ gensim==3.8.1
 spacy==2.3.2
 matplotlib
 pyjarowinkler
+phonemizer
+unidecode
