@@ -5,6 +5,7 @@ import freeling
 from dependencias import dependencies_spacy
 from elementos_sintaticos import set_elementos
 from identifica_suj_pred import identifica_elementos
+import re
 
 
 def retirar_pontuacao(pred_tags):
@@ -151,7 +152,7 @@ def preprocessar(f, freeling_values):
 	map_corpus_tags = {'R': 'ADV', 'A': 'ADJ', 'CS': 'CONJ', 'D': 'DET', 'N':'N', 'S':'PREP', 'P':'PRON', 'V':'V', 'Z': 'NUM', 'CC': 'CONJ' }
 
 	# 1º estrutura frásica:
-	dep_words, dep_tags, indices_filhos = dependencies_spacy(f, freeling_values)
+	# dep_words, dep_tags, indices_filhos = dependencies_spacy(f, freeling_values)
 
 
 	# 2º constituintes com Freeling
@@ -161,7 +162,7 @@ def preprocessar(f, freeling_values):
 
 	print(pred_tags)
 
-	palavras_compostas, indices_compostas = palavra_composta(words)
+	# palavras_compostas, indices_compostas = palavra_composta(words)
 
 
 	adv_quant = ["muito", "muitos", "muita", "muitas", "menos", "tanto", "pouco", "pouca", "demasiado", "bastante", "apenas", "mais", "tanto"]
@@ -170,77 +171,123 @@ def preprocessar(f, freeling_values):
 	adv_int = ["onde", "quando", "como", "porque"]
 	pronomes_int = ["qual", "quais", "quantos", "quantas", "quanto", "porquê", "quem"]
 
+	sub_frases_words = []
+	sub_frases_lemmas = []
+	sub_frases_lemma_verdadeiro = []
+	sub_frases_pred_tags = []
+	index  = 0
+
+	delimiters = []
+	string_delimiters = ""
+	
 	for m, i in enumerate(pred_tags):
 		if i.startswith("PE") and words[m].lower() in pronomes_int:
 			pred_tags[m] = "PT"
+		if i == "Fc" or i == "CC" or i == "CS" or i == "RG":
+			sub_frases_words.append(words[index:m])
+			sub_frases_lemmas.append(lemmas[index:m])
+			sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:m])
+			sub_frases_pred_tags.append(pred_tags[index:m])
+			index = m
+			delimiters.append(words[m])
+			string_delimiters += words[m] + " | "
 
-	atualiza_tags(adv_quant, words, pred_tags, "RGQ")
-	atualiza_tags(adv_tempo_passado, words, pred_tags, "RGTP")
-	atualiza_tags(adv_tempo_futuro, words, pred_tags, "RGTF")
-	atualiza_tags(pronomes_int, words, pred_tags, "PT")
-	atualiza_tags(adv_int, words, pred_tags, "RGI")
+	string_delimiters = string_delimiters[0:len(string_delimiters)-2]
 
-	frase_input = Frase_input(f)
+	sub_frases_words.append(words[index:len(words)])
+	print(sub_frases_words)
+	sub_frases_pred_tags.append(pred_tags[index:len(words)])
+	print(sub_frases_pred_tags)
 
-	for p in palavras_compostas:
-		for k in indices_compostas:
-			frase_input.set_palavras_compostas(words[k], p)
+	sub_frases_lemmas.append(lemmas[index:len(lemmas)])
+	print(sub_frases_lemmas)
+	sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:len(lemma_verdadeiro)])
+	print(sub_frases_lemma_verdadeiro)
 
-	pred_tags, indx_remo = retirar_pontuacao(pred_tags)
+	print(delimiters)
 
-	dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
+	f = re.split(string_delimiters, f)
+	print(f)
+	for index, value in enumerate(delimiters):
+		f[index+1] = value + " " + f[index+1]
 
-	atualiza_listas(words, indx_remo)
+	print(f)
 
-	frase_input.set_dep_tags(dependencies_tags)
+	frases = []
 
-	ind_eliminado = retirar_determinante(pred_tags, words)
+	for index in range(0, len(sub_frases_words)):
 
-	atualiza_listas(dependencies_tags, ind_eliminado)
-	atualiza_listas(lemmas, indx_remo)
-	atualiza_listas(lemmas, ind_eliminado)
+		dep_words, dep_tags, indices_filhos = dependencies_spacy(f[index], freeling_values)
 
-	frase_input.set_lemmas_sem_det(lemmas)
+		atualiza_tags(adv_quant, sub_frases_words[index], sub_frases_pred_tags[index], "RGQ")
+		atualiza_tags(adv_tempo_passado, sub_frases_words[index], sub_frases_pred_tags[index], "RGTP")
+		atualiza_tags(adv_tempo_futuro, sub_frases_words[index], sub_frases_pred_tags[index], "RGTF")
+		atualiza_tags(pronomes_int, sub_frases_words[index], sub_frases_pred_tags[index], "PT")
+		atualiza_tags(adv_int, sub_frases_words[index], sub_frases_pred_tags[index], "RGI")
 
-	atualiza_listas(lemma_verdadeiro, ind_eliminado)
+		frase_input = Frase_input(f[index])
 
-	frase_input.set_lemma_verdade_sem_det(lemma_verdadeiro)
+		# for p in palavras_compostas:
+		# 	for k in indices_compostas:
+		# 		frase_input.set_palavras_compostas(sub_frases[index][k], p)
+
+		sub_frases_pred_tags[index], indx_remo = retirar_pontuacao(sub_frases_pred_tags[index])
+
+		dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
+
+		atualiza_listas(sub_frases_words[index], indx_remo)
+
+		frase_input.set_dep_tags(dependencies_tags)
+
+		ind_eliminado = retirar_determinante(sub_frases_pred_tags[index], sub_frases_words[index])
+
+		atualiza_listas(dependencies_tags, ind_eliminado)
+		atualiza_listas(sub_frases_lemmas[index], indx_remo)
+		atualiza_listas(sub_frases_lemmas[index], ind_eliminado)
+
+		frase_input.set_lemmas_sem_det(sub_frases_lemmas[index])
+
+		atualiza_listas(sub_frases_lemma_verdadeiro[index], ind_eliminado)
+
+		frase_input.set_lemma_verdade_sem_det(sub_frases_lemma_verdadeiro[index])
 
 
-	# 3º identificar o tipo de frase
-	tipo = tipo_de_frase(pred_tags, f[-1])
-	frase_input.set_tipo(tipo)
+		# 3º identificar o tipo de frase
+		tipo = tipo_de_frase(sub_frases_pred_tags[index], f[index][-1])
+		frase_input.set_tipo(tipo)
 
-	pred_tags_antes = pred_tags.copy()
-	frase_input.set_classes_antes(pred_tags_antes) #Lista com as palavras todas da frase (ex: com determinantes artigos)
+		pred_tags_antes = sub_frases_pred_tags[index].copy()
+		frase_input.set_classes_antes(pred_tags_antes) #Lista com as palavras todas da frase (ex: com determinantes artigos)
 
-	# 4º retirar em cada elemento o determinantes artigos
-	dependency_pt = list(filter(lambda a: a != 'punct', dep_tags))
+		# 4º retirar em cada elemento o determinantes artigos
+		dependency_pt = list(filter(lambda a: a != 'punct', dep_tags))
 
-	atualiza_listas(dep_words, ind_eliminado)
-	atualiza_listas(dependency_pt, ind_eliminado)
+		atualiza_listas(dep_words, ind_eliminado)
+		atualiza_listas(dependency_pt, ind_eliminado)
 
-	frase_input.set_palavras(dep_words)
-	frase_input.set_frase_sem_det(dep_words, lemmas, pred_tags_antes)
-	frase_input.set_frase_sem_det_lemmas_verd(dep_words, lemma_verdadeiro, pred_tags_antes)
+		frase_input.set_palavras(dep_words)
+		frase_input.set_frase_sem_det(dep_words, sub_frases_lemmas[index], pred_tags_antes)
+		frase_input.set_frase_sem_det_lemmas_verd(dep_words, lemma_verdadeiro, pred_tags_antes)
 
-	# 5º identificar o que é suj, obj, verbo e predicado
-	set_elementos(dependencies_tags, pred_tags, dep_words, frase_input)
+		# 5º identificar o que é suj, obj, verbo e predicado
+		set_elementos(dependencies_tags, sub_frases_pred_tags[index], dep_words, frase_input)
 
-	# 6º converter as etiquetas de dependenciaa para as do corpus
-	estrutura = converte_estrutura(dependencies_tags, map_corpus_dep)
-	frase_input.set_dep(estrutura)
+		# 6º converter as etiquetas de dependenciaa para as do corpus
+		estrutura = converte_estrutura(dependencies_tags, map_corpus_dep)
+		frase_input.set_dep(estrutura)
 
-	# 7º converter as etiquetas das classes gramaticais para as do corpus
-	frase_input.set_classes(pred_tags)
-	frase_input.set_classes(converte_classes(frase_input.classes, map_corpus_tags) + tipo)
-	converte_classes(frase_input.classes_suj, map_corpus_tags)
-	converte_classes(frase_input.classes_obj, map_corpus_tags)
-	converte_classes(frase_input.classes_verbo, map_corpus_tags)
-	converte_classes(frase_input.classes_outro, map_corpus_tags)
-	converte_classes(frase_input.classes_pred, map_corpus_tags)
+		# 7º converter as etiquetas das classes gramaticais para as do corpus
+		frase_input.set_classes(sub_frases_pred_tags[index])
+		frase_input.set_classes(converte_classes(frase_input.classes, map_corpus_tags) + tipo)
+		converte_classes(frase_input.classes_suj, map_corpus_tags)
+		converte_classes(frase_input.classes_obj, map_corpus_tags)
+		converte_classes(frase_input.classes_verbo, map_corpus_tags)
+		converte_classes(frase_input.classes_outro, map_corpus_tags)
+		converte_classes(frase_input.classes_pred, map_corpus_tags)
 
-	# 8º concatenar às novas classes, o tipo da frase:
-	frase_input.set_classes(frase_input.classes + tipo)
+		# 8º concatenar às novas classes, o tipo da frase:
+		frase_input.set_classes(frase_input.classes + tipo)
 
-	return frase_input
+		frases.append(frase_input)
+
+	return frases

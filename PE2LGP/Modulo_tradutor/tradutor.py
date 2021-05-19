@@ -383,7 +383,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 				# else:
 			#fase de análise
 			nova_frase = retira_cor_de(f, palavras_unidas)
-			frases_input.append(preprocessar(nova_frase, freeling_model))
+			frases_input = (preprocessar(nova_frase, freeling_model))
 	print("--- %s fraseeesss ---" % (time.time() - start_time))
 	exprFaciais = {}
 	# indice = 0
@@ -609,6 +609,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "crianças andam"
-# freeling_model, palavras_glosas, freq_dic = tradutor_main()
-# translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
+sentence = "as crianças não gostam de ler mas gostam de desenhar"
+freeling_model, palavras_glosas, freq_dic = tradutor_main()
+translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

@@ -106,7 +106,7 @@ def load_freeling(valor):
 							 True,  # DictionarySearch,
 							 True,  # AffixAnalysis,
 							 False,  # CompoundAnalysis,
-							 True,  # RetokContractions,
+							 False,  # RetokContractions,
 							 valor,  # MultiwordsDetection,
 							 valor,  # NERecognition,
 							 True,  # QuantitiesDetection,
