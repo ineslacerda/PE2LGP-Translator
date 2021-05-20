@@ -349,8 +349,6 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		classe = valor[2]
 		lema = valor[1]
 		palavra = valor[0]
-		print(indice)
-		print(indice)
 
 		if not classe.startswith("A") and not classe.startswith("NC"):
 			i.traducao[indice] = lema.upper()

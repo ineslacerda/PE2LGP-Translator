@@ -48,7 +48,6 @@ class silabizer():
             first, second = chars.split_by(split_rule,where)
             if second:
                 if first.type_line in set(['c','s','x','cs']) or second.type_line in set(['c','s','x','cs']):
-                    #print 'skip1', first.word, second.word, split_rule, chars.type_line
                     continue
                 if first.type_line[-1]=='c' and second.word[0] in set(['l','r']):
                     continue

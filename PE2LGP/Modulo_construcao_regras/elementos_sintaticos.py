@@ -169,13 +169,6 @@ def set_elementos(dependencies_tags, pred_tags, dep_words, frase):
 			frase.set_classes_antes_obj(dep_words[i], pred_tags[i])
 			frase.set_indices_obj(i)
 
-		print("d")
-		print(d)
-		print("dependencies_tags")
-		print(dependencies_tags)
-		print("pred_tags")
-		print(pred_tags)
-
 		# Se verbo estiver no inicio da frase sem sujeito --> d == case
 		if (d == "ROOT" or d == "case") and "cop" not in dependencies_tags and pred_tags[i].startswith("V"):
 			frase.set_classes_v(pred_tags[i])

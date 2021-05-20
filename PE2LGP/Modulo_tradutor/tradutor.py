@@ -609,6 +609,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-sentence = "as crianças não gostam de ler mas gostam de desenhar"
-freeling_model, palavras_glosas, freq_dic = tradutor_main()
-translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
+# sentence = "as crianças não gostam de ler mas gostam de desenhar"
+# freeling_model, palavras_glosas, freq_dic = tradutor_main()
+# translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

@@ -128,8 +128,6 @@ def estatistica_estrutura(lgp, tipo, estatisticas):
 	:param estatisticas: dicionário com as estatísticas
 	:return: dicionário com as estatísticas
 	"""
-	print(tipo)
-	print(lgp)
 	if str(tipo) == "":
 			tipo = "CAN"
 	if str((str(lgp).replace(" ", ""), tipo)) in estatisticas.keys():
@@ -137,8 +135,6 @@ def estatistica_estrutura(lgp, tipo, estatisticas):
 	else:
 		estatisticas[str((lgp.replace(" ", ""), tipo))] = 1
 	
-	print(estatisticas)
-
 	return estatisticas
 
 

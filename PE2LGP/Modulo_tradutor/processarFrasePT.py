@@ -195,23 +195,13 @@ def preprocessar(f, freeling_values):
 	string_delimiters = string_delimiters[0:len(string_delimiters)-2]
 
 	sub_frases_words.append(words[index:len(words)])
-	print(sub_frases_words)
 	sub_frases_pred_tags.append(pred_tags[index:len(words)])
-	print(sub_frases_pred_tags)
-
 	sub_frases_lemmas.append(lemmas[index:len(lemmas)])
-	print(sub_frases_lemmas)
 	sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:len(lemma_verdadeiro)])
-	print(sub_frases_lemma_verdadeiro)
-
-	print(delimiters)
 
 	f = re.split(string_delimiters, f)
-	print(f)
 	for index, value in enumerate(delimiters):
 		f[index+1] = value + " " + f[index+1]
-
-	print(f)
 
 	frases = []
 

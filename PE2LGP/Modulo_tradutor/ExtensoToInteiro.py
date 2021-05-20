@@ -70,8 +70,6 @@ def ExtensoToInteiro(extenso):
 
     resultado += grupoCorrente
 
-    print(resultado)
-
     return resultado
 
 # ExtensoToInteiro("trinta mil e um")
