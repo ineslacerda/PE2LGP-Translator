@@ -199,15 +199,20 @@ def preprocessar(f, freeling_values):
 	sub_frases_lemmas.append(lemmas[index:len(lemmas)])
 	sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:len(lemma_verdadeiro)])
 
-	f = re.split(string_delimiters, f)
-	for index, value in enumerate(delimiters):
-		f[index+1] = value + " " + f[index+1]
+	print(sub_frases_words)
+	frase = []
+	if delimiters:
+		frase = re.split(string_delimiters, f)
+		for index, value in enumerate(delimiters):
+			frase[index+1] = value + " " + frase[index+1]
+	else:
+		frase.append(f)
 
+	
 	frases = []
-
 	for index in range(0, len(sub_frases_words)):
 
-		dep_words, dep_tags, indices_filhos = dependencies_spacy(f[index], freeling_values)
+		dep_words, dep_tags, indices_filhos = dependencies_spacy(frase[index], freeling_values)
 
 		atualiza_tags(adv_quant, sub_frases_words[index], sub_frases_pred_tags[index], "RGQ")
 		atualiza_tags(adv_tempo_passado, sub_frases_words[index], sub_frases_pred_tags[index], "RGTP")
@@ -215,7 +220,7 @@ def preprocessar(f, freeling_values):
 		atualiza_tags(pronomes_int, sub_frases_words[index], sub_frases_pred_tags[index], "PT")
 		atualiza_tags(adv_int, sub_frases_words[index], sub_frases_pred_tags[index], "RGI")
 
-		frase_input = Frase_input(f[index])
+		frase_input = Frase_input(frase[index])
 
 		# for p in palavras_compostas:
 		# 	for k in indices_compostas:
@@ -243,7 +248,7 @@ def preprocessar(f, freeling_values):
 
 
 		# 3º identificar o tipo de frase
-		tipo = tipo_de_frase(sub_frases_pred_tags[index], f[index][-1])
+		tipo = tipo_de_frase(sub_frases_pred_tags[index], frase[index][-1])
 		frase_input.set_tipo(tipo)
 
 		pred_tags_antes = sub_frases_pred_tags[index].copy()
