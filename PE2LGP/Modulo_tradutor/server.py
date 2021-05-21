@@ -82,9 +82,12 @@ async def post_handler(request):
         print(translated_sentence)
     except IndexError as err:
         print('Error translating sentence')
+        translated_sentence = "Erro"
 
     try:
         response = json.dumps(translated_sentence, ensure_ascii=False) #create response
+        if translated_sentence == "Erro":
+                response = translated_sentence
     except:
         print('Error sending sentence')
     return web.Response(status=200, body=response)
