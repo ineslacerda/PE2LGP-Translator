@@ -371,7 +371,11 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 
 		# Adiciona a expressao negativa no verbo
 		if classe.startswith("VMI") and "NEG" in i.tipo[0] and lema in negativa_irregular:
-			exprFaciais[str(indice+counter) + "-" + str(indice+counter+1)] = "negativa_headshake"
+			key = str(indice+counter) + "-" + str(indice+counter+1)
+			if key in exprFaciais:
+				exprFaciais[key].append("negativa_headshake")
+			else:
+				exprFaciais[key] = ["negativa_headshake"]
 			i.traducao[indice] = "NÃO_" + lema.upper()
 			verbo_neg_irregular = True
 
@@ -380,13 +384,21 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		
 		if verbo_neg_irregular:
 			indice -= 1
+
 		if "INT" in i.tipo[0]:
+			key = str(indice+counter) + "-" + str(indice+counter+1)
 			#Adiciona a expressao da interrogativa parcial no adverbio
 			if (classe.startswith("PT") or classe.startswith("RGI")):
-				exprFaciais[str(indice+counter) + "-" + str(indice+counter+1)] = "interrogativa_parcial"
+				if key in exprFaciais:
+					exprFaciais[key].append("interrogativa_parcial")
+				else:
+					exprFaciais[key] = ["interrogativa_parcial"]
 			#Adiciona a expressao da interrogativa total no ultimo gesto da frase
 			elif indice==(len(i.traducao)-1):
-				exprFaciais[str(indice+counter) + "-" + str(indice+counter+1)] = "interrogativa_total"
+				if key in exprFaciais:
+					exprFaciais[key].append("interrogativa_total")
+				else:
+					exprFaciais[key] = ["interrogativa_total"]
 
 
 		# Adiciona a expressao negativa no gesto manual NÃO
@@ -405,7 +417,7 @@ def expressao_olhos_franzidos(tipo, traducao, indice, exprFaciais):
 	:return:
 	"""
 	if "INT" in tipo[0] or "NEG" in tipo[0]:
-		exprFaciais[str(indice) + "-" + str(indice+len(traducao))] = "olhos_franzidos"
+		exprFaciais[str(indice) + "-" + str(indice+len(traducao))] = ["olhos_franzidos"]
 		# traducao_glosas = "{" + traducao_glosas + "}(q)"
 
 	# return traducao_glosas

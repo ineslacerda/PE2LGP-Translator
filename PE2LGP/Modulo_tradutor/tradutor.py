@@ -518,6 +518,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			ord('Ʒ'): 'j',
 			ord('ɲ'): 'j',
 			ord('ɛ'): 'e',
+			ord('ə'): 'e',
 			ord('ɹ'): 'r',
 			ord('ɾ'): 'r',
 			ord('ʁ'): 'r',
@@ -609,6 +610,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "as crianças não gostam de ler mas não gostam de desenhar"
+# sentence = "não queres ir ao cinema comigo?"
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
