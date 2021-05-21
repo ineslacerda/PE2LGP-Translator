@@ -183,7 +183,7 @@ def preprocessar(f, freeling_values):
 	for m, i in enumerate(pred_tags):
 		if i.startswith("PE") and words[m].lower() in pronomes_int:
 			pred_tags[m] = "PT"
-		if i == "Fc" or i == "CC" or i == "CS" or i == "RG":
+		if i == "Fc" or i == "CC" or i == "CS":
 			sub_frases_words.append(words[index:m])
 			sub_frases_lemmas.append(lemmas[index:m])
 			sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:m])
