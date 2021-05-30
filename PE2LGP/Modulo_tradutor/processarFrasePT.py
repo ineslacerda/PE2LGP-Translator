@@ -199,6 +199,11 @@ def preprocessar(f, freeling_values):
 	sub_frases_lemmas.append(lemmas[index:len(lemmas)])
 	sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:len(lemma_verdadeiro)])
 
+	sub_frases_words = list(filter(None, sub_frases_words))
+	sub_frases_pred_tags = list(filter(None, sub_frases_pred_tags))
+	sub_frases_lemmas = list(filter(None, sub_frases_lemmas))
+	sub_frases_lemma_verdadeiro = list(filter(None, sub_frases_lemma_verdadeiro))
+
 	print(sub_frases_words)
 	frase = []
 	if delimiters:
@@ -207,6 +212,10 @@ def preprocessar(f, freeling_values):
 			frase[index+1] = value + " " + frase[index+1]
 	else:
 		frase.append(f)
+
+	frase = list(filter(None, frase))
+
+	print(frase)
 
 	
 	frases = []

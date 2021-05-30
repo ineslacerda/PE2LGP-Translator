@@ -52,6 +52,8 @@ def orden_neg_int(i, counter, exprFaciais, negativa_irregular):
 				indice = 0
 			if (classe.startswith("PT") or classe.startswith("RGI")) and "INT" in i.tipo[0]:
 				# valor = ("{"+valor[0] +"}(interrogativa)", "{"+valor[0] +"}(interrogativa)", valor[2])
+				print("valor")
+				print(valor)
 				i.traducao.append(valor)
 				del i.traducao[indice]
 				count += 1
@@ -345,10 +347,15 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 	:return:
 	"""
 	verbo_neg_irregular = False
-	for indice, valor in enumerate(i.traducao):
+	indice = 0
+	while indice < len(i.traducao):
+		valor = i.traducao[indice]
+	# for indice, valor in enumerate(i.traducao):
 		classe = valor[2]
 		lema = valor[1]
 		palavra = valor[0]
+
+		print(palavra)
 
 		if not classe.startswith("A") and not classe.startswith("NC"):
 			i.traducao[indice] = lema.upper()
@@ -379,11 +386,13 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 			i.traducao[indice] = "NÃO_" + lema.upper()
 			verbo_neg_irregular = True
 
+		# Remove a glosa NAO se for uma negativa irregular
 		if verbo_neg_irregular and classe.startswith("RN"):
 			del i.traducao[indice]
-		
-		if verbo_neg_irregular:
 			indice -= 1
+		
+		# if verbo_neg_irregular:
+		# 	counter -= 1
 
 		if "INT" in i.tipo[0]:
 			key = str(indice+counter) + "-" + str(indice+counter+1)
@@ -399,6 +408,8 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 					exprFaciais[key].append("interrogativa_total")
 				else:
 					exprFaciais[key] = ["interrogativa_total"]
+		
+		indice += 1
 
 
 		# Adiciona a expressao negativa no gesto manual NÃO
@@ -437,9 +448,6 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	#altera ordem determinantes, numerais e adverbios quantidade
 	ordena_dets_num_adverq(i.traducao)
 
-	#Verbos
-	tempo_verbal(i)
-
 	#nomes próprios
 	# nomes_proprios(i.traducao, i.palavras_compostas)
 
@@ -456,8 +464,17 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	#advérbio de negação e interrogativas parciais (pronomes e advérbios) para o fim da frase
 	orden_neg_int(i, counter, exprFaciais, negativa_irregular)
 
+	print(i.traducao)
+
+	#Verbos
+	tempo_verbal(i)
+
+	print(i.traducao)
+
 	# passar para glosas && adicionar expressão facial negativa e interrogativa
 	converte_glosas(i, counter, exprFaciais, negativa_irregular)
+
+	print(i.traducao)
 
 	# join das glosas da traducao
 	traducao_glosas = " ".join(i.traducao)
