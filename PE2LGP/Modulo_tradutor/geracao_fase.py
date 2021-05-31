@@ -385,6 +385,7 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 				exprFaciais[key] = ["negativa_headshake"]
 			i.traducao[indice] = "NÃO_" + lema.upper()
 			verbo_neg_irregular = True
+			i.traducao_palavras.append("NÃO")
 
 		# Remove a glosa NAO se for uma negativa irregular
 		if verbo_neg_irregular and classe.startswith("RN"):
@@ -408,6 +409,9 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 					exprFaciais[key].append("interrogativa_total")
 				else:
 					exprFaciais[key] = ["interrogativa_total"]
+		
+		if not (verbo_neg_irregular and classe.startswith("RN")):
+			i.traducao_palavras.append(palavra.upper().replace("_", " ").replace("-", " ").replace(" DE", ""))
 		
 		indice += 1
 
@@ -477,13 +481,13 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	print(i.traducao)
 
 	# join das glosas da traducao
-	traducao_glosas = " ".join(i.traducao)
+	# traducao_glosas = " ".join(i.traducao)
 
-	print(i.traducao)
+	# print(i.traducao)
 
-	traducao_glosas = traducao_glosas.split(" ")
+	# traducao_glosas = traducao_glosas.split(" ")
 
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
-	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
+	expressao_olhos_franzidos(i.tipo, i.traducao, counter, exprFaciais)
 
-	return traducao_glosas, exprFaciais
+	return i.traducao, exprFaciais, " ".join(i.traducao_palavras)

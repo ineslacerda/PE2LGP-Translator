@@ -388,6 +388,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 	exprFaciais = {}
 	# indice = 0
 	frase_lgp = []
+	mouthing = ""
 	for i in frases_input:
 		# fase de transferência lexical
 		transferencia_lexical(i, palavras_glosas, freq_dic)
@@ -500,17 +501,21 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 		print("--- %s ordenar elemento frásicoo ---" % (time.time() - start_time))
 		
 		#fase de geracao
-		f_lgp, exprFaciais = geracao(i, indice, exprFaciais, negativa_irregular)
+		f_lgp, exprFaciais, traducao_lgp = geracao(i, indice, exprFaciais, negativa_irregular)
 		indice += len(f_lgp)
 		frase_lgp += f_lgp
+		mouthing += traducao_lgp + " "
 
 		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
-	traducao_lgp = " ".join(frase_lgp)
+	# traducao_lgp = " ".join(frase_lgp)
 
 	print("frase_lgp")
-	print(traducao_lgp)
+	print(frase_lgp)
 
-	fonemas = phonemize(traducao_lgp, language="pt-pt", backend="espeak")
+	print("mouthinggg")
+	print(mouthing)
+
+	fonemas = phonemize(mouthing, language="pt-pt", backend="espeak")
 	print(fonemas)
 	table = {
 			ord('ɐ'): 'a',
@@ -610,6 +615,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "não queres ir ao cinema?" # tens uma caneca de bebé em casa
+# sentence = "no fim de semana, vamos ao cinema?" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

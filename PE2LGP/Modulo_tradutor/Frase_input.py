@@ -10,6 +10,7 @@ class Frase_input:
 		self.frase_sem_det = []
 
 		self.traducao = []
+		self.traducao_palavras = [] #para o mouthing --> faz-se a conjugação de verbos
 		self.palavras_compostas = {}
 		self.palavras = []
 		self.tipo = []
