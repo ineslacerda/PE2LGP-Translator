@@ -288,15 +288,13 @@ def feminino(traducao, excepcoes):
 
 def remove_prep(traducao):
 	indice = 0
-	count = 0
-	while indice < len(traducao)-count:
-		classe = traducao[indice][2]
-		lema = traducao[indice][1]
-		palavra = traducao[indice][0]
+	while indice < len(traducao):
+		valor = traducao[indice]
+		classe = valor[2]
 
 		if classe.startswith("SP"):
 			del traducao[indice]
-			count += 1
+			indice -= 1
 		indice +=1
 
 def remove_ser_estar(traducao):

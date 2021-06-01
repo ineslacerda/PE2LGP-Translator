@@ -615,6 +615,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "no fim de semana, vamos ao cinema?" # tens uma caneca de bebé em casa
+# sentence = "no aniversáio do meu primo, fomos andar de barco no rio Tejo e depois fomos ao zoo" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
