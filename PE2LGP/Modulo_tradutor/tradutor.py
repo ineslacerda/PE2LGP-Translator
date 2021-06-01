@@ -528,7 +528,9 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			ord('ɾ'): 'r',
 			ord('ʁ'): 'r',
 			ord('ʃ'): 's',
+			ord('Z'): 's',
 			ord('ɔ'): 'o',
+			ord('w'): 'u',
 			ord('ʊ'): 'u',
 			ord('ŋ'): 'n',
 		}
@@ -615,6 +617,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "no aniversáio do meu primo, fomos andar de barco no rio Tejo e depois fomos ao zoo" # tens uma caneca de bebé em casa
-# freeling_model, palavras_glosas, freq_dic = tradutor_main()
-# translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
+sentence = "no aniversáio do meu primo, fomos andar de barco e depois fomos ao zoo" # tens uma caneca de bebé em casa
+freeling_model, palavras_glosas, freq_dic = tradutor_main()
+translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
