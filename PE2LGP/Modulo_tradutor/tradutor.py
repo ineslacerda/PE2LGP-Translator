@@ -17,7 +17,8 @@ from freeling import load_freeling
 from phonemizer.phonemize import phonemize
 import unidecode
 import time
-# import pyphen
+# import pyphen --> silabas
+# epitran --> fonemas
 
 from separate_syllables import silabizer
 
@@ -383,7 +384,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 				# else:
 			#fase de análise
 			nova_frase = retira_cor_de(f, palavras_unidas)
-			frases_input = preprocessar(nova_frase, freeling_model)
+			frases_input += preprocessar(nova_frase, freeling_model)
 	print("--- %s fraseeesss ---" % (time.time() - start_time))
 	exprFaciais = {}
 	# indice = 0
@@ -617,6 +618,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-sentence = "no aniversáio do meu primo, fomos andar de barco e depois fomos ao zoo" # tens uma caneca de bebé em casa
-freeling_model, palavras_glosas, freq_dic = tradutor_main()
-translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
+# sentence = "qual é o barco? é aquele vermelho?" # tens uma caneca de bebé em casa
+# freeling_model, palavras_glosas, freq_dic = tradutor_main()
+# translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
