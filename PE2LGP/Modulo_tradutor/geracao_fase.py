@@ -400,13 +400,8 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 					exprFaciais[key].append("interrogativa_parcial")
 				else:
 					exprFaciais[key] = ["interrogativa_parcial"]
-			#Adiciona a expressao da interrogativa total no ultimo gesto da frase
-			elif classe.startswith("Fc") or classe.startswith("CC") or classe.startswith("CS"):
-				if str(indice+counter-1) + "-" + str(indice+counter) in exprFaciais:
-					exprFaciais[str(indice+counter-1) + "-" + str(indice+counter)].append("interrogativa_total")
-				else:
-					exprFaciais[str(indice+counter-1) + "-" + str(indice+counter)] = ["interrogativa_total"]
-			elif indice==(len(i.traducao)-1):
+			#Adiciona a expressao da interrogativa total na preposição e no ultimo gesto da frase
+			elif classe.startswith("Fc") or classe.startswith("CC") or classe.startswith("CS") or indice==(len(i.traducao)-1):
 				if key in exprFaciais:
 					exprFaciais[key].append("interrogativa_total")
 				else:
