@@ -298,8 +298,10 @@ def remove_prep(traducao):
 
 		if "de " in traducao[indice][1] or "para " in traducao[indice][1]:
 			traducao[indice] =  (valor[0], traducao[indice][1].replace("de ", "").replace("para ", ""), classe)
-
+		
 		if classe.startswith("SP"):
+			if traducao[indice+1][2].startswith("PP"):
+				traducao[indice+1] =  (traducao[indice+1][0], "d" + traducao[indice+1][1], traducao[indice+1][2])
 			del traducao[indice]
 			indice -= 1
 		indice +=1
@@ -417,9 +419,6 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		# if classe.startswith("RN") and "NEG" in i.tipo[0]:
 		# 	exprFaciais[str(indice+counter) + "-" + str(indice+counter+1)] = "negativa"
 
-	if "" in i.traducao:
-		i.traducao.remove('')
-
 def expressao_olhos_franzidos(tipo, traducao, indice, exprFaciais):
 	"""
 	Adiciona as expressões faciais em interrogativas globais.
@@ -487,4 +486,4 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
 	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
 
-	return traducao_glosas, exprFaciais, " ".join(i.traducao_palavras)
+	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras)
