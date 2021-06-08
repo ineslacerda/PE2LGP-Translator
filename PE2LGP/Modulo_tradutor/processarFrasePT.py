@@ -184,14 +184,18 @@ def preprocessar(f, freeling_values):
 		if i.startswith("PE") and words[m].lower() in pronomes_int:
 			pred_tags[m] = "PT"
 		# a estrutura das interrogativas tem que ser preservada
-		if (i == "Fc" or i == "CC" or i == "CS") and f[-1] != "?": #só separa em orações se não for uma interrogativa
+		if (i == "Fc" or i == "CC" or i == "CS" or i == "RG") and f[-1] != "?": #só separa em orações se não for uma interrogativa
 			sub_frases_words.append(words[index:m])
+			sub_frases_words.append([words[m]]) #adicionar conjunção em separado
 			sub_frases_lemmas.append(lemmas[index:m])
+			sub_frases_lemmas.append([lemmas[m]]) #adicionar conjunção em separado
 			sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:m])
+			sub_frases_lemma_verdadeiro.append([lemma_verdadeiro[m]]) #adicionar conjunção em separado
 			sub_frases_pred_tags.append(pred_tags[index:m])
-			index = m
+			sub_frases_pred_tags.append([pred_tags[m]]) #adicionar conjunção em separado
+			index = m + 1
 			delimiters.append(words[m])
-			string_delimiters += words[m] + " | "
+			string_delimiters += words[m] + " |"
 
 	string_delimiters = string_delimiters[0:len(string_delimiters)-2]
 
@@ -210,7 +214,8 @@ def preprocessar(f, freeling_values):
 	if f[-1] != "?" and delimiters:
 		frase = re.split(string_delimiters, f)
 		for index, value in enumerate(delimiters):
-			frase[index+1] = value + " " + frase[index+1]
+			frase.insert(index+1, value)
+			# frase[index+1] = value + " " + frase[index+1]
 	else:
 		frase.append(f)
 
