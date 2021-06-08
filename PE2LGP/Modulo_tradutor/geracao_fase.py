@@ -30,7 +30,7 @@ def ordena_dets_num_adverq(traducao):
 
 def orden_neg_int(i, counter, exprFaciais, negativa_irregular):
 	"""
-	Ordena elementos de negação e de interrogação e adiciona as expressões faciais.
+	Ordena elementos de negação e de interrogação.
 	:param i.traducao: frase
 	:return:
 	"""
@@ -292,6 +292,13 @@ def remove_prep(traducao):
 		valor = traducao[indice]
 		classe = valor[2]
 
+		# converte _ para - ex. fim_de_semana para fim de semana
+		if "_" in traducao[indice][1] or "-" in traducao[indice][1]:
+			traducao[indice] = (valor[0], traducao[indice][1].replace("_", " ").replace("-", " "), classe)
+
+		if "de " in traducao[indice][1] or "para " in traducao[indice][1]:
+			traducao[indice] =  (valor[0], traducao[indice][1].replace("de ", "").replace("para ", ""), classe)
+
 		if classe.startswith("SP"):
 			del traducao[indice]
 			indice -= 1
@@ -360,13 +367,7 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 
 		else:
 			i.traducao[indice] = palavra.upper()
-		# converte _ para - ex. fim_de_semana para fim-de-semana
-		if "_" in i.traducao[indice] or "-" in i.traducao[indice]:
-			i.traducao[indice] = i.traducao[indice].replace("_", " ").replace("-", " ")
 
-		if "DE" in i.traducao[indice].upper():
-			i.traducao[indice] = i.traducao[indice].replace(" DE", "")
-		
 		if classe.startswith("Z"):
 			try:
 				int(palavra)
@@ -390,9 +391,7 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 			del i.traducao[indice]
 			indice -= 1
 		
-		# if verbo_neg_irregular:
-		# 	counter -= 1
-
+		# Adicionar expressão da interrogativa
 		if "INT" in i.tipo[0]:
 			key = str(indice+counter) + "-" + str(indice+counter+1)
 			#Adiciona a expressao da interrogativa parcial no adverbio
@@ -402,6 +401,11 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 				else:
 					exprFaciais[key] = ["interrogativa_parcial"]
 			#Adiciona a expressao da interrogativa total no ultimo gesto da frase
+			elif classe.startswith("Fc") or classe.startswith("CC") or classe.startswith("CS"):
+				if str(indice+counter-1) + "-" + str(indice+counter) in exprFaciais:
+					exprFaciais[str(indice+counter-1) + "-" + str(indice+counter)].append("interrogativa_total")
+				else:
+					exprFaciais[str(indice+counter-1) + "-" + str(indice+counter)] = ["interrogativa_total"]
 			elif indice==(len(i.traducao)-1):
 				if key in exprFaciais:
 					exprFaciais[key].append("interrogativa_total")
@@ -463,7 +467,7 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	# transformar cliticos
 	cliticos(i.traducao)
 
-	#advérbio de negação e interrogativas parciais (pronomes e advérbios) para o fim da frase
+	#advérbio de negação e interrogativas parciais (pronomes e advérbios) para o fim da oração
 	orden_neg_int(i, counter, exprFaciais, negativa_irregular)
 
 	print(i.traducao)
@@ -479,13 +483,13 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	print(i.traducao)
 
 	# join das glosas da traducao
-	# traducao_glosas = " ".join(i.traducao)
+	traducao_glosas = " ".join(i.traducao)
 
 	# print(i.traducao)
 
-	# traducao_glosas = traducao_glosas.split(" ")
+	traducao_glosas = traducao_glosas.split(" ")
 
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
-	expressao_olhos_franzidos(i.tipo, i.traducao, counter, exprFaciais)
+	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
 
-	return i.traducao, exprFaciais, " ".join(i.traducao_palavras)
+	return traducao_glosas, exprFaciais, " ".join(i.traducao_palavras)

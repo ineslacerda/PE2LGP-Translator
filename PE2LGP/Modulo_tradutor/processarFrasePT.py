@@ -183,7 +183,8 @@ def preprocessar(f, freeling_values):
 	for m, i in enumerate(pred_tags):
 		if i.startswith("PE") and words[m].lower() in pronomes_int:
 			pred_tags[m] = "PT"
-		if i == "Fc" or i == "CC" or i == "CS":
+		# a estrutura das interrogativas tem que ser preservada
+		if (i == "Fc" or i == "CC" or i == "CS") and f[-1] != "?": #só separa em orações se não for uma interrogativa
 			sub_frases_words.append(words[index:m])
 			sub_frases_lemmas.append(lemmas[index:m])
 			sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:m])
@@ -206,7 +207,7 @@ def preprocessar(f, freeling_values):
 
 	print(sub_frases_words)
 	frase = []
-	if delimiters:
+	if f[-1] != "?" and delimiters:
 		frase = re.split(string_delimiters, f)
 		for index, value in enumerate(delimiters):
 			frase[index+1] = value + " " + frase[index+1]
