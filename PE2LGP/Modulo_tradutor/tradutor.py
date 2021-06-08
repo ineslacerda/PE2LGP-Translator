@@ -453,6 +453,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			else:
 				int_suj = False
 
+			estrutura = "osv" #default é o sov
+
 			if estrutura.startswith('svo'):
 				i.set_traducao(suj, i.traducao_regras_verbo, i.traducao_regras_obj)
 				ordena_palavras(i)
@@ -503,9 +505,10 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 		
 		#fase de geracao
 		f_lgp, exprFaciais, traducao_lgp = geracao(i, indice, exprFaciais, negativa_irregular)
-		indice += len(f_lgp)
-		frase_lgp += f_lgp
-		mouthing += traducao_lgp + " "
+		if f_lgp:
+			indice += len(f_lgp)
+			frase_lgp += f_lgp
+			mouthing += traducao_lgp + " "
 
 		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
 	# traducao_lgp = " ".join(frase_lgp)
@@ -618,6 +621,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "gostavas de ter uma banheira ou um chuveiro?" # tens uma caneca de bebé em casa
+# sentence = "nós vamos comer em casa e depois vamos à praia" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
