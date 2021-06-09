@@ -299,7 +299,7 @@ def remove_prep(traducao):
 		if "de " in traducao[indice][1] or "para " in traducao[indice][1]:
 			traducao[indice] =  (valor[0], traducao[indice][1].replace("de ", "").replace("para ", ""), classe)
 		
-		if classe.startswith("SP"):
+		if classe.startswith("SP") or classe.startswith("PR"):
 			if valor[1] == "de" and traducao[indice+1][2].startswith("PP"):
 				traducao[indice+1] =  ("d" + traducao[indice+1][0], "d" + traducao[indice+1][1], traducao[indice+1][2])
 			del traducao[indice]
