@@ -197,7 +197,7 @@ def preprocessar(f, freeling_values):
 				sub_frases_pred_tags.append([pred_tags[m]])
 
 			delimiters.append(words[m])
-			string_delimiters += words[m] + " |"
+			string_delimiters += words[m] + " | "
 
 			index = m + 1
 
@@ -217,9 +217,15 @@ def preprocessar(f, freeling_values):
 	frase = []
 	if f[-1] != "?" and delimiters:
 		frase = re.split(string_delimiters, f)
-		for index, value in enumerate(delimiters):
-			if value != ",":
-				frase.insert(index+1, value)
+		indice = 0
+		index = 0
+		while indice < len(frase)-1:
+			print(index)
+			if delimiters[index] != ",":
+				frase.insert(indice+1, delimiters[index])
+				indice += 1
+			indice += 1
+			index += 1
 			# frase[index+1] = value + " " + frase[index+1]
 	else:
 		frase.append(f)
