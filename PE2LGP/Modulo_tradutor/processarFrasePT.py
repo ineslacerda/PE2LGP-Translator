@@ -24,7 +24,7 @@ def retirar_determinante(pred_tags, words):
 	ind = []
 
 	for indx, val in enumerate(pred_tags):
-		if val.startswith("DA") or (val.startswith("DI") and (words[indx] == "um" or words[indx] == "uma")):
+		if val.startswith("DA") or (val.startswith("DI") and (words[indx].lower() == "um" or words[indx].lower() == "uma")):
 				ind.append(indx)
 
 	for i in sorted(ind, reverse=True) :
@@ -129,14 +129,11 @@ def atualiza_tags(adv_quant, words, pred_tags, sub):
 	"""
 	for adv in adv_quant:
 
-		advs = list(filter(lambda x: adv.lower().replace("_", "") == x[1].lower(), enumerate(words)))
+		advs = list(filter(lambda x: adv.lower() == x[1].lower(), enumerate(words)))
 		if advs and pred_tags[words.index(advs[0][1])].startswith("RG"):
 			pred_tags[words.index(advs[0][1])] = sub
 
 		if advs and pred_tags[words.index(advs[0][1])].startswith("PR"):
-			pred_tags[words.index(advs[0][1])] = sub
-
-		if advs and pred_tags[words.index(advs[0][1])].startswith("RG"):
 			pred_tags[words.index(advs[0][1])] = sub
 
 
@@ -158,8 +155,13 @@ def preprocessar(f, freeling_values):
 	# 2º constituintes com Freeling
 	words, lemmas, lemma_verdadeiro, pred_tags = freeling.main(f, freeling_values)
 
+	print("words")
 	print(words)
-
+	print("lemmas")
+	print(lemmas)
+	print("lemma_verdadeiro")
+	print(lemma_verdadeiro)
+	print("pred_tags")
 	print(pred_tags)
 
 	# palavras_compostas, indices_compostas = palavra_composta(words)
@@ -167,9 +169,22 @@ def preprocessar(f, freeling_values):
 
 	adv_quant = ["muito", "muitos", "muita", "muitas", "menos", "tanto", "pouco", "pouca", "demasiado", "bastante", "apenas", "mais", "tanto"]
 	adv_tempo_passado = ['ontem', 'outrora', 'dantes', 'antigamente', 'antes', 'já', 'hoje_de_manhã']
-	adv_tempo_futuro = ['logo', 'amanhã', 'doravante','em breve']
+	adv_tempo_futuro = ['logo', 'amanhã', 'doravante','em_breve']
 	adv_int = ["onde", "quando", "como", "porque"]
 	pronomes_int = ["qual", "quais", "quantos", "quantas", "quanto", "porquê", "quem"]
+	adv_neg = ["nunca"]
+
+	atualiza_tags(adv_quant, words, pred_tags, "RGQ")
+	atualiza_tags(adv_tempo_passado, words, pred_tags, "RGTP")
+	atualiza_tags(adv_tempo_futuro, words, pred_tags, "RGTF")
+	if f[-1] == "?": #atualiza pronomes/advérbios interrogativos se for uma interrogativa
+		atualiza_tags(pronomes_int, words, pred_tags, "PT")
+		atualiza_tags(adv_int, words, pred_tags, "RGI")
+	atualiza_tags(adv_neg, words, pred_tags, "NEGA")
+
+	print(words)
+
+	print(pred_tags)
 
 	sub_frases_words = []
 	sub_frases_lemmas = []
@@ -183,6 +198,14 @@ def preprocessar(f, freeling_values):
 	for m, i in enumerate(pred_tags):
 		if i.startswith("PE") and words[m].lower() in pronomes_int:
 			pred_tags[m] = "PT"
+
+		# adverbio de negação --> ainda não
+		if i == "RG" and pred_tags[m+1] == "RN":
+			pred_tags[m] = "NEGA"
+			words[m] = "ainda_não"
+			lemmas[m] = "ainda_não"
+			lemma_verdadeiro[m] = "ainda_não"
+			i = "NEGA"
 		# a estrutura das interrogativas tem que ser preservada
 		if (i == "Fc" or i == "CC" or i == "CS" or i == "RG") and f[-1] != "?": #só separa em orações se não for uma interrogativa
 			sub_frases_words.append(words[index:m])
@@ -215,7 +238,7 @@ def preprocessar(f, freeling_values):
 
 	print(sub_frases_words)
 	frase = []
-	if f[-1] != "?" and delimiters:
+	if f[-1] != "?" and delimiters: # só divide em orações se frase não for interrogativa
 		frase = re.split(string_delimiters, f)
 		indice = 0
 		index = 0
@@ -239,12 +262,6 @@ def preprocessar(f, freeling_values):
 	for index in range(0, len(sub_frases_words)):
 
 		dep_words, dep_tags, indices_filhos = dependencies_spacy(frase[index], freeling_values)
-
-		atualiza_tags(adv_quant, sub_frases_words[index], sub_frases_pred_tags[index], "RGQ")
-		atualiza_tags(adv_tempo_passado, sub_frases_words[index], sub_frases_pred_tags[index], "RGTP")
-		atualiza_tags(adv_tempo_futuro, sub_frases_words[index], sub_frases_pred_tags[index], "RGTF")
-		atualiza_tags(pronomes_int, sub_frases_words[index], sub_frases_pred_tags[index], "PT")
-		atualiza_tags(adv_int, sub_frases_words[index], sub_frases_pred_tags[index], "RGI")
 
 		frase_input = Frase_input(frase[index])
 
@@ -285,7 +302,6 @@ def preprocessar(f, freeling_values):
 
 		atualiza_listas(dep_words, ind_eliminado)
 		atualiza_listas(dependency_pt, ind_eliminado)
-
 		frase_input.set_palavras(dep_words)
 		frase_input.set_frase_sem_det(dep_words, sub_frases_lemmas[index], pred_tags_antes)
 		frase_input.set_frase_sem_det_lemmas_verd(dep_words, lemma_verdadeiro, pred_tags_antes)

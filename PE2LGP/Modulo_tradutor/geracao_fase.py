@@ -38,25 +38,22 @@ def orden_neg_int(i, counter, exprFaciais, negativa_irregular):
 	indice = 0
 
 
-	while indice < len(i.traducao):
+	while indice < len(i.traducao) - count:
 		valor = i.traducao[indice]
 		classe = valor[2]
-		if indice < len(i.traducao) - count:
-			if classe.startswith("RN"): # adds "Não" at the end
-				# valor = ("{"+valor[0] +"}(negativa)", "{"+valor[0] +"}(negativa)", valor[2])
-				# indice_verbo = i.indices_verbo[0]-1
-				# if i.traducao[indice_verbo][1] not in negativa_irregular:
-				i.traducao.append(valor)
-				del i.traducao[indice]
-				count += 1
-				indice = 0
-			if (classe.startswith("PT") or classe.startswith("RGI")) and "INT" in i.tipo[0]:
-				# valor = ("{"+valor[0] +"}(interrogativa)", "{"+valor[0] +"}(interrogativa)", valor[2])
-				print("valor")
-				print(valor)
-				i.traducao.append(valor)
-				del i.traducao[indice]
-				count += 1
+		if classe.startswith("RN") or classe.startswith("NEGA"): # adds "Não" at the end
+			# valor = ("{"+valor[0] +"}(negativa)", "{"+valor[0] +"}(negativa)", valor[2])
+			# indice_verbo = i.indices_verbo[0]-1
+			# if i.traducao[indice_verbo][1] not in negativa_irregular:
+			i.traducao.append(valor)
+			del i.traducao[indice]
+			count += 1
+			indice = -1
+		if (classe.startswith("PT") or classe.startswith("RGI")) and "INT" in i.tipo[0]:
+			# valor = ("{"+valor[0] +"}(interrogativa)", "{"+valor[0] +"}(interrogativa)", valor[2])
+			i.traducao.append(valor)
+			del i.traducao[indice]
+			count += 1
 		indice += 1
 
 
@@ -354,6 +351,7 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 	:return:
 	"""
 	verbo_neg_irregular = False
+	adverbio_negacao =  False
 	indice = 0
 	while indice < len(i.traducao):
 		valor = i.traducao[indice]
@@ -376,20 +374,27 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 			except ValueError:
 				# Transforma numeros por exenso sem ser por extenso
 				i.traducao[indice] = str(ExtensoToInteiro(palavra))
-
-		# Adiciona a expressao negativa no verbo
-		if classe.startswith("VMI") and "NEG" in i.tipo[0] and lema in negativa_irregular:
+	
+		# Adiciona a expressao negativa
+		if "NEG" in i.tipo[0]:
 			key = str(indice+counter) + "-" + str(indice+counter+1)
 			if key in exprFaciais:
 				exprFaciais[key].append("negativa_headshake")
 			else:
 				exprFaciais[key] = ["negativa_headshake"]
-			i.traducao[indice] = "NÃO_" + lema.upper()
-			verbo_neg_irregular = True
-			i.traducao_palavras.append("NÃO")
+				
+			# Adiciona a expressao negativa no verbo se for negação irregular
+			if classe.startswith("VMI") and lema in negativa_irregular:
+				i.traducao[indice] = "NÃO_" + lema.upper()
+				verbo_neg_irregular = True
+				i.traducao_palavras.append("NÃO")
+			# Adicionar expressão no adverbio de negação
+			if classe.startswith("NEGA"):
+				i.traducao[indice] = lema.replace(" ", "_").upper()
+				adverbio_negacao = True	
 
-		# Remove a glosa NAO se for uma negativa irregular
-		if verbo_neg_irregular and classe.startswith("RN"):
+		# Remove a glosa NAO se for uma negativa irregular or um advérbio de negação
+		if (verbo_neg_irregular or adverbio_negacao) and classe.startswith("RN"):
 			del i.traducao[indice]
 			indice -= 1
 		
