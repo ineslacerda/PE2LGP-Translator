@@ -378,18 +378,22 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		# Adiciona a expressao negativa
 		if "NEG" in i.tipo[0]:
 			key = str(indice+counter) + "-" + str(indice+counter+1)
-			if key in exprFaciais:
-				exprFaciais[key].append("negativa_headshake")
-			else:
-				exprFaciais[key] = ["negativa_headshake"]
 				
 			# Adiciona a expressao negativa no verbo se for negação irregular
 			if classe.startswith("VMI") and lema in negativa_irregular:
+				if key in exprFaciais:
+					exprFaciais[key].append("negativa_headshake")
+				else:
+					exprFaciais[key] = ["negativa_headshake"]
 				i.traducao[indice] = "NÃO_" + lema.upper()
 				verbo_neg_irregular = True
 				i.traducao_palavras.append("NÃO")
 			# Adicionar expressão no adverbio de negação
 			if classe.startswith("NEGA"):
+				if key in exprFaciais:
+					exprFaciais[key].append("negativa_headshake")
+				else:
+					exprFaciais[key] = ["negativa_headshake"]
 				i.traducao[indice] = lema.replace(" ", "_").upper()
 				adverbio_negacao = True	
 

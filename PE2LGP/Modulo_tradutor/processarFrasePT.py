@@ -220,7 +220,7 @@ def preprocessar(f, freeling_values):
 				sub_frases_pred_tags.append([pred_tags[m]])
 
 			delimiters.append(words[m])
-			string_delimiters += words[m] + " | "
+			string_delimiters += words[m] + " |"
 
 			index = m + 1
 
