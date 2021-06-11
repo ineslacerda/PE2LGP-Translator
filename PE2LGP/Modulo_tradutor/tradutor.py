@@ -420,7 +420,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			map_valor_suj = map_bijecao(suj_pt, i.classes_antes_suj)
 			traducao_ordenado_suj = list(map(lambda x: map_valor_suj[x], suj_lgp))
 			i.set_traducao_regras_suj(traducao_ordenado_suj)
-
+		
 		if dist_obj_mod:
 
 			mod_pt, mod_lgp = escolher_regra_melhor(i, sim_mod, dist_obj_mod, i.classes_outro, freq_mod)
@@ -500,6 +500,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 				else:
 					i.set_traducao(suj, i.traducao_regras_obj, i.traducao_regras_verbo)
 				ordena_palavras(i)
+		
 		print(i.traducao)
 		print("--- %s ordenar elemento frásicoo ---" % (time.time() - start_time))
 		
@@ -621,6 +622,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Um rapaz surdo estava a andar pelo supermercado quando chocou com uma rapariga e depois caiu no chão" # tens uma caneca de bebé em casa
+# sentence = "O meu irmão surdo estava a conduzir quando viu uma curva perigosa e depois chocou contra uma parede." # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

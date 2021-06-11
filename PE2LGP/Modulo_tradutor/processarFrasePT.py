@@ -137,12 +137,12 @@ def atualiza_tags(adv_quant, words, pred_tags, sub):
 			pred_tags[words.index(advs[0][1])] = sub
 
 
-def obj_verb_transitivo(pred_tags, dep_tags):
+def obj_verb_transitivo(pred_tags, dep_tags, words):
 	verbs = list(filter(lambda x: pred_tags[x[0]].startswith("V") and dep_tags[x[0]] == "ROOT" and dep_tags[x[0]+1] == "case", enumerate(dep_tags)))
 
 	objs_verbs_trans = {}
 	for verb in verbs:
-		objs_verbs_trans[str(verb[0]+3)] = dep_tags[verb[0]+3]
+		objs_verbs_trans[str(words[verb[0]+3])] = dep_tags[verb[0]+3]
 
 	return objs_verbs_trans
 
@@ -282,10 +282,19 @@ def preprocessar(f, freeling_values):
 		atualiza_listas(sub_frases_words[index], indx_remo)
 
 		# Guarda indice do objecto de um verbo transitivo
-		frase_input.obj_verb_trans = obj_verb_transitivo(sub_frases_pred_tags[index], dep_tags)
+		frase_input.obj_verb_trans = obj_verb_transitivo(sub_frases_pred_tags[index], dep_tags, dep_words)
 
 		# modifica dep_tags
 		dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
+
+		print("dep_words")
+		print(dep_words)
+
+		print("dep_tags")
+		print(dep_tags)
+
+		print("dependencies_tags")
+		print(dependencies_tags)
 
 		frase_input.set_dep_tags(dependencies_tags)
 

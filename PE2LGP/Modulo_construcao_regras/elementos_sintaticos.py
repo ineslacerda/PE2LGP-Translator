@@ -174,6 +174,12 @@ def set_elementos(dependencies_tags, pred_tags, dep_words, frase):
 			frase.set_classes_v(pred_tags[i])
 			frase.set_classes_antes_v(dep_words[i], pred_tags[i])
 			frase.set_indices_verbo(i)
+
+		# Verbo auxiliar --> "estava a conduzir"
+		if d == "xcomp" and pred_tags[i].startswith("V"):
+			frase.set_classes_v(pred_tags[i])
+			frase.set_classes_antes_v(dep_words[i], pred_tags[i])
+			frase.set_indices_verbo(i)
 		
 		if d == "amod" and "ROOT" in dependencies_tags and pred_tags[i].startswith("V"):
 			frase.set_indices_verbo(i)
