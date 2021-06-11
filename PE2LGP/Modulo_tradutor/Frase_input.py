@@ -18,6 +18,7 @@ class Frase_input:
 		self.classes_sem_tipo = []
 		self.classes_antes = []
 
+		self.obj_verb_trans = []
 		self.indices_obj = []
 		self.indices_suj = []
 		self.indices_verbo = []

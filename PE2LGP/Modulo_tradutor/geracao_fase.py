@@ -64,8 +64,9 @@ def tempo_verbal(i):
 	:return:
 	"""
 	pronomes = {"1S": "eu", "2S": "tu", "3S": "ele", "1P": "nós", "2P": "vós", "3P": "eles"}
-	indice_tempo = list(filter(lambda x: x[1][2] == "RGTP" or x[1][2] == "RGTF", enumerate(i.traducao)))
+	indice_tempo = list(filter(lambda x: x[1][2] == "RGT" or x[1][2] == "RGTP" or x[1][2] == "RGTF", enumerate(i.traducao)))
 
+	# Adiciona tempo verbal no início da frase
 	if indice_tempo:
 		temp = i.traducao[indice_tempo[0][0]]
 		del i.traducao[indice_tempo[0][0]]
@@ -75,6 +76,10 @@ def tempo_verbal(i):
 	for indice, valor in enumerate(i.traducao):
 		classe = valor[2]
 		if classe.startswith("V"):
+			if i.obj_verb_trans and valor[1].lower() == "chocar":
+				index = list(i.obj_verb_trans.keys())[0]
+				if i.obj_verb_trans[index] == "obl" or i.traducao[index][2].startswith("NP"):
+					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_pessoa", classe)
 			# if indice==0 or indice > 0 and not (i.traducao[indice-1][2].startswith("PP") or i.traducao[indice-1][2].startswith("NC")): # or traducao[indice-1][2].startswith("NC")
 			if not i.classes_suj:
 				pronome = classe[4] + classe[5]

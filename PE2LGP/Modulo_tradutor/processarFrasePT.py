@@ -137,6 +137,16 @@ def atualiza_tags(adv_quant, words, pred_tags, sub):
 			pred_tags[words.index(advs[0][1])] = sub
 
 
+def obj_verb_transitivo(pred_tags, dep_tags):
+	verbs = list(filter(lambda x: pred_tags[x[0]].startswith("V") and dep_tags[x[0]] == "ROOT" and dep_tags[x[0]+1] == "case", enumerate(dep_tags)))
+
+	objs_verbs_trans = {}
+	for verb in verbs:
+		objs_verbs_trans[str(verb[0]+3)] = dep_tags[verb[0]+3]
+
+	return objs_verbs_trans
+
+
 def preprocessar(f, freeling_values):
 	"""
 	Realiza a análise sintática e morfossintática da frase em português.
@@ -168,6 +178,7 @@ def preprocessar(f, freeling_values):
 
 
 	adv_quant = ["muito", "muitos", "muita", "muitas", "menos", "tanto", "pouco", "pouca", "demasiado", "bastante", "apenas", "mais", "tanto"]
+	adv_temporal = ["fim_de_semana"]
 	adv_tempo_passado = ['ontem', 'outrora', 'dantes', 'antigamente', 'antes', 'já', 'hoje_de_manhã']
 	adv_tempo_futuro = ['logo', 'amanhã', 'doravante','em_breve']
 	adv_int = ["onde", "quando", "como", "porque"]
@@ -175,6 +186,7 @@ def preprocessar(f, freeling_values):
 	adv_neg = ["nunca"]
 
 	atualiza_tags(adv_quant, words, pred_tags, "RGQ")
+	atualiza_tags(adv_temporal, words, pred_tags, "RGT")
 	atualiza_tags(adv_tempo_passado, words, pred_tags, "RGTP")
 	atualiza_tags(adv_tempo_futuro, words, pred_tags, "RGTF")
 	if f[-1] == "?": #atualiza pronomes/advérbios interrogativos se for uma interrogativa
@@ -220,11 +232,14 @@ def preprocessar(f, freeling_values):
 				sub_frases_pred_tags.append([pred_tags[m]])
 
 			delimiters.append(words[m])
-			string_delimiters += words[m] + " |"
+			if m == index:	
+				string_delimiters += words[m] + " |"
+			else:
+				string_delimiters += " " + words[m] + " |"
 
 			index = m + 1
 
-	string_delimiters = string_delimiters[0:len(string_delimiters)-2]
+	string_delimiters = string_delimiters[0:len(string_delimiters)-1]
 
 	sub_frases_words.append(words[index:len(words)])
 	sub_frases_pred_tags.append(pred_tags[index:len(words)])
@@ -238,8 +253,10 @@ def preprocessar(f, freeling_values):
 
 	print(sub_frases_words)
 	frase = []
+	print(string_delimiters)
 	if f[-1] != "?" and delimiters: # só divide em orações se frase não for interrogativa
 		frase = re.split(string_delimiters, f)
+		print(frase)
 		indice = 0
 		index = 0
 		while indice < len(frase)-1:
@@ -261,9 +278,18 @@ def preprocessar(f, freeling_values):
 	frases = []
 	for index in range(0, len(sub_frases_words)):
 
+		print(sub_frases_words[index])
+
 		dep_words, dep_tags, indices_filhos = dependencies_spacy(frase[index], freeling_values)
 
+		print("dependency tagsss")
+		print(dep_words)
+		print(dep_tags)
+		print(indices_filhos)
+
 		frase_input = Frase_input(frase[index])
+
+		#verb_trans_obj
 
 		# for p in palavras_compostas:
 		# 	for k in indices_compostas:
@@ -271,9 +297,13 @@ def preprocessar(f, freeling_values):
 
 		sub_frases_pred_tags[index], indx_remo = retirar_pontuacao(sub_frases_pred_tags[index])
 
-		dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
-
 		atualiza_listas(sub_frases_words[index], indx_remo)
+
+		# Guarda indice do objecto de um verbo transitivo
+		frase_input.obj_verb_trans = obj_verb_transitivo(sub_frases_pred_tags[index], dep_tags)
+
+		# modifica dep_tags
+		dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
 
 		frase_input.set_dep_tags(dependencies_tags)
 
@@ -288,7 +318,6 @@ def preprocessar(f, freeling_values):
 		atualiza_listas(sub_frases_lemma_verdadeiro[index], ind_eliminado)
 
 		frase_input.set_lemma_verdade_sem_det(sub_frases_lemma_verdadeiro[index])
-
 
 		# 3º identificar o tipo de frase
 		tipo = tipo_de_frase(sub_frases_pred_tags[index], frase[index][-1])
