@@ -167,10 +167,6 @@ def preprocessar(f, freeling_values):
 
 	print("words")
 	print(words)
-	print("lemmas")
-	print(lemmas)
-	print("lemma_verdadeiro")
-	print(lemma_verdadeiro)
 	print("pred_tags")
 	print(pred_tags)
 
@@ -193,10 +189,6 @@ def preprocessar(f, freeling_values):
 		atualiza_tags(pronomes_int, words, pred_tags, "PT")
 		atualiza_tags(adv_int, words, pred_tags, "RGI")
 	atualiza_tags(adv_neg, words, pred_tags, "NEGA")
-
-	print(words)
-
-	print(pred_tags)
 
 	sub_frases_words = []
 	sub_frases_lemmas = []
@@ -253,14 +245,11 @@ def preprocessar(f, freeling_values):
 
 	print(sub_frases_words)
 	frase = []
-	print(string_delimiters)
 	if f[-1] != "?" and delimiters: # só divide em orações se frase não for interrogativa
 		frase = re.split(string_delimiters, f)
-		print(frase)
 		indice = 0
 		index = 0
 		while indice < len(frase)-1:
-			print(index)
 			if delimiters[index] != ",":
 				frase.insert(indice+1, delimiters[index])
 				indice += 1
@@ -278,14 +267,7 @@ def preprocessar(f, freeling_values):
 	frases = []
 	for index in range(0, len(sub_frases_words)):
 
-		print(sub_frases_words[index])
-
 		dep_words, dep_tags, indices_filhos = dependencies_spacy(frase[index], freeling_values)
-
-		print("dependency tagsss")
-		print(dep_words)
-		print(dep_tags)
-		print(indices_filhos)
 
 		frase_input = Frase_input(frase[index])
 
