@@ -174,7 +174,7 @@ def preprocessar(f, freeling_values):
 
 
 	adv_quant = ["muito", "muitos", "muita", "muitas", "menos", "tanto", "pouco", "pouca", "demasiado", "bastante", "apenas", "mais", "tanto"]
-	adv_temporal = ["fim_de_semana"]
+	adv_temporal = ["fim_de_semana", "quando", "enquanto"]
 	adv_tempo_passado = ['ontem', 'outrora', 'dantes', 'antigamente', 'antes', 'já', 'hoje_de_manhã']
 	adv_tempo_futuro = ['logo', 'amanhã', 'doravante','em_breve']
 	adv_int = ["onde", "quando", "como", "porque"]
@@ -204,14 +204,15 @@ def preprocessar(f, freeling_values):
 			pred_tags[m] = "PT"
 
 		# adverbio de negação --> ainda não
-		if i == "RG" and pred_tags[m+1] == "RN":
+		if i == "RG" and len(pred_tags) > m+1 and pred_tags[m+1] == "RN":
 			pred_tags[m] = "NEGA"
 			words[m] = "ainda_não"
 			lemmas[m] = "ainda_não"
 			lemma_verdadeiro[m] = "ainda_não"
 			i = "NEGA"
 		# a estrutura das interrogativas tem que ser preservada
-		if (i == "Fc" or i == "CC" or i == "CS" or i == "RG") and f[-1] != "?": #só separa em orações se não for uma interrogativa
+		# i == "CS"  --> not sure if needed
+		if (i == "Fc" or i == "CC" or i == "RGT") and f[-1] != "?": #só separa em orações se não for uma interrogativa
 			sub_frases_words.append(words[index:m])
 			sub_frases_lemmas.append(lemmas[index:m])
 			sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:m])
@@ -281,8 +282,15 @@ def preprocessar(f, freeling_values):
 
 		atualiza_listas(sub_frases_words[index], indx_remo)
 
+		print("dep_words")
+		print(dep_words)
+
+		print("dep_tags")
+		print(dep_tags)
+
 		# Guarda indice do objecto de um verbo transitivo
-		frase_input.obj_verb_trans = obj_verb_transitivo(sub_frases_pred_tags[index], dep_tags, dep_words)
+		if len(dep_tags) >= 4:
+			frase_input.obj_verb_trans = obj_verb_transitivo(sub_frases_pred_tags[index], dep_tags, dep_words)
 
 		# modifica dep_tags
 		dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
