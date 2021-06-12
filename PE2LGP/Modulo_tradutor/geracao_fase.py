@@ -179,14 +179,14 @@ def feminino(traducao, excepcoes):
 					if classe.endswith("D"):
 						if classe.startswith("NCFP") and palavra[:-5].lower() != lema[:-1].lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (glosa, lema, "A"))
+							traducao.insert(indice, (palavra, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
 
 						elif classe.startswith("NCFS") and palavra[:-4].lower() != lema[:-1].lower():
 							glosa = "MULHER"
-							traducao.insert(indice,(glosa, lema, "A"))
+							traducao.insert(indice,(palavra, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
@@ -220,14 +220,14 @@ def feminino(traducao, excepcoes):
 					elif classe.endswith("A"):
 						if classe.startswith("NCFP") and palavra[:-5].lower() != lema[:-1].lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (glosa, lema, "A"))
+							traducao.insert(indice, (palavra, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
 
 						elif classe.startswith("NCFS") and palavra[:-4].lower() != lema[:-1].lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (glosa, lema, "A"))
+							traducao.insert(indice, (palavra, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
@@ -246,12 +246,12 @@ def feminino(traducao, excepcoes):
 					else:
 						if classe.startswith("NCFP") and palavra[:-1].lower() != lema.lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (glosa, lema, "A"))
+							traducao.insert(indice, (palavra, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							indice += 1
 						elif classe.startswith("NCFS") and palavra.lower() != lema.lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (glosa, lema, "A"))
+							traducao.insert(indice, (palavra, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							indice += 1
 
@@ -260,7 +260,7 @@ def feminino(traducao, excepcoes):
 					if classe.endswith("D"):
 						diminutivo = "PEQUENO"
 						if "mulher" in excepcoes[palavra].split():
-							traducao.insert(indice, ("mulher", lema, "A"))
+							traducao.insert(indice, (palavra, "MULHER", "A"))
 							traducao[indice + 1] = (excepcoes[palavra].split()[1], lema, classe)
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
@@ -273,7 +273,7 @@ def feminino(traducao, excepcoes):
 					elif classe.endswith("A"):
 						if "mulher" in excepcoes[palavra].split():
 
-							traducao.insert(indice, ("mulher", lema, "A"))
+							traducao.insert(indice, (palavra, "MULHER", "A"))
 							traducao[indice + 1] = (excepcoes[palavra].split()[1], lema, classe)
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
@@ -367,11 +367,13 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		lema = valor[1]
 		palavra = valor[0]
 
-		if not classe.startswith("A") and not classe.startswith("NC"):
-			i.traducao[indice] = lema.upper()
+		i.traducao[indice] = lema.upper()
 
-		else:
-			i.traducao[indice] = palavra.upper()
+		# if not classe.startswith("A") and not classe.startswith("NC"):
+		# 	i.traducao[indice] = lema.upper()
+
+		# else:
+		# 	i.traducao[indice] = palavra.upper()
 
 		if classe.startswith("Z"):
 			try:
