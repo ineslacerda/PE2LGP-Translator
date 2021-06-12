@@ -562,12 +562,9 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 	# print(syllables)
 
-	dictionary = {'glosas': frase_lgp, 'fonemas': visemas} #  'fonemas': fonemas
+	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos} #  'fonemas': fonemas
 	if exprFaciais:
 		dictionary['exprFaciais'] = exprFaciais
-
-	if True in gestos_compostos:
-		dictionary['gestos_compostos'] = gestos_compostos
 
 	print("--- %s dicionario ---" % (time.time() - start_time))
 
