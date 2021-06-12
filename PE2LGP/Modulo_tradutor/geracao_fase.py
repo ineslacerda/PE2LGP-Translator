@@ -79,9 +79,9 @@ def tempo_verbal(i):
 			if i.obj_verb_trans and valor[1].lower() == "chocar":
 				index = list(i.obj_verb_trans.keys())[0]
 				if i.obj_verb_trans[index] == "obl":
-					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_pessoa", classe)
+					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_com_pessoa", classe)
 				elif i.obj_verb_trans[index] == "obj" and index.lower() == "parede":
-					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_parede", classe)
+					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_com_parede", classe)
 			# if indice==0 or indice > 0 and not (i.traducao[indice-1][2].startswith("PP") or i.traducao[indice-1][2].startswith("NC")): # or traducao[indice-1][2].startswith("NC")
 			if not i.classes_suj:
 				pronome = classe[4] + classe[5]
