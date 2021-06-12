@@ -147,7 +147,7 @@ def obj_verb_transitivo(pred_tags, dep_tags, words):
 	return objs_verbs_trans
 
 
-def preprocessar(f, freeling_values):
+def preprocessar(f, freeling_values, frase_indice):
 	"""
 	Realiza a análise sintática e morfossintática da frase em português.
 	:param f: string, frase em português.
@@ -190,6 +190,11 @@ def preprocessar(f, freeling_values):
 		atualiza_tags(adv_int, words, pred_tags, "RGI")
 	atualiza_tags(adv_neg, words, pred_tags, "NEGA")
 
+	print("words")
+	print(words)
+	print("pred_tags")
+	print(pred_tags)
+
 	sub_frases_words = []
 	sub_frases_lemmas = []
 	sub_frases_lemma_verdadeiro = []
@@ -213,7 +218,11 @@ def preprocessar(f, freeling_values):
 		# a estrutura das interrogativas tem que ser preservada
 		# i == "CS"  --> not sure if needed
 		if (i == "Fc" or i == "CC" or i == "RGT"): #só separa em orações se houver verbo
-			verbs = list(filter(lambda x: pred_tags[x[0]].startswith("V"), enumerate(pred_tags[index:m])))
+			pred_tags_aux = pred_tags[m:len(pred_tags)]
+			verbs = list(filter(lambda x: pred_tags_aux[x[0]].startswith("V"), enumerate(pred_tags_aux)))
+
+			print("verbsss")
+			print(verbs)
 			if verbs:
 				sub_frases_words.append(words[index:m])
 				sub_frases_lemmas.append(lemmas[index:m])
@@ -236,21 +245,21 @@ def preprocessar(f, freeling_values):
 
 	string_delimiters = string_delimiters[0:len(string_delimiters)-1]
 
-	verbs = list(filter(lambda x: pred_tags[x[0]].startswith("V"), enumerate(pred_tags[index:len(pred_tags)])))
-	if verbs:
-		sub_frases_words.append(words[index:len(words)])
-		sub_frases_pred_tags.append(pred_tags[index:len(pred_tags)])
-		sub_frases_lemmas.append(lemmas[index:len(lemmas)])
-		sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:len(lemma_verdadeiro)])
+	# verbs = list(filter(lambda x: pred_tags[x[0]].startswith("V"), enumerate(pred_tags[index:len(pred_tags)])))
+	# if verbs:
+	sub_frases_words.append(words[index:len(words)])
+	sub_frases_pred_tags.append(pred_tags[index:len(pred_tags)])
+	sub_frases_lemmas.append(lemmas[index:len(lemmas)])
+	sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:len(lemma_verdadeiro)])
 
-		sub_frases_words = list(filter(None, sub_frases_words))
-		sub_frases_pred_tags = list(filter(None, sub_frases_pred_tags))
-		sub_frases_lemmas = list(filter(None, sub_frases_lemmas))
-		sub_frases_lemma_verdadeiro = list(filter(None, sub_frases_lemma_verdadeiro))
+	sub_frases_words = list(filter(None, sub_frases_words))
+	sub_frases_pred_tags = list(filter(None, sub_frases_pred_tags))
+	sub_frases_lemmas = list(filter(None, sub_frases_lemmas))
+	sub_frases_lemma_verdadeiro = list(filter(None, sub_frases_lemma_verdadeiro))
 
 	print(sub_frases_words)
 	frase = []
-	if f[-1] != "?" and delimiters: # só divide em orações se frase não for interrogativa
+	if delimiters:
 		frase = re.split(string_delimiters, f)
 		indice = 0
 		index = 0
@@ -275,6 +284,8 @@ def preprocessar(f, freeling_values):
 		dep_words, dep_tags, indices_filhos = dependencies_spacy(frase[index], freeling_values)
 
 		frase_input = Frase_input(frase[index])
+
+		frase_input.frase_indice = frase_indice
 
 		#verb_trans_obj
 

@@ -384,15 +384,18 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 				# else:
 			#fase de análise
 			nova_frase = retira_cor_de(f, palavras_unidas)
-			frases_input += preprocessar(nova_frase, freeling_model)
+			frases_input += preprocessar(nova_frase, freeling_model, indice)
+
+		indice += 1
+		
 	print("--- %s fraseeesss ---" % (time.time() - start_time))
 	exprFaciais = {}
-	# indice = 0
+	indice = 0
 	frase_lgp = []
 	mouthing = ""
 	gestos_compostos = []
 	pausas = []
-	for i in frases_input:
+	for index, i in enumerate(frases_input):
 		# fase de transferência lexical
 		transferencia_lexical(i, palavras_glosas, freq_dic)
 
@@ -413,6 +416,13 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			i.set_traducao_regras_pred(traducao_ordenado)
 
 			objs, verbos = set_traducao_regras(i.classes_antes_verbo, i.traducao_regras_pred)
+			print("regraaaaaaaaaaa")
+			print( i.classes_pred)
+			print("mappp")
+			print(map_valor)
+			
+			print("objsss")
+			print(objs)
 			i.set_traducao_regras_obj(objs)
 			i.set_traducao_regras_verbo(verbos)
 
@@ -513,6 +523,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			frase_lgp += f_lgp
 			mouthing += traducao_lgp + " "
 			gestos_compostos += gest_comp_frase
+			if index < len(frases_input)-1 and i.frase_indice != frases_input[index+1].frase_indice:
+				pausas_frase[-1] = "frase"
 			pausas += pausas_frase
 
 		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
@@ -526,6 +538,9 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 	print("gestos_comp")
 	print(gestos_compostos)
+
+	print("pausasss")
+	print(pausas)
 
 	fonemas = phonemize(mouthing, language="pt-pt", backend="espeak")
 	print(fonemas)
@@ -629,6 +644,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Um rapaz surdo estava a andar pelo supermercado quando chocou com uma rapariga e caiu no chão" # tens uma caneca de bebé em casa
+# sentence = "O João comprou 12 despertadores vermelhos e fui à praia. E tu?" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

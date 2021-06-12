@@ -367,8 +367,10 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		classe = valor[2]
 		lema = valor[1]
 		palavra = valor[0]
-
-		i.traducao[indice] = lema.upper()
+		if classe.startswith("NC") and classe[3] == "P" and "NUM" not in i.classes:
+			i.traducao[indice] = palavra.upper()
+		else:
+			i.traducao[indice] = lema.upper()
 
 		# if not classe.startswith("A") and not classe.startswith("NC"):
 		# 	i.traducao[indice] = lema.upper()
@@ -431,10 +433,13 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		
 		#identifica palavras compostas
 		i.palavras_compostas.append(i.traducao[indice-1] == "MULHER")
-		print(i.palavras_compostas)
 
 		#identifica as pausas
-		i.pausas.append(indice==(len(i.traducao)-1) and len(i.traducao)>1)
+		if indice==(len(i.traducao)-1) and len(i.traducao)>1:
+			i.pausas.append("oracao")
+		else:
+			i.pausas.append(False)
+
 		print(i.pausas)
 
 		indice += 1
