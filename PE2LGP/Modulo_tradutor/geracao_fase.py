@@ -179,14 +179,14 @@ def feminino(traducao, excepcoes):
 					if classe.endswith("D"):
 						if classe.startswith("NCFP") and palavra[:-5].lower() != lema[:-1].lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (palavra, glosa, "A"))
+							traducao.insert(indice, (glosa, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
 
 						elif classe.startswith("NCFS") and palavra[:-4].lower() != lema[:-1].lower():
 							glosa = "MULHER"
-							traducao.insert(indice,(palavra, glosa, "A"))
+							traducao.insert(indice,(glosa, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
@@ -220,14 +220,14 @@ def feminino(traducao, excepcoes):
 					elif classe.endswith("A"):
 						if classe.startswith("NCFP") and palavra[:-5].lower() != lema[:-1].lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (palavra, glosa, "A"))
+							traducao.insert(indice, (glosa, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
 
 						elif classe.startswith("NCFS") and palavra[:-4].lower() != lema[:-1].lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (palavra, glosa, "A"))
+							traducao.insert(indice, (glosa, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
@@ -246,12 +246,12 @@ def feminino(traducao, excepcoes):
 					else:
 						if classe.startswith("NCFP") and palavra[:-1].lower() != lema.lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (palavra, glosa, "A"))
+							traducao.insert(indice, (glosa, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							indice += 1
 						elif classe.startswith("NCFS") and palavra.lower() != lema.lower():
 							glosa = "MULHER"
-							traducao.insert(indice, (palavra, glosa, "A"))
+							traducao.insert(indice, (glosa, glosa, "A"))
 							traducao[indice + 1] = (lema, lema, classe)
 							indice += 1
 
@@ -260,7 +260,7 @@ def feminino(traducao, excepcoes):
 					if classe.endswith("D"):
 						diminutivo = "PEQUENO"
 						if "mulher" in excepcoes[palavra].split():
-							traducao.insert(indice, (palavra, "MULHER", "A"))
+							traducao.insert(indice, ("MULHER", "MULHER", "A"))
 							traducao[indice + 1] = (excepcoes[palavra].split()[1], lema, classe)
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
@@ -273,7 +273,7 @@ def feminino(traducao, excepcoes):
 					elif classe.endswith("A"):
 						if "mulher" in excepcoes[palavra].split():
 
-							traducao.insert(indice, (palavra, "MULHER", "A"))
+							traducao.insert(indice, ("MULHER", "MULHER", "A"))
 							traducao[indice + 1] = (excepcoes[palavra].split()[1], lema, classe)
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
@@ -349,7 +349,8 @@ def cliticos(traducao):
 				traducao[indice] = ("NÓS", "NÓS", classe)
 
 			elif palavra.lower() == "se":
-				traducao[indice] = ("", "", classe)
+				del traducao[indice]
+				indice -= 1
 
 def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 	"""
@@ -368,6 +369,9 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		palavra = valor[0]
 
 		i.traducao[indice] = lema.upper()
+
+		i.palavras_compostas.append(i.traducao[indice-1] == "MULHER")
+		print(i.palavras_compostas)
 
 		# if not classe.startswith("A") and not classe.startswith("NC"):
 		# 	i.traducao[indice] = lema.upper()
@@ -502,4 +506,4 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
 	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
 
-	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras)
+	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras), i.palavras_compostas

@@ -390,6 +390,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 	# indice = 0
 	frase_lgp = []
 	mouthing = ""
+	gestos_compostos = []
 	for i in frases_input:
 		# fase de transferência lexical
 		transferencia_lexical(i, palavras_glosas, freq_dic)
@@ -505,11 +506,12 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 		print("--- %s ordenar elemento frásicoo ---" % (time.time() - start_time))
 		
 		#fase de geracao
-		f_lgp, exprFaciais, traducao_lgp = geracao(i, indice, exprFaciais, negativa_irregular)
+		f_lgp, exprFaciais, traducao_lgp, gest_comp_frase = geracao(i, indice, exprFaciais, negativa_irregular)
 		if f_lgp:
 			indice += len(f_lgp)
 			frase_lgp += f_lgp
 			mouthing += traducao_lgp + " "
+			gestos_compostos += gest_comp_frase
 
 		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
 	# traducao_lgp = " ".join(frase_lgp)
@@ -519,6 +521,9 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 	print("mouthinggg")
 	print(mouthing)
+
+	print("gestos_comp")
+	print(gestos_compostos)
 
 	fonemas = phonemize(mouthing, language="pt-pt", backend="espeak")
 	print(fonemas)
@@ -560,6 +565,9 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 	dictionary = {'glosas': frase_lgp, 'fonemas': visemas} #  'fonemas': fonemas
 	if exprFaciais:
 		dictionary['exprFaciais'] = exprFaciais
+
+	if True in gestos_compostos:
+		dictionary['gestos_compostos'] = gestos_compostos
 
 	print("--- %s dicionario ---" % (time.time() - start_time))
 
@@ -622,6 +630,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "O meu irmão surdo estava a conduzir quando viu uma curva perigosa e depois chocou contra uma parede." # tens uma caneca de bebé em casa
+# sentence = "O despertador vermelho do meu irmão estragou-se." # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

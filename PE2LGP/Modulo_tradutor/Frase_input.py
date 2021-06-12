@@ -11,14 +11,14 @@ class Frase_input:
 
 		self.traducao = []
 		self.traducao_palavras = [] #para o mouthing --> faz-se a conjugação de verbos
-		self.palavras_compostas = {}
+		self.palavras_compostas = []
 		self.palavras = []
 		self.tipo = []
 		self.classes = []
 		self.classes_sem_tipo = []
 		self.classes_antes = []
 
-		self.obj_verb_trans = []
+		self.obj_verb_trans = [] #adiciona o objeto (e.g., parede) e tipo de objeto (i.e., obl ou obj) para os verbos transitivos 
 		self.indices_obj = []
 		self.indices_suj = []
 		self.indices_verbo = []
