@@ -174,7 +174,7 @@ def preprocessar(f, freeling_values):
 
 
 	adv_quant = ["muito", "muitos", "muita", "muitas", "menos", "tanto", "pouco", "pouca", "demasiado", "bastante", "apenas", "mais", "tanto"]
-	adv_temporal = ["fim_de_semana", "quando", "enquanto"]
+	adv_temporal = ["fim_de_semana", "quando", "enquanto", "depois"]
 	adv_tempo_passado = ['ontem', 'outrora', 'dantes', 'antigamente', 'antes', 'já', 'hoje_de_manhã']
 	adv_tempo_futuro = ['logo', 'amanhã', 'doravante','em_breve']
 	adv_int = ["onde", "quando", "como", "porque"]
