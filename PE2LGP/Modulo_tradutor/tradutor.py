@@ -391,6 +391,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 	frase_lgp = []
 	mouthing = ""
 	gestos_compostos = []
+	pausas = []
 	for i in frases_input:
 		# fase de transferência lexical
 		transferencia_lexical(i, palavras_glosas, freq_dic)
@@ -506,12 +507,13 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 		print("--- %s ordenar elemento frásicoo ---" % (time.time() - start_time))
 		
 		#fase de geracao
-		f_lgp, exprFaciais, traducao_lgp, gest_comp_frase = geracao(i, indice, exprFaciais, negativa_irregular)
+		f_lgp, exprFaciais, traducao_lgp, gest_comp_frase, pausas_frase = geracao(i, indice, exprFaciais, negativa_irregular)
 		if f_lgp:
 			indice += len(f_lgp)
 			frase_lgp += f_lgp
 			mouthing += traducao_lgp + " "
 			gestos_compostos += gest_comp_frase
+			pausas += pausas_frase
 
 		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
 	# traducao_lgp = " ".join(frase_lgp)
@@ -562,7 +564,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 	# print(syllables)
 
-	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos} #  'fonemas': fonemas
+	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos, 'pausas': pausas}
 	if exprFaciais:
 		dictionary['exprFaciais'] = exprFaciais
 
@@ -627,6 +629,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "O despertador vermelho do meu irmão estragou-se." # tens uma caneca de bebé em casa
+# sentence = "Um rapaz surdo estava a andar pelo supermercado quando chocou com uma rapariga e caiu no chão" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

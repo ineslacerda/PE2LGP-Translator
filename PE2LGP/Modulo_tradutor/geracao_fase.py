@@ -370,9 +370,6 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 
 		i.traducao[indice] = lema.upper()
 
-		i.palavras_compostas.append(i.traducao[indice-1] == "MULHER")
-		print(i.palavras_compostas)
-
 		# if not classe.startswith("A") and not classe.startswith("NC"):
 		# 	i.traducao[indice] = lema.upper()
 
@@ -432,6 +429,14 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		if not (verbo_neg_irregular and classe.startswith("RN")):
 			i.traducao_palavras.append(palavra.upper().replace("_", " ").replace("-", " ").replace(" DE", ""))
 		
+		#identifica palavras compostas
+		i.palavras_compostas.append(i.traducao[indice-1] == "MULHER")
+		print(i.palavras_compostas)
+
+		#identifica as pausas
+		i.pausas.append(indice==(len(i.traducao)-1) and len(i.traducao)>1)
+		print(i.pausas)
+
 		indice += 1
 
 
@@ -506,4 +511,4 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
 	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
 
-	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras), i.palavras_compostas
+	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras), i.palavras_compostas, i.pausas
