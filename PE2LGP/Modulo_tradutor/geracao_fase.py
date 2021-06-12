@@ -438,7 +438,7 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		if indice==(len(i.traducao)-1) and len(i.traducao)>1:
 			i.pausas.append("oracao")
 		else:
-			i.pausas.append(False)
+			i.pausas.append("false")
 
 		print(i.pausas)
 
