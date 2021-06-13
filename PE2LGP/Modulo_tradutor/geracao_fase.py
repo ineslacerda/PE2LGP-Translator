@@ -493,6 +493,9 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 
 	classes = list(list(zip(*i.traducao))[2])
 
+	# remover ser e estar, "e" e "se"
+	remove_ser_estar(i.traducao)
+
 	#feminino
 	excepcoes = abre_feminino_excepcoes()
 	feminino(i.traducao, excepcoes)
@@ -505,9 +508,6 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 
 	#nomes próprios
 	# nomes_proprios(i.traducao, i.palavras_compostas)
-
-	# remover ser e estar, "e" e "se"
-	remove_ser_estar(i.traducao)
 	
 	# transformar cliticos
 	cliticos(i.traducao)

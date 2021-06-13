@@ -204,6 +204,12 @@ def set_elementos(dependencies_tags, pred_tags, dep_words, frase):
 			frase.set_classes_suj(pred_tags[i])
 			frase.set_classes_antes_suj(dep_words[i], pred_tags[i])
 			frase.set_indices_suj(i)
+		
+		# como é que ficaste surdo? adiciona o como
+		if "mark" in d and "cop" in dependencies_tags:
+			frase.set_classes_outros(pred_tags[i])
+			frase.set_classes_antes_outro(dep_words[i], pred_tags[i])
+			frase.set_indices_outros(i)
 
 		if "flat:name" in d:
 			frase.set_classes_obj(pred_tags[i])
