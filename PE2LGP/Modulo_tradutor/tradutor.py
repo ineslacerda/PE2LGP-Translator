@@ -518,17 +518,50 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 		print("--- %s ordenar elemento frásicoo ---" % (time.time() - start_time))
 		
 		#fase de geracao
-		f_lgp, exprFaciais, traducao_lgp, gest_comp_frase, pausas_frase, adv_cond_frase  = geracao(i, indice, exprFaciais, negativa_irregular)
+		f_lgp, exprFaciais, traducao_lgp  = geracao(i, indice, exprFaciais, negativa_irregular)
+		
 		if f_lgp:
 			indice += len(f_lgp)
 			frase_lgp += f_lgp
 			mouthing += traducao_lgp + " "
+			# gestos_compostos += gest_comp_frase
+
+			#gestos_compostos
+			gest_comp_frase = [False] * len(f_lgp)
+			if "MULHER" in f_lgp:
+				indices = [i for i, e in enumerate(f_lgp) if e == "MULHER"]
+				for indice in indices:
+					gest_comp_frase.insert(indice-1, True)
+			
 			gestos_compostos += gest_comp_frase
-			if index < len(frases_input)-1 and i.frase_indice != frases_input[index+1].frase_indice:
-				pausas_frase[-1] = "frase"
+			
+			# Identifica as pausas
+			pausas_frase = ["false"] * len(f_lgp)
+
+			if index < len(frases_input)-1:
+				if i.frase_indice == frases_input[index+1].frase_indice and len(f_lgp)>1:
+					pausas_frase[-1] = "oracao"
+				elif i.frase_indice != frases_input[index+1].frase_indice:
+					pausas_frase[-1] = "frase"
 			if index == len(frases_input)-1:
 				pausas_frase[-1] = "frase"
+
 			pausas += pausas_frase
+
+			print(pausas)
+
+			#identifica clausulas adverbiais condicionais com o "se"
+			adv_cond_frase = [False] * len(f_lgp)
+
+			print("avverbiooo")
+			print(i.clausula_adv_cond[0][1].upper())
+
+			if i.clausula_adv_cond and i.clausula_adv_cond[0][1].upper() in traducao_lgp.split(" "):
+				indices = [indice for indice, e in enumerate(traducao_lgp.split(" ")) if e == i.clausula_adv_cond[0][1].upper()]
+				print(indices)
+				for indice in indices:
+					adv_cond_frase[indice] = True
+			
 			adv_cond_frases += adv_cond_frase
 
 		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
@@ -642,6 +675,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Um rapaz surdo estava a andar pelo supermercado quando chocou com uma rapariga e caiu no chão." # tens uma caneca de bebé em casa
+# sentence = "Se tu beberes não conduzas" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

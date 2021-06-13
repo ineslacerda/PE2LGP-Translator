@@ -152,8 +152,9 @@ def obj_verb_transitivo(pred_tags, dep_tags, words):
 
 def clausula_adverbial_cond(pred_tags, dep_tags, words):
 	words = [word.lower() for word in words]
-	adv_cl = list(filter(lambda x: "se" in words and pred_tags[x[0]].startswith("V") and dep_tags[x[0]] == "advcl", enumerate(words)))
-
+	adv_cl = list(filter(lambda x: "se" in words and pred_tags[x[0]].startswith("V") and (dep_tags[x[0]] == "advcl" or dep_tags[x[0]] == "nsubj"), enumerate(words)))
+	print("advvvvvvv")
+	print(adv_cl)
 	advs_cl = []
 	for adv_cl in adv_cl:
 		adv_cl = (adv_cl[0], adv_cl[1].lower())
@@ -323,7 +324,7 @@ def preprocessar(f, freeling_values, frase_indice):
 
 		# Guarda adverbio (verbo) da clausula adverbial condicional --> (indice, verbo_antes_tranducao)
 		
-		frase_input.clausula_adv_cond_aux = clausula_adverbial_cond(sub_frases_pred_tags[index], dep_tags, dep_words)
+		frase_input.clausula_adv_cond = clausula_adverbial_cond(sub_frases_pred_tags[index], dep_tags, dep_words)
 
 		# Guarda indice do objecto de um verbo transitivo
 		if len(dep_tags) >= 4:

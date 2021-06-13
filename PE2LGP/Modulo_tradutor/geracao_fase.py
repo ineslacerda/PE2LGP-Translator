@@ -447,22 +447,6 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		if not (verbo_neg_irregular and classe.startswith("RN")):
 			i.traducao_palavras.append(palavra.upper().replace("_", " ").replace("-", " ").replace(" DE", ""))
 		
-		#identifica palavras compostas
-		i.palavras_compostas.append(i.traducao[indice-1] == "MULHER")
-
-		#identifica as pausas
-		if indice==(len(i.traducao)-1) and len(i.traducao)>1:
-			i.pausas.append("oracao")
-		else:
-			i.pausas.append("false")
-
-		i.clausula_adv_cond_final.append(False)
-
-		#identifica clausulas adverbiais condicionais com o "se"
-		for adv in i.clausula_adv_cond_aux:
-			if palavra.lower() == adv[1]:
-				i.clausula_adv_cond_final[indice] = True
-		
 		indice += 1
 
 
@@ -537,4 +521,4 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
 	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
 
-	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras), i.palavras_compostas, i.pausas, i.clausula_adv_cond_final
+	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras)
