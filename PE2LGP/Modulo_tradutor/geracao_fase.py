@@ -180,6 +180,10 @@ def feminino(traducao, excepcoes):
 		classe = valor[2]
 		lema = valor[1]
 
+		print("femininooooo")
+		print(palavra)
+		print(lema)
+
 		if classe.startswith("NC"):
 
 			if palavra not in excepcoes:
@@ -489,6 +493,10 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 
 	classes = list(list(zip(*i.traducao))[2])
 
+	#feminino
+	excepcoes = abre_feminino_excepcoes()
+	feminino(i.traducao, excepcoes)
+
 	# remover preposições
 	remove_prep(i.traducao)
 
@@ -497,10 +505,6 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 
 	#nomes próprios
 	# nomes_proprios(i.traducao, i.palavras_compostas)
-
-	#feminino
-	excepcoes = abre_feminino_excepcoes()
-	feminino(i.traducao, excepcoes)
 
 	# remover ser e estar, "e" e "se"
 	remove_ser_estar(i.traducao)
