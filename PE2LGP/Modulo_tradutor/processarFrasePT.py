@@ -128,23 +128,38 @@ def atualiza_tags(adv_quant, words, pred_tags, sub):
 	:return:
 	"""
 	for adv in adv_quant:
-
+		print(adv_quant)
 		advs = list(filter(lambda x: adv.lower() == x[1].lower(), enumerate(words)))
-		if advs and pred_tags[words.index(advs[0][1])].startswith("RG"):
+		print("advs")
+		print(advs)
+		if advs:
 			pred_tags[words.index(advs[0][1])] = sub
+		# if advs and pred_tags[words.index(advs[0][1])].startswith("RG"):
+		# 	pred_tags[words.index(advs[0][1])] = sub
 
-		if advs and pred_tags[words.index(advs[0][1])].startswith("PR"):
-			pred_tags[words.index(advs[0][1])] = sub
+		# if advs and pred_tags[words.index(advs[0][1])].startswith("PR"):
+		# 	pred_tags[words.index(advs[0][1])] = sub
 
 
 def obj_verb_transitivo(pred_tags, dep_tags, words):
-	verbs = list(filter(lambda x: pred_tags[x[0]].startswith("V") and dep_tags[x[0]] == "ROOT" and dep_tags[x[0]+1] == "case", enumerate(dep_tags)))
+	verbs = list(filter(lambda x: x[0]+1 < len(dep_tags) and pred_tags[x[0]].startswith("V") and dep_tags[x[0]] == "ROOT" and dep_tags[x[0]+1] == "case", enumerate(dep_tags)))
 
 	objs_verbs_trans = {}
 	for verb in verbs:
 		objs_verbs_trans[str(words[verb[0]+3])] = dep_tags[verb[0]+3]
 
 	return objs_verbs_trans
+
+def clausula_adverbial_cond(pred_tags, dep_tags, words):
+	words = [word.lower() for word in words]
+	adv_cl = list(filter(lambda x: "se" in words and pred_tags[x[0]].startswith("V") and dep_tags[x[0]] == "advcl", enumerate(words)))
+
+	advs_cl = []
+	for adv_cl in adv_cl:
+		adv_cl = (adv_cl[0], adv_cl[1].lower())
+		advs_cl.append(adv_cl)
+
+	return advs_cl
 
 
 def preprocessar(f, freeling_values, frase_indice):
@@ -180,6 +195,8 @@ def preprocessar(f, freeling_values, frase_indice):
 	adv_int = ["onde", "quando", "como", "porque"]
 	pronomes_int = ["qual", "quais", "quantos", "quantas", "quanto", "porquê", "quem"]
 	adv_neg = ["nunca"]
+	pron_relativo = ["é_que", "que"]
+
 
 	atualiza_tags(adv_quant, words, pred_tags, "RGQ")
 	atualiza_tags(adv_temporal, words, pred_tags, "RGT")
@@ -189,6 +206,7 @@ def preprocessar(f, freeling_values, frase_indice):
 		atualiza_tags(pronomes_int, words, pred_tags, "PT")
 		atualiza_tags(adv_int, words, pred_tags, "RGI")
 	atualiza_tags(adv_neg, words, pred_tags, "NEGA")
+	atualiza_tags(pron_relativo, words, pred_tags, "PR") #pronomes relativos
 
 	print("words")
 	print(words)
@@ -302,6 +320,10 @@ def preprocessar(f, freeling_values, frase_indice):
 
 		print("dep_tags")
 		print(dep_tags)
+
+		# Guarda adverbio (verbo) da clausula adverbial condicional --> (indice, verbo_antes_tranducao)
+		
+		frase_input.clausula_adv_cond_aux = clausula_adverbial_cond(sub_frases_pred_tags[index], dep_tags, dep_words)
 
 		# Guarda indice do objecto de um verbo transitivo
 		if len(dep_tags) >= 4:

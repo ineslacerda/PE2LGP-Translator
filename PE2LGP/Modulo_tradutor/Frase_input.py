@@ -13,7 +13,9 @@ class Frase_input:
 		self.traducao_palavras = [] #para o mouthing --> faz-se a conjugação de verbos
 		self.palavras_compostas = [] #gestos_compostos
 		self.pausas = []  #introdução de pausas entre orações e frases
-		self.frase_indice = []
+		self.frase_indice = [] #indice de cada frase
+		self.clausula_adv_cond_aux = []
+		self.clausula_adv_cond_final = []
 
 		self.palavras = []
 		self.tipo = []

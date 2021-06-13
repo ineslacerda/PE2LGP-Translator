@@ -37,7 +37,7 @@ def orden_neg_int(i, counter, exprFaciais, negativa_irregular):
 	count = 0
 	indice = 0
 
-
+	int_parcial = False
 	while indice < len(i.traducao) - count:
 		valor = i.traducao[indice]
 		classe = valor[2]
@@ -49,11 +49,19 @@ def orden_neg_int(i, counter, exprFaciais, negativa_irregular):
 			del i.traducao[indice]
 			count += 1
 			indice = -1
+		
 		if (classe.startswith("PT") or classe.startswith("RGI")) and "INT" in i.tipo[0]:
 			# valor = ("{"+valor[0] +"}(interrogativa)", "{"+valor[0] +"}(interrogativa)", valor[2])
 			i.traducao.append(valor)
 			del i.traducao[indice]
+			int_parcial = True
 			count += 1
+			indice = -1
+		
+		#remove verbo "ficar" se for uma interrogativa parcial --> predicado de estado
+		if valor[1].lower() == "ficar" and classe.startswith("V") and int_parcial:
+			del i.traducao[indice]
+			indice = -1
 		indice += 1
 
 
@@ -324,6 +332,9 @@ def remove_ser_estar(traducao):
 		elif classe == "CC" and palavra.lower() == "e":
 			del traducao[indice]
 			count += 1
+		elif classe == "CS" and palavra.lower() == "se":
+			del traducao[indice]
+			count += 1
 		indice+=1
 
 
@@ -367,6 +378,7 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		classe = valor[2]
 		lema = valor[1]
 		palavra = valor[0]
+		# Se não tiver um quantificador numeral então faz-se o plural
 		if classe.startswith("NC") and classe[3] == "P" and "NUM" not in i.classes:
 			i.traducao[indice] = palavra.upper()
 		else:
@@ -440,8 +452,13 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		else:
 			i.pausas.append("false")
 
-		print(i.pausas)
+		i.clausula_adv_cond_final.append(False)
 
+		#identifica clausulas adverbiais condicionais com o "se"
+		for adv in i.clausula_adv_cond_aux:
+			if palavra.lower() == adv[1]:
+				i.clausula_adv_cond_final[indice] = True
+		
 		indice += 1
 
 
@@ -485,9 +502,9 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	excepcoes = abre_feminino_excepcoes()
 	feminino(i.traducao, excepcoes)
 
-	# remover ser e estar
+	# remover ser e estar, "e" e "se"
 	remove_ser_estar(i.traducao)
-
+	
 	# transformar cliticos
 	cliticos(i.traducao)
 
@@ -516,4 +533,4 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
 	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
 
-	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras), i.palavras_compostas, i.pausas
+	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras), i.palavras_compostas, i.pausas, i.clausula_adv_cond_final
