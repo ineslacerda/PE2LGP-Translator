@@ -527,12 +527,15 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			# gestos_compostos += gest_comp_frase
 
 			#gestos_compostos
+			print("gestosssssss compostosss")
 			gest_comp_frase = [False] * len(f_lgp)
 			if "MULHER" in f_lgp:
 				indices = [i for i, e in enumerate(f_lgp) if e == "MULHER"]
+				print(indices)
 				for indice in indices:
-					gest_comp_frase.insert(indice-1, True)
-			
+					gest_comp_frase[indice+1] = True
+
+			print(gest_comp_frase)			
 			gestos_compostos += gest_comp_frase
 			
 			# Identifica as pausas
@@ -552,9 +555,6 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 			#identifica clausulas adverbiais condicionais com o "se"
 			adv_cond_frase = [False] * len(f_lgp)
-
-			print("avverbiooo")
-			print(i.clausula_adv_cond[0][1].upper())
 
 			if i.clausula_adv_cond and i.clausula_adv_cond[0][1].upper() in traducao_lgp.split(" "):
 				indices = [indice for indice, e in enumerate(traducao_lgp.split(" ")) if e == i.clausula_adv_cond[0][1].upper()]
@@ -675,6 +675,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Se tu beberes não conduzas" # tens uma caneca de bebé em casa
+# sentence = "Um rapaz surdo estava a andar pelo supermercado quando chocou com uma rapariga e depois caiu no chão." # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
