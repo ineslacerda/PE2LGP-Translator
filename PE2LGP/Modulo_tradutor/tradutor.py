@@ -516,7 +516,10 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 		
 		print(i.traducao)
 		print("--- %s ordenar elemento frásicoo ---" % (time.time() - start_time))
-		
+
+		print("sujeitoooo")
+		print(suj)
+
 		#fase de geracao
 		f_lgp, exprFaciais, traducao_lgp  = geracao(i, indice, exprFaciais, negativa_irregular)
 		
@@ -594,6 +597,9 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 		}
 		
 	fonemas = fonemas.translate(table)
+	print(fonemas)
+	fonemas = fonemas.replace("re", "r")
+	print(fonemas)
 	fonemas = unidecode.unidecode(fonemas)
 	fonemas = fonemas.split(" ")
 	fonemas = list(filter(None, fonemas))
@@ -675,6 +681,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Um rapaz surdo estava a andar pelo supermercado quando chocou com uma rapariga e depois caiu no chão." # tens uma caneca de bebé em casa
+# sentence = "Um rapaz surdo estava a andar pelo supermercado quando ele chocou com uma rapariga e depois ele caiu no chão" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
