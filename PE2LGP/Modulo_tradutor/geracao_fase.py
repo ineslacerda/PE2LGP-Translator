@@ -444,9 +444,15 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 				else:
 					exprFaciais[key] = ["interrogativa_total"]
 		
-		if not (verbo_neg_irregular and classe.startswith("RN")):
+		# remove o adverbio de intensidade MUITO
+		if palavra.upper() == "MUITO":
+			del i.traducao[indice]
+			indice -= 1
+
+		if not (verbo_neg_irregular and classe.startswith("RN")) and palavra.upper() != "MUITO":
 			i.traducao_palavras.append(palavra.upper().replace("_", " ").replace("-", " ").replace(" DE", ""))
-		
+	
+
 		indice += 1
 
 

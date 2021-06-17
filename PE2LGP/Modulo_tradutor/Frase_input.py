@@ -13,6 +13,7 @@ class Frase_input:
 		self.traducao_palavras = [] #para o mouthing --> faz-se a conjugação de verbos
 		self.frase_indice = [] #indice de cada frase
 		self.clausula_adv_cond = []
+		self.adverbial_mod = {} #dicionario com adverbios (i.e., muito, pouco)
 
 		self.palavras = []
 		self.tipo = []

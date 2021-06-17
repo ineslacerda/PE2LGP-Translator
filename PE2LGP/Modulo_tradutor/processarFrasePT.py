@@ -140,6 +140,24 @@ def atualiza_tags(adv_quant, words, pred_tags, sub):
 		# if advs and pred_tags[words.index(advs[0][1])].startswith("PR"):
 		# 	pred_tags[words.index(advs[0][1])] = sub
 
+def adverbial_mod(dep_tags, words):
+	verb_adv_mod = list(filter(lambda x: x[0]+1 < len(dep_tags) and dep_tags[x[0]] == "ROOT" and words[x[0]+1] == "muito" and dep_tags[x[0]+1] == "advmod", enumerate(words)))
+	print("verb_adv_mod")
+	print(verb_adv_mod)
+	
+	#Modificador adjetival do modificador averbial 
+	adj_adv_mod = list(filter(lambda x: x[0]-1 > 0 and dep_tags[x[0]] == "amod" and words[x[0]-1] == "muito" and dep_tags[x[0]-1] == "advmod", enumerate(words)))
+	print("adj_adv_mod")
+	print(adj_adv_mod)
+
+	adv_mod = {}
+	for verb in verb_adv_mod:
+		adv_mod[str(words[verb[0]])] = "muito"
+	for adj in adj_adv_mod:
+		adv_mod[str(words[adj[0]])] = "muito"
+
+	return adv_mod
+
 
 def obj_verb_transitivo(pred_tags, dep_tags, words):
 	verbs = list(filter(lambda x: x[0]+1 < len(dep_tags) and pred_tags[x[0]].startswith("V") and dep_tags[x[0]] == "ROOT" and dep_tags[x[0]+1] == "case", enumerate(dep_tags)))
@@ -242,7 +260,7 @@ def preprocessar(f, freeling_values, frase_indice):
 
 			print("verbsss")
 			print(verbs)
-			if verbs:
+			if verbs and words[m] != ",":
 				sub_frases_words.append(words[index:m])
 				sub_frases_lemmas.append(lemmas[index:m])
 				sub_frases_lemma_verdadeiro.append(lemma_verdadeiro[index:m])
@@ -321,6 +339,10 @@ def preprocessar(f, freeling_values, frase_indice):
 
 		print("dep_tags")
 		print(dep_tags)
+
+		# Guarda verbo/modificador adjectival a que o adverbio de modo "muito" está a ser aplicado
+		
+		frase_input.adverbial_mod = adverbial_mod(dep_tags, dep_words)
 
 		# Guarda adverbio (verbo) da clausula adverbial condicional --> (indice, verbo_antes_tranducao)
 		

@@ -396,6 +396,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 	gestos_compostos = []
 	pausas = []
 	adv_cond_frases = []
+	adv_intensidade_frases = []
 	for index, i in enumerate(frases_input):
 		# fase de transferência lexical
 		transferencia_lexical(i, palavras_glosas, freq_dic)
@@ -560,12 +561,25 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 			adv_cond_frase = [False] * len(f_lgp)
 
 			if i.clausula_adv_cond and i.clausula_adv_cond[0][1].upper() in traducao_lgp.split(" "):
-				indices = [indice for indice, e in enumerate(traducao_lgp.split(" ")) if e == i.clausula_adv_cond[0][1].upper()]
+				indices = [index for index, e in enumerate(traducao_lgp.split(" ")) if e == i.clausula_adv_cond[0][1].upper()]
 				print(indices)
-				for indice in indices:
-					adv_cond_frase[indice] = True
+				for index in indices:
+					adv_cond_frase[index] = True
 			
 			adv_cond_frases += adv_cond_frase
+
+			#identifica adverbios de intensidade
+			adv_int_frase = ["false"] * len(f_lgp)
+
+			for adv in i.adverbial_mod:
+				if adv.upper() in traducao_lgp.split(" "):
+					# retorna tuplo com (indice, adverbio de intensidade)
+					indices = [(index, i.adverbial_mod[adv]) for index, e in enumerate(traducao_lgp.split(" ")) if e == adv.upper()]
+					for index in indices:
+						adv_int_frase[index[0]] = index[1]
+			print("adv_intttttttttttttt_frase")
+			print(adv_int_frase)
+			adv_intensidade_frases += adv_int_frase
 
 		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
 	# traducao_lgp = " ".join(frase_lgp)
@@ -616,7 +630,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 	# print(syllables)
 
-	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos, 'pausas': pausas, 'adv_cond': adv_cond_frases}
+	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos,
+	'pausas': pausas, 'adv_cond': adv_cond_frases, 'adv_intensidade': adv_intensidade_frases}
 	if exprFaciais:
 		dictionary['exprFaciais'] = exprFaciais
 
@@ -681,6 +696,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Um rapaz surdo estava a andar pelo supermercado quando ele chocou com uma rapariga e depois ele caiu no chão" # tens uma caneca de bebé em casa
+# sentence = "ele trabalha muito quando viu uma curva muito perigosa e depois chocou contra uma parede." # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
