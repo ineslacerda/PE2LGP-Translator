@@ -702,6 +702,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Porque é que não queres ir ao cinema?" # tens uma caneca de bebé em casa
+# sentence = "Quando começa a escola?" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
