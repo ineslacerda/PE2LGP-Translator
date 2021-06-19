@@ -195,10 +195,10 @@ def set_elementos(dependencies_tags, pred_tags, dep_words, frase):
 			frase.set_classes_antes_v(dep_words[i], pred_tags[i])
 			frase.set_indices_verbo(i)
 
-		if "aux" in d:
-			frase.set_classes_v(pred_tags[i])
-			frase.set_classes_antes_v(dep_words[i], pred_tags[i])
-			frase.set_indices_verbo(i)
+		# if "aux" in d:
+		# 	frase.set_classes_v(pred_tags[i])
+		# 	frase.set_classes_antes_v(dep_words[i], pred_tags[i])
+		# 	frase.set_indices_verbo(i)
 
 		if "mark" in d and "nsubj" in dependencies_tags:
 			frase.set_classes_suj(pred_tags[i])
