@@ -128,10 +128,7 @@ def atualiza_tags(adv_quant, words, pred_tags, sub):
 	:return:
 	"""
 	for adv in adv_quant:
-		print(adv_quant)
 		advs = list(filter(lambda x: adv.lower() == x[1].lower(), enumerate(words)))
-		print("advs")
-		print(advs)
 		if advs:
 			pred_tags[words.index(advs[0][1])] = sub
 		# if advs and pred_tags[words.index(advs[0][1])].startswith("RG"):
@@ -232,6 +229,9 @@ def preprocessar(f, freeling_values, frase_indice):
 	print("pred_tags")
 	print(pred_tags)
 
+	print("lemmas")
+	print(lemmas)
+
 	sub_frases_words = []
 	sub_frases_lemmas = []
 	sub_frases_lemma_verdadeiro = []
@@ -240,6 +240,7 @@ def preprocessar(f, freeling_values, frase_indice):
 
 	delimiters = []
 	string_delimiters = ""
+	adv_negacao = False
 	
 	for m, i in enumerate(pred_tags):
 		if i.startswith("PE") and words[m].lower() in pronomes_int:
@@ -252,6 +253,9 @@ def preprocessar(f, freeling_values, frase_indice):
 			lemmas[m] = "ainda_não"
 			lemma_verdadeiro[m] = "ainda_não"
 			i = "NEGA"
+			adv_negacao = True
+		if m > 0 and i.startswith("V") and pred_tags[m-1] == "RN" and not adv_negacao:
+			pred_tags[m] += "_NEGA"
 		# a estrutura das interrogativas tem que ser preservada
 		# i == "CS"  --> not sure if needed
 		if (i == "Fc" or i == "CC" or i == "RGT"): #só separa em orações se houver verbo

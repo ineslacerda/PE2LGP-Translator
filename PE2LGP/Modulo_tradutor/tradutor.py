@@ -415,6 +415,12 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 			traducao_ordenado = list(map(lambda x: map_valor[x], pred_lgp))
 
+			print("traducaoooo")
+			print(traducao_ordenado)
+
+			print("pred_lgpppp")
+			print(pred_lgp)
+
 			i.set_traducao_regras_pred(traducao_ordenado)
 
 			objs, verbos = set_traducao_regras(i.classes_antes_verbo, i.traducao_regras_pred)
@@ -696,6 +702,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "ele trabalha muito quando viu uma curva muito perigosa e depois chocou contra uma parede." # tens uma caneca de bebé em casa
+# sentence = "Porque é que não queres ir ao cinema?" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)

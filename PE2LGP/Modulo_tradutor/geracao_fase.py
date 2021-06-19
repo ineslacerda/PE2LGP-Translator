@@ -13,22 +13,26 @@ def ordena_dets_num_adverq(traducao):
 
 	indice = 0
 
+	print("ordena_dets_num_adverqqqqqqqqqq")
+
 	while indice < len(traducao):
 
 		valor = traducao[indice]
 		classe = valor[2]
 
-		if (classe.startswith("DP") or classe.startswith("Z") or classe.startswith("RGQ")) :
-			if indice!=len(traducao)-1 and traducao[indice+1][2].startswith("N"):
+		print(valor)
+		# classe.startswith("Z") 
+		if (classe.startswith("DP") or classe.startswith("RGQ")):
+			if indice!=len(traducao)-1 and (traducao[indice+1][2].startswith("N") or traducao[indice+1][2].startswith("AQ")):
 				temp = valor
 				traducao[indice] = traducao[indice + 1]
 				traducao[indice + 1] = temp
-				indice+=1
+				indice-=1
 
 		indice+=1
 
 
-def orden_neg_int(i, counter, exprFaciais, negativa_irregular):
+def orden_neg(i, counter, exprFaciais, negativa_irregular):
 	"""
 	Ordena elementos de negação e de interrogação.
 	:param i.traducao: frase
@@ -41,14 +45,39 @@ def orden_neg_int(i, counter, exprFaciais, negativa_irregular):
 	while indice < len(i.traducao) - count:
 		valor = i.traducao[indice]
 		classe = valor[2]
-		if classe.startswith("RN") or classe.startswith("NEGA"): # adds "Não" at the end
+		if classe.startswith("NEGA") or "NEGA" in classe: # adds "Não" at the end
 			# valor = ("{"+valor[0] +"}(negativa)", "{"+valor[0] +"}(negativa)", valor[2])
 			# indice_verbo = i.indices_verbo[0]-1
 			# if i.traducao[indice_verbo][1] not in negativa_irregular:
 			i.traducao.append(valor)
 			del i.traducao[indice]
+			i.traducao.append(('não', 'não', 'RN'))
 			count += 1
 			indice = -1
+
+		elif classe.startswith("RN"):
+			del i.traducao[indice]
+			indice = -1
+		
+		#remove verbo "ficar" se for uma interrogativa parcial --> predicado de estado
+		if valor[1].lower() == "ficar" and classe.startswith("V") and int_parcial:
+			del i.traducao[indice]
+			indice = -1
+		indice += 1
+
+def orden_int(i, counter, exprFaciais, negativa_irregular):
+	"""
+	Ordena elementos de negação e de interrogação.
+	:param i.traducao: frase
+	:return:
+	"""
+	count = 0
+	indice = 0
+
+	int_parcial = False
+	while indice < len(i.traducao) - count:
+		valor = i.traducao[indice]
+		classe = valor[2]
 		
 		if (classe.startswith("PT") or classe.startswith("RGI")) and "INT" in i.tipo[0]:
 			# valor = ("{"+valor[0] +"}(interrogativa)", "{"+valor[0] +"}(interrogativa)", valor[2])
@@ -58,12 +87,7 @@ def orden_neg_int(i, counter, exprFaciais, negativa_irregular):
 			count += 1
 			indice = -1
 		
-		#remove verbo "ficar" se for uma interrogativa parcial --> predicado de estado
-		if valor[1].lower() == "ficar" and classe.startswith("V") and int_parcial:
-			del i.traducao[indice]
-			indice = -1
 		indice += 1
-
 
 def tempo_verbal(i):
 	"""
@@ -91,7 +115,7 @@ def tempo_verbal(i):
 				elif i.obj_verb_trans[index] == "obj" and index.lower() == "parede":
 					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_com_parede", classe)
 			# if indice==0 or indice > 0 and not (i.traducao[indice-1][2].startswith("PP") or i.traducao[indice-1][2].startswith("NC")): # or traducao[indice-1][2].startswith("NC")
-			if not i.classes_suj:
+			if not i.classes_suj and (valor[1].lower() != "começar" and valor[1].lower() != "haver"):
 				pronome = classe[4] + classe[5]
 				if pronome in pronomes:
 					temp = (pronomes[pronome], pronomes[pronome], "PP")
@@ -336,9 +360,6 @@ def remove_ser_estar(traducao):
 		elif classe == "CC" and palavra.lower() == "e":
 			del traducao[indice]
 			count += 1
-		elif classe == "CS" and palavra.lower() == "se":
-			del traducao[indice]
-			count += 1
 		indice+=1
 
 
@@ -406,7 +427,7 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 			key = str(indice+counter) + "-" + str(indice+counter+1)
 				
 			# Adiciona a expressao negativa no verbo se for negação irregular
-			if classe.startswith("VMI") and lema in negativa_irregular:
+			if classe.startswith("VMI") and "NEGA" in classe and lema in negativa_irregular:
 				if key in exprFaciais:
 					exprFaciais[key].append("negativa_headshake")
 				else:
@@ -483,12 +504,8 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 
 	classes = list(list(zip(*i.traducao))[2])
 
-	# remover ser e estar, "e" e "se"
+	# remover "ser", "estar" e "e"
 	remove_ser_estar(i.traducao)
-
-	#feminino
-	excepcoes = abre_feminino_excepcoes()
-	feminino(i.traducao, excepcoes)
 
 	# remover preposições
 	remove_prep(i.traducao)
@@ -496,14 +513,23 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	#altera ordem determinantes, numerais e adverbios quantidade
 	ordena_dets_num_adverq(i.traducao)
 
+	#feminino
+	excepcoes = abre_feminino_excepcoes()
+	feminino(i.traducao, excepcoes)
+
 	#nomes próprios
 	# nomes_proprios(i.traducao, i.palavras_compostas)
 	
 	# transformar cliticos
 	cliticos(i.traducao)
 
-	#advérbio de negação e interrogativas parciais (pronomes e advérbios) para o fim da oração
-	orden_neg_int(i, counter, exprFaciais, negativa_irregular)
+	print(i.traducao)
+
+	#advérbio de negação para o fim da oração
+	orden_neg(i, counter, exprFaciais, negativa_irregular)
+
+	#interrogativas parciais (pronomes e advérbios) para o fim da oração
+	orden_int(i, counter, exprFaciais, negativa_irregular)
 
 	print(i.traducao)
 
