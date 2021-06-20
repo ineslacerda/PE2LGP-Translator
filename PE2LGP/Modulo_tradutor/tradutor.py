@@ -572,6 +572,11 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 				for index in indices:
 					adv_cond_frase[index] = True
 			
+			if "SE" in traducao_lgp.split(" "):
+				indices = [index for index, e in enumerate(traducao_lgp.split(" ")) if e == "SE"]
+				for index in indices:
+					adv_cond_frase[index] = True
+			
 			adv_cond_frases += adv_cond_frase
 
 			#identifica adverbios de intensidade
