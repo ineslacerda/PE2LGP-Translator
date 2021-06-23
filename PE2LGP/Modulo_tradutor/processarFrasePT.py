@@ -422,9 +422,7 @@ def preprocessar(f, freeling_values, frase_indice):
 	for index in range(0, len(sub_frases_words)):
 		thread = multiprocessing.Process(target=processar_frase, args=(frase, index, freeling_values, frase_indice, sub_frases_pred_tags, sub_frases_words, sub_frases_lemmas, sub_frases_lemma_verdadeiro, lemma_verdadeiro, map_corpus_dep, map_corpus_tags,my_queue))
 		thread.start()
-		threads.append(thread)
-	
-	for p in threads:
+		# threads.append(thread)
 		frases.append(my_queue.get())
 	
 	return frases
