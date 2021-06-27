@@ -6,7 +6,7 @@ from dependencias import dependencies_spacy
 from elementos_sintaticos import set_elementos
 from identifica_suj_pred import identifica_elementos
 import re
-import multiprocessing
+
 
 def retirar_pontuacao(pred_tags):
 	pred = []
@@ -177,103 +177,6 @@ def clausula_adverbial_cond(pred_tags, dep_tags, words):
 
 	return advs_cl
 
-def processar_frase(frase, index, freeling_values, frase_indice, sub_frases_pred_tags, sub_frases_words, sub_frases_lemmas, sub_frases_lemma_verdadeiro, lemma_verdadeiro, map_corpus_dep, map_corpus_tags, queue):
-	dep_words, dep_tags, indices_filhos = dependencies_spacy(frase[index], freeling_values)
-
-	frase_input = Frase_input(frase[index])
-
-	frase_input.frase_indice = frase_indice
-
-	#verb_trans_obj
-
-	# for p in palavras_compostas:
-	# 	for k in indices_compostas:
-	# 		frase_input.set_palavras_compostas(sub_frases[index][k], p)
-
-	sub_frases_pred_tags[index], indx_remo = retirar_pontuacao(sub_frases_pred_tags[index])
-
-	atualiza_listas(sub_frases_words[index], indx_remo)
-
-	print("dep_words")
-	print(dep_words)
-
-	print("dep_tags")
-	print(dep_tags)
-
-	# Guarda verbo/modificador adjectival a que o adverbio de modo "muito" está a ser aplicado
-	
-	frase_input.adverbial_mod = adverbial_mod(dep_tags, dep_words)
-
-	# Guarda adverbio (verbo) da clausula adverbial condicional --> (indice, verbo_antes_tranducao)
-	
-	frase_input.clausula_adv_cond = clausula_adverbial_cond(sub_frases_pred_tags[index], dep_tags, dep_words)
-
-	# Guarda indice do objecto de um verbo transitivo
-	if len(dep_tags) >= 4:
-		frase_input.obj_verb_trans = obj_verb_transitivo(sub_frases_pred_tags[index], dep_tags, dep_words)
-
-	# modifica dep_tags
-	dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
-
-	print("dep_words")
-	print(dep_words)
-
-	print("dep_tags")
-	print(dep_tags)
-
-	print("dependencies_tags")
-	print(dependencies_tags)
-
-	frase_input.set_dep_tags(dependencies_tags)
-
-	ind_eliminado = retirar_determinante(sub_frases_pred_tags[index], sub_frases_words[index])
-
-	atualiza_listas(dependencies_tags, ind_eliminado)
-	atualiza_listas(sub_frases_lemmas[index], indx_remo)
-	atualiza_listas(sub_frases_lemmas[index], ind_eliminado)
-
-	frase_input.set_lemmas_sem_det(sub_frases_lemmas[index])
-
-	atualiza_listas(sub_frases_lemma_verdadeiro[index], ind_eliminado)
-
-	frase_input.set_lemma_verdade_sem_det(sub_frases_lemma_verdadeiro[index])
-
-	# 3º identificar o tipo de frase
-	tipo = tipo_de_frase(sub_frases_pred_tags[index], frase[index][-1])
-	frase_input.set_tipo(tipo)
-
-	pred_tags_antes = sub_frases_pred_tags[index].copy()
-	frase_input.set_classes_antes(pred_tags_antes) #Lista com as palavras todas da frase (ex: com determinantes artigos)
-
-	# 4º retirar em cada elemento o determinantes artigos
-	dependency_pt = list(filter(lambda a: a != 'punct', dep_tags))
-
-	atualiza_listas(dep_words, ind_eliminado)
-	atualiza_listas(dependency_pt, ind_eliminado)
-	frase_input.set_palavras(dep_words)
-	frase_input.set_frase_sem_det(dep_words, sub_frases_lemmas[index], pred_tags_antes)
-	frase_input.set_frase_sem_det_lemmas_verd(dep_words, lemma_verdadeiro, pred_tags_antes)
-
-	# 5º identificar o que é suj, obj, verbo e predicado
-	set_elementos(dependencies_tags, sub_frases_pred_tags[index], dep_words, frase_input)
-
-	# 6º converter as etiquetas de dependenciaa para as do corpus
-	estrutura = converte_estrutura(dependencies_tags, map_corpus_dep)
-	frase_input.set_dep(estrutura)
-
-	# 7º converter as etiquetas das classes gramaticais para as do corpus
-	frase_input.set_classes(sub_frases_pred_tags[index])
-	frase_input.set_classes(converte_classes(frase_input.classes, map_corpus_tags) + tipo)
-	converte_classes(frase_input.classes_suj, map_corpus_tags)
-	converte_classes(frase_input.classes_obj, map_corpus_tags)
-	converte_classes(frase_input.classes_verbo, map_corpus_tags)
-	converte_classes(frase_input.classes_outro, map_corpus_tags)
-	converte_classes(frase_input.classes_pred, map_corpus_tags)
-
-	# 8º concatenar às novas classes, o tipo da frase:
-	frase_input.set_classes(frase_input.classes + tipo)
-
-	queue.put(frase_input)
 
 def preprocessar(f, freeling_values, frase_indice):
 	"""
@@ -417,12 +320,103 @@ def preprocessar(f, freeling_values, frase_indice):
 
 	
 	frases = []
-	threads = []
-	my_queue = multiprocessing.Queue()
 	for index in range(0, len(sub_frases_words)):
-		thread = multiprocessing.Process(target=processar_frase, args=(frase, index, freeling_values, frase_indice, sub_frases_pred_tags, sub_frases_words, sub_frases_lemmas, sub_frases_lemma_verdadeiro, lemma_verdadeiro, map_corpus_dep, map_corpus_tags,my_queue))
-		thread.start()
-		# threads.append(thread)
-		frases.append(my_queue.get())
-	
+
+		dep_words, dep_tags, indices_filhos = dependencies_spacy(frase[index], freeling_values)
+
+		frase_input = Frase_input(frase[index])
+
+		frase_input.frase_indice = frase_indice
+
+		#verb_trans_obj
+
+		# for p in palavras_compostas:
+		# 	for k in indices_compostas:
+		# 		frase_input.set_palavras_compostas(sub_frases[index][k], p)
+
+		sub_frases_pred_tags[index], indx_remo = retirar_pontuacao(sub_frases_pred_tags[index])
+
+		atualiza_listas(sub_frases_words[index], indx_remo)
+
+		print("dep_words")
+		print(dep_words)
+
+		print("dep_tags")
+		print(dep_tags)
+
+		# Guarda verbo/modificador adjectival a que o adverbio de modo "muito" está a ser aplicado
+		
+		frase_input.adverbial_mod = adverbial_mod(dep_tags, dep_words)
+
+		# Guarda adverbio (verbo) da clausula adverbial condicional --> (indice, verbo_antes_tranducao)
+		
+		frase_input.clausula_adv_cond = clausula_adverbial_cond(sub_frases_pred_tags[index], dep_tags, dep_words)
+
+		# Guarda indice do objecto de um verbo transitivo
+		if len(dep_tags) >= 4:
+			frase_input.obj_verb_trans = obj_verb_transitivo(sub_frases_pred_tags[index], dep_tags, dep_words)
+
+		# modifica dep_tags
+		dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
+
+		print("dep_words")
+		print(dep_words)
+
+		print("dep_tags")
+		print(dep_tags)
+
+		print("dependencies_tags")
+		print(dependencies_tags)
+
+		frase_input.set_dep_tags(dependencies_tags)
+
+		ind_eliminado = retirar_determinante(sub_frases_pred_tags[index], sub_frases_words[index])
+
+		atualiza_listas(dependencies_tags, ind_eliminado)
+		atualiza_listas(sub_frases_lemmas[index], indx_remo)
+		atualiza_listas(sub_frases_lemmas[index], ind_eliminado)
+
+		frase_input.set_lemmas_sem_det(sub_frases_lemmas[index])
+
+		atualiza_listas(sub_frases_lemma_verdadeiro[index], ind_eliminado)
+
+		frase_input.set_lemma_verdade_sem_det(sub_frases_lemma_verdadeiro[index])
+
+		# 3º identificar o tipo de frase
+		tipo = tipo_de_frase(sub_frases_pred_tags[index], frase[index][-1])
+		frase_input.set_tipo(tipo)
+
+		pred_tags_antes = sub_frases_pred_tags[index].copy()
+		frase_input.set_classes_antes(pred_tags_antes) #Lista com as palavras todas da frase (ex: com determinantes artigos)
+
+		# 4º retirar em cada elemento o determinantes artigos
+		dependency_pt = list(filter(lambda a: a != 'punct', dep_tags))
+
+		atualiza_listas(dep_words, ind_eliminado)
+		atualiza_listas(dependency_pt, ind_eliminado)
+		frase_input.set_palavras(dep_words)
+		frase_input.set_frase_sem_det(dep_words, sub_frases_lemmas[index], pred_tags_antes)
+		frase_input.set_frase_sem_det_lemmas_verd(dep_words, lemma_verdadeiro, pred_tags_antes)
+
+		# 5º identificar o que é suj, obj, verbo e predicado
+		set_elementos(dependencies_tags, sub_frases_pred_tags[index], dep_words, frase_input)
+
+		# 6º converter as etiquetas de dependenciaa para as do corpus
+		estrutura = converte_estrutura(dependencies_tags, map_corpus_dep)
+		frase_input.set_dep(estrutura)
+
+		# 7º converter as etiquetas das classes gramaticais para as do corpus
+		frase_input.set_classes(sub_frases_pred_tags[index])
+		frase_input.set_classes(converte_classes(frase_input.classes, map_corpus_tags) + tipo)
+		converte_classes(frase_input.classes_suj, map_corpus_tags)
+		converte_classes(frase_input.classes_obj, map_corpus_tags)
+		converte_classes(frase_input.classes_verbo, map_corpus_tags)
+		converte_classes(frase_input.classes_outro, map_corpus_tags)
+		converte_classes(frase_input.classes_pred, map_corpus_tags)
+
+		# 8º concatenar às novas classes, o tipo da frase:
+		frase_input.set_classes(frase_input.classes + tipo)
+
+		frases.append(frase_input)
+
 	return frases
