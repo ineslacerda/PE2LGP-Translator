@@ -157,12 +157,13 @@ def adverbial_mod(dep_tags, words):
 
 
 def obj_verb_transitivo(pred_tags, dep_tags, words):
-	verbs = list(filter(lambda x: x[0]+1 < len(dep_tags) and pred_tags[x[0]].startswith("V") and dep_tags[x[0]] == "ROOT" and dep_tags[x[0]+1] == "case", enumerate(dep_tags)))
+	verbs = list(filter(lambda x: "case" in dep_tags and ("obl" in dep_tags[x[0]] or "obj" in dep_tags[x[0]]), enumerate(dep_tags)))
 
 	objs_verbs_trans = {}
 	for verb in verbs:
-		objs_verbs_trans[str(words[verb[0]+3])] = dep_tags[verb[0]+3]
-
+		objs_verbs_trans[str(words[verb[0]])] = dep_tags[verb[0]]
+	print("TRANSSSSSSSSSSSSS")
+	print(objs_verbs_trans)
 	return objs_verbs_trans
 
 def clausula_adverbial_cond(pred_tags, dep_tags, words):
