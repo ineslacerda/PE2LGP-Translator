@@ -404,7 +404,7 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		lema = valor[1]
 		palavra = valor[0]
 		# Se não tiver um quantificador numeral então faz-se o plural
-		if classe.startswith("NC") and classe[3] == "P" and "NUM" not in i.classes:
+		if (classe.startswith("NC") and classe[3] == "P") or (classe.startswith("AQ") and classe[4] == "P") and "NUM" not in i.classes:
 			i.traducao[indice] = palavra.upper()
 		else:
 			i.traducao[indice] = lema.upper()
@@ -443,6 +443,13 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 					exprFaciais[key] = ["negativa_headshake"]
 				i.traducao[indice] = lema.replace(" ", "_").upper()
 				adverbio_negacao = True	
+		
+		print("negaaaa")
+		print(verbo_neg_irregular and classe.startswith("RN"))
+		print(palavra)
+		if not verbo_neg_irregular and palavra.upper() != "MUITO":
+			i.traducao_palavras.append(palavra.upper().replace("_", " ").replace("-", " ").replace(" DE", ""))
+	
 
 		# Remove a glosa NAO se for uma negativa irregular or um advérbio de negação
 		if (verbo_neg_irregular or adverbio_negacao) and classe.startswith("RN"):
@@ -469,10 +476,6 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		if palavra.upper() == "MUITO":
 			del i.traducao[indice]
 			indice -= 1
-
-		if not (verbo_neg_irregular and classe.startswith("RN")) and palavra.upper() != "MUITO":
-			i.traducao_palavras.append(palavra.upper().replace("_", " ").replace("-", " ").replace(" DE", ""))
-	
 
 		indice += 1
 
