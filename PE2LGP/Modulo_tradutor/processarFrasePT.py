@@ -202,6 +202,11 @@ def preprocessar(f, freeling_values, frase_indice):
 	print("pred_tags")
 	print(pred_tags)
 
+	# dep_words, dep_tags, indices_filhos = dependencies_spacy("um rapaz estava a andar pelo supermercado quando uma rapariga chocou contra ele", freeling_values)
+	# print("SPACYYYYY")
+	# print(dep_words)
+	# print(dep_tags)
+
 	# palavras_compostas, indices_compostas = palavra_composta(words)
 
 

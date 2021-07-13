@@ -171,15 +171,21 @@ def set_elementos(dependencies_tags, pred_tags, dep_words, frase):
 
 		# Se verbo estiver no inicio da frase sem sujeito --> d == case
 		if (d == "ROOT" or d == "case") and "cop" not in dependencies_tags and pred_tags[i].startswith("V"):
+			print("verbooo incioooooooo " + dep_words[i])
 			frase.set_classes_v(pred_tags[i])
 			frase.set_classes_antes_v(dep_words[i], pred_tags[i])
 			frase.set_indices_verbo(i)
 
 		# Verbo auxiliar --> "estava a conduzir"
 		if d == "xcomp" and pred_tags[i].startswith("V"):
-			frase.set_classes_v(pred_tags[i])
-			frase.set_classes_antes_v(dep_words[i], pred_tags[i])
-			frase.set_indices_verbo(i)
+			print("verbooo auxiliar " + dep_words[i] + " : " + str(i))
+			print(dep_words)
+			frase.classes_verbo.insert(len(frase.classes_verbo)-1, pred_tags[i])
+			print(frase.classes_verbo)
+			# frase.set_classes_v(pred_tags[i])
+			frase.classes_antes_verbo.insert(len(frase.classes_antes_verbo)-1, (dep_words[i], pred_tags[i]))
+			frase.indices_verbo.insert(len(frase.indices_verbo)-1, i)
+			# frase.set_indices_verbo(i)
 		
 		if d == "amod" and "ROOT" in dependencies_tags and pred_tags[i].startswith("V"):
 			frase.set_indices_verbo(i)
