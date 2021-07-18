@@ -78,7 +78,7 @@ async def post_handler(request):
     post_data = await request.text()
 
     try:
-        translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data)
+        translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data, negativa_irregular, gestos_compostos)
         print(translated_sentence)
     except IndexError as err:
         print('Error translating sentence')
@@ -97,7 +97,7 @@ async def post_handler(request):
  #   print("putttt")
 
 if __name__ == "__main__":
-    freeling_model, palavras_glosas, freq_dic = tradutor_main()
+    freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
     PORT = 80
 
     app = web.Application()

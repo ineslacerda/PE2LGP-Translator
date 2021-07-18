@@ -17,6 +17,7 @@ from freeling import load_freeling
 from phonemizer.phonemize import phonemize
 import unidecode
 import time
+import json
 # import pyphen --> silabas
 # epitran --> fonemas
 
@@ -335,7 +336,10 @@ def abre_corpus_teste(corpus):
 			references.append(l[0])
 	return references
 
-def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
+def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos):
+
+	print("GESTOS COMPOSTOSSS")
+	print(gestos_compostos)
 	frase_lgp = []
 	start_time = time.time()
 
@@ -350,13 +354,6 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 	palavras_unidas = ["cor de rosa", "cor de laranja"]
 
-	negativa_irregular = []
-	with open('Verbos_excepcoes.csv') as csvfile:
-		csvreader = csv.reader(csvfile, delimiter="\t")
-		for row in csvreader:
-			negativa_irregular.append(row[0])
-
-	print(negativa_irregular)
 	frases = sent_tokenize(sentence)
 	print(frases)
 
@@ -393,7 +390,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 	indice = 0
 	frase_lgp = []
 	mouthing = ""
-	gestos_compostos = []
+	gestos_compostos_frases = []
 	pausas = []
 	adv_cond_frases = []
 	adv_intensidade_frases = []
@@ -526,9 +523,11 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 		print("sujeitoooo")
 		print(suj)
+		print(i.traducao_regras_outro)
+		print(i.traducao_regras_suj)
 
 		#fase de geracao
-		f_lgp, exprFaciais, traducao_lgp  = geracao(i, indice, exprFaciais, negativa_irregular)
+		f_lgp, exprFaciais, traducao_lgp, gest_comp_frase  = geracao(i, indice, exprFaciais, negativa_irregular, gestos_compostos)
 		
 		if f_lgp:
 			indice += len(f_lgp)
@@ -538,15 +537,15 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 			#gestos_compostos
 			print("gestosssssss compostosss")
-			gest_comp_frase = [False] * len(f_lgp)
-			if "MULHER" in f_lgp:
-				indices = [i for i, e in enumerate(f_lgp) if e == "MULHER"]
-				print(indices)
-				for indice in indices:
-					gest_comp_frase[indice+1] = True
+			# gest_comp_frase = [False] * len(f_lgp)
+			# if "MULHER" in f_lgp:
+			# 	indices = [i for i, e in enumerate(f_lgp) if e == "MULHER"]
+			# 	print(indices)
+			# 	for indice in indices:
+			# 		gest_comp_frase[indice+1] = True
 
-			print(gest_comp_frase)			
-			gestos_compostos += gest_comp_frase
+			# print(gest_comp_frase)			
+			gestos_compostos_frases += gest_comp_frase
 			
 			# Identifica as pausas
 			pausas_frase = ["false"] * len(f_lgp)
@@ -641,7 +640,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence):
 
 	# print(syllables)
 
-	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos,
+	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos_frases,
 	'pausas': pausas, 'adv_cond': adv_cond_frases, 'adv_intensidade': adv_intensidade_frases}
 	if exprFaciais:
 		dictionary['exprFaciais'] = exprFaciais
@@ -700,13 +699,30 @@ def tradutor_main():
 		freeling_model = load_freeling(True)
 		palavras_glosas, freq_dic = freq_dicionario()
 
-		return freeling_model, palavras_glosas, freq_dic
+		#Identifica verbos com uma negativa irregular --> modificação morfológica
+		negativa_irregular = []
+		with open('Verbos_excepcoes.csv') as csvfile:
+			csvreader = csv.reader(csvfile, delimiter="\t")
+			for row in csvreader:
+				negativa_irregular.append(row[0])
+
+		print(negativa_irregular)
+
+		#Identifica gestos compostos
+		f = open('gestos_compostos.json',)
+		data = json.load(f)
+		# for i in data['gestos_compostos']:
+		# 	print(i)
+		# 	print(data['gestos_compostos'][i])
+		f.close()
+
+		return freeling_model, palavras_glosas, freq_dic, negativa_irregular, data['gestos_compostos']
 
 		#return traducao_lgp
 
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Ontem ele viu o jogo de basquetebol." # tens uma caneca de bebé em casa
-# freeling_model, palavras_glosas, freq_dic = tradutor_main()
-# translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence)
+# sentence = "ele gosta de jogar basquetebol" # tens uma caneca de bebé em casa
+# freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
+# translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)

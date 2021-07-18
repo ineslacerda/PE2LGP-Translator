@@ -216,14 +216,14 @@ def feminino(traducao, excepcoes):
 						if classe.startswith("NCFP") and palavra[:-5].lower() != lema[:-1].lower():
 							glosa = "MULHER"
 							traducao.insert(indice, (glosa, glosa, "A"))
-							traducao[indice + 1] = (lema, lema, classe)
+							traducao[indice + 1] = (lema, lema, classe + "_COMP")
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
 
 						elif classe.startswith("NCFS") and palavra[:-4].lower() != lema[:-1].lower():
 							glosa = "MULHER"
 							traducao.insert(indice,(glosa, glosa, "A"))
-							traducao[indice + 1] = (lema, lema, classe)
+							traducao[indice + 1] = (lema, lema, classe + "_COMP")
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
 
@@ -257,14 +257,14 @@ def feminino(traducao, excepcoes):
 						if classe.startswith("NCFP") and palavra[:-5].lower() != lema[:-1].lower():
 							glosa = "MULHER"
 							traducao.insert(indice, (glosa, glosa, "A"))
-							traducao[indice + 1] = (lema, lema, classe)
+							traducao[indice + 1] = (lema, lema, classe + "_COMP")
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
 
 						elif classe.startswith("NCFS") and palavra[:-4].lower() != lema[:-1].lower():
 							glosa = "MULHER"
 							traducao.insert(indice, (glosa, glosa, "A"))
-							traducao[indice + 1] = (lema, lema, classe)
+							traducao[indice + 1] = (lema, lema, classe + "_COMP")
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
 
@@ -283,12 +283,12 @@ def feminino(traducao, excepcoes):
 						if classe.startswith("NCFP") and palavra[:-1].lower() != lema.lower():
 							glosa = "MULHER"
 							traducao.insert(indice, (glosa, glosa, "A"))
-							traducao[indice + 1] = (lema, lema, classe)
+							traducao[indice + 1] = (lema, lema, classe + "_COMP")
 							indice += 1
 						elif classe.startswith("NCFS") and palavra.lower() != lema.lower():
 							glosa = "MULHER"
 							traducao.insert(indice, (glosa, glosa, "A"))
-							traducao[indice + 1] = (lema, lema, classe)
+							traducao[indice + 1] = (lema, lema, classe + "_COMP")
 							indice += 1
 
 			else:
@@ -297,7 +297,7 @@ def feminino(traducao, excepcoes):
 						diminutivo = "PEQUENO"
 						if "mulher" in excepcoes[palavra].split():
 							traducao.insert(indice, ("MULHER", "MULHER", "A"))
-							traducao[indice + 1] = (excepcoes[palavra].split()[1], lema, classe)
+							traducao[indice + 1] = (excepcoes[palavra].split()[1], lema, classe + "_COMP")
 							traducao.insert(indice + 2, ("PEQUENO", "PEQUENO", classe))
 							indice += 2
 
@@ -310,7 +310,7 @@ def feminino(traducao, excepcoes):
 						if "mulher" in excepcoes[palavra].split():
 
 							traducao.insert(indice, ("MULHER", "MULHER", "A"))
-							traducao[indice + 1] = (excepcoes[palavra].split()[1], lema, classe)
+							traducao[indice + 1] = (excepcoes[palavra].split()[1], lema, classe + "_COMP")
 							traducao.insert(indice + 2, ("GRANDE", "GRANDE", classe))
 							indice += 2
 
@@ -388,7 +388,7 @@ def cliticos(traducao):
 				del traducao[indice]
 				indice -= 1
 
-def converte_glosas(i, counter, exprFaciais, negativa_irregular):
+def expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 	"""
 	Converte as palavras em glosas.
 	:param traducao: frase
@@ -403,11 +403,6 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		classe = valor[2]
 		lema = valor[1]
 		palavra = valor[0]
-		# Se não tiver um quantificador numeral então faz-se o plural
-		if (classe.startswith("NC") and classe[3] == "P") or (classe.startswith("AQ") and classe[4] == "P") and "NUM" not in i.classes:
-			i.traducao[indice] = palavra.upper()
-		else:
-			i.traducao[indice] = lema.upper()
 
 		# if not classe.startswith("A") and not classe.startswith("NC"):
 		# 	i.traducao[indice] = lema.upper()
@@ -415,13 +410,6 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		# else:
 		# 	i.traducao[indice] = palavra.upper()
 
-		if classe.startswith("Z"):
-			try:
-				int(palavra)
-			except ValueError:
-				# Transforma numeros por exenso sem ser por extenso
-				i.traducao[indice] = str(ExtensoToInteiro(palavra))
-	
 		# Adiciona a expressao negativa
 		if "NEG" in i.tipo[0]:
 			key = str(indice+counter) + "-" + str(indice+counter+1)
@@ -447,9 +435,6 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 		print("negaaaa")
 		print(verbo_neg_irregular and classe.startswith("RN"))
 		print(palavra)
-		if not verbo_neg_irregular and palavra.upper() != "MUITO":
-			i.traducao_palavras.append(palavra.upper().replace("_", " ").replace("-", " ").replace(" DE", ""))
-	
 
 		# Remove a glosa NAO se for uma negativa irregular or um advérbio de negação
 		if (verbo_neg_irregular or adverbio_negacao) and classe.startswith("RN"):
@@ -471,14 +456,74 @@ def converte_glosas(i, counter, exprFaciais, negativa_irregular):
 					exprFaciais[key].append("interrogativa_total")
 				else:
 					exprFaciais[key] = ["interrogativa_total"]
-		
+
+		if not verbo_neg_irregular and palavra.upper() != "MUITO":
+			i.traducao_palavras.append(palavra.upper().replace("_", " ").replace("-", " ").replace(" DE", ""))
+	
+
 		# remove o adverbio de intensidade MUITO
 		if palavra.upper() == "MUITO":
 			del i.traducao[indice]
-			indice -= 1
+			indice -= 1		
+
+		#coverte gestos compostos
+		print("GESTOS COMPOSTOSSS")
+		print(gestos_compostos)
+		if palavra.upper() in gestos_compostos:
+			del i.traducao[indice]
+			for index, value in enumerate(gestos_compostos[palavra.upper()]):
+				if (index > 0):
+					classe += "_COMP"
+				i.traducao.insert(indice, (palavra, value, classe))
+				indice += 1
 
 		indice += 1
 
+def converte_glosas(i, counter):
+	"""
+	Converte as palavras em glosas.
+	:param traducao: frase
+	:return:
+	"""
+	verbo_neg_irregular = False
+	adverbio_negacao =  False
+	indice = 0
+	gest_comp_frase = [False] * len(i.traducao)
+	while indice < len(i.traducao):
+		valor = i.traducao[indice]
+	# for indice, valor in enumerate(i.traducao):
+		classe = valor[2]
+		lema = valor[1]
+		palavra = valor[0]
+		# Se não tiver um quantificador numeral então faz-se o plural
+		if (classe.startswith("NC") and classe[3] == "P") or (classe.startswith("AQ") and classe[4] == "P") and "NUM" not in i.classes:
+			i.traducao[indice] = palavra.upper()
+		else:
+			i.traducao[indice] = lema.upper()
+
+		# if not classe.startswith("A") and not classe.startswith("NC"):
+		# 	i.traducao[indice] = lema.upper()
+
+		# else:
+		# 	i.traducao[indice] = palavra.upper()
+
+		if classe.startswith("Z"):
+			try:
+				int(palavra)
+			except ValueError:
+				# Transforma numeros por exenso sem ser por extenso
+				i.traducao[indice] = str(ExtensoToInteiro(palavra))
+	
+		print(palavra)
+		
+		if "COMP" in classe:
+			gest_comp_frase[indice] = True
+
+		print(gest_comp_frase)			
+
+		indice += 1
+	
+	return gest_comp_frase
 
 		# Adiciona a expressao negativa no gesto manual NÃO
 		# if classe.startswith("RN") and "NEG" in i.tipo[0]:
@@ -498,7 +543,7 @@ def expressao_olhos_franzidos(tipo, traducao, indice, exprFaciais):
 
 	# return traducao_glosas
 
-def geracao(i, counter, exprFaciais, negativa_irregular):
+def geracao(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 	"""
 	Função principal que aplica as regras manuais anteriores conforme a gramática da LGP.
 	:param i: Frase em português (objeto).
@@ -541,8 +586,13 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 
 	print(i.traducao)
 
-	# passar para glosas && adicionar expressão facial negativa e interrogativa
-	converte_glosas(i, counter, exprFaciais, negativa_irregular)
+	# adicionar expressão facial negativa e interrogativa, e converte gestos_compostos
+	expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compostos)
+
+	# passar para glosas, identifica gestos compostos
+	gest_comp_frase = converte_glosas(i, counter)
+	print("GESTOS COMPOSTOS:")
+	print(gest_comp_frase)
 
 	print(i.traducao)
 
@@ -556,4 +606,4 @@ def geracao(i, counter, exprFaciais, negativa_irregular):
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
 	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
 
-	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras)
+	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras), gest_comp_frase

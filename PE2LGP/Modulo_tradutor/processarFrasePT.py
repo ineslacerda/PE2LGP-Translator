@@ -371,6 +371,9 @@ def preprocessar(f, freeling_values, frase_indice):
 		print("dep_tags")
 		print(dep_tags)
 
+		print("FILHOSSSS")
+		print(indices_filhos)
+
 		print("dependencies_tags")
 		print(dependencies_tags)
 
@@ -396,7 +399,7 @@ def preprocessar(f, freeling_values, frase_indice):
 		frase_input.set_classes_antes(pred_tags_antes) #Lista com as palavras todas da frase (ex: com determinantes artigos)
 
 		# 4º retirar em cada elemento o determinantes artigos
-		dependency_pt = list(filter(lambda a: a != 'punct', dep_tags))
+		dependency_pt = list(filter(lambda a: a != 'punct', dependencies_tags))
 
 		atualiza_listas(dep_words, ind_eliminado)
 		atualiza_listas(dependency_pt, ind_eliminado)

@@ -101,7 +101,12 @@ def set_elementos(dependencies_tags, pred_tags, dep_words, frase):
 			frase.set_classes_antes_obj(dep_words[i], pred_tags[i])
 			frase.set_indices_obj(i)
 
-		if "acl" in d:
+		if "acl" in d and pred_tags[i].startswith("V"):
+			frase.set_classes_v(pred_tags[i])
+			frase.set_classes_antes_v(dep_words[i], pred_tags[i])
+			frase.set_indices_verbo(i)
+
+		elif "acl" in d:
 			frase.set_classes_obj(pred_tags[i])
 			frase.set_classes_antes_obj(dep_words[i], pred_tags[i])
 			frase.set_indices_obj(i)
@@ -196,7 +201,7 @@ def set_elementos(dependencies_tags, pred_tags, dep_words, frase):
 			frase.set_classes_antes_obj(dep_words[i], pred_tags[i])
 			frase.set_indices_obj(i)
 
-		if d == "cop" and "ROOT" in dependencies_tags :
+		if d == "cop" and "ROOT" in dependencies_tags:
 			frase.set_classes_v(pred_tags[i])
 			frase.set_classes_antes_v(dep_words[i], pred_tags[i])
 			frase.set_indices_verbo(i)
@@ -211,8 +216,13 @@ def set_elementos(dependencies_tags, pred_tags, dep_words, frase):
 		# 	frase.set_classes_antes_suj(dep_words[i], pred_tags[i])
 		# 	frase.set_indices_suj(i)
 		
+		if d == "mark" and i<len(dependencies_tags) and dependencies_tags[i+1] == "nsubj":
+			frase.set_classes_suj(pred_tags[i])
+			frase.set_classes_antes_suj(dep_words[i], pred_tags[i])
+			frase.set_indices_suj(i)
+
 		# Quando começa a escola? adiciona o quando
-		if "mark" in d:
+		elif "mark" in d:
 			frase.set_classes_outros(pred_tags[i])
 			frase.set_classes_antes_outro(dep_words[i], pred_tags[i])
 			frase.set_indices_outros(i)
