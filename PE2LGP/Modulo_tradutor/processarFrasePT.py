@@ -377,11 +377,11 @@ def preprocessar(f, freeling_values, frase_indice):
 		print("dependencies_tags")
 		print(dependencies_tags)
 
-		frase_input.set_dep_tags(dependencies_tags)
+		frase_input.set_dep_tags(dep_tags)
 
 		ind_eliminado = retirar_determinante(sub_frases_pred_tags[index], sub_frases_words[index])
 
-		atualiza_listas(dependencies_tags, ind_eliminado)
+		atualiza_listas(dep_tags, ind_eliminado)
 		atualiza_listas(sub_frases_lemmas[index], indx_remo)
 		atualiza_listas(sub_frases_lemmas[index], ind_eliminado)
 
@@ -399,7 +399,7 @@ def preprocessar(f, freeling_values, frase_indice):
 		frase_input.set_classes_antes(pred_tags_antes) #Lista com as palavras todas da frase (ex: com determinantes artigos)
 
 		# 4º retirar em cada elemento o determinantes artigos
-		dependency_pt = list(filter(lambda a: a != 'punct', dependencies_tags))
+		dependency_pt = list(filter(lambda a: a != 'punct', dep_tags))
 
 		atualiza_listas(dep_words, ind_eliminado)
 		atualiza_listas(dependency_pt, ind_eliminado)
@@ -408,10 +408,10 @@ def preprocessar(f, freeling_values, frase_indice):
 		frase_input.set_frase_sem_det_lemmas_verd(dep_words, lemma_verdadeiro, pred_tags_antes)
 
 		# 5º identificar o que é suj, obj, verbo e predicado
-		set_elementos(dependencies_tags, sub_frases_pred_tags[index], dep_words, frase_input)
+		set_elementos(dep_tags, sub_frases_pred_tags[index], dep_words, frase_input)
 
 		# 6º converter as etiquetas de dependenciaa para as do corpus
-		estrutura = converte_estrutura(dependencies_tags, map_corpus_dep)
+		estrutura = converte_estrutura(dep_tags, map_corpus_dep)
 		frase_input.set_dep(estrutura)
 
 		# 7º converter as etiquetas das classes gramaticais para as do corpus

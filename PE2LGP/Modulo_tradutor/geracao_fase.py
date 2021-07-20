@@ -420,7 +420,8 @@ def expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compo
 					exprFaciais[key].append("negativa_headshake")
 				else:
 					exprFaciais[key] = ["negativa_headshake"]
-				i.traducao[indice] = "NÃO_" + lema.upper()
+
+				i.traducao[indice] = (palavra, "NÃO_" + lema.upper(), classe)
 				verbo_neg_irregular = True
 				i.traducao_palavras.append("NÃO")
 			# Adicionar expressão no adverbio de negação
@@ -429,7 +430,7 @@ def expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compo
 					exprFaciais[key].append("negativa_headshake")
 				else:
 					exprFaciais[key] = ["negativa_headshake"]
-				i.traducao[indice] = lema.replace(" ", "_").upper()
+				i.traducao[indice] = (palavra, lema.replace(" ", "_").upper(), classe)
 				adverbio_negacao = True	
 		
 		print("negaaaa")
@@ -588,6 +589,9 @@ def geracao(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 
 	# adicionar expressão facial negativa e interrogativa, e converte gestos_compostos
 	expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compostos)
+
+	print("expreeeee: ")
+	print(i.traducao)
 
 	# passar para glosas, identifica gestos compostos
 	gest_comp_frase = converte_glosas(i, counter)
