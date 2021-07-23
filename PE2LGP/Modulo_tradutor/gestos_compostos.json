@@ -4,6 +4,14 @@
       "BASQUETEBOL": [
       "BASQUETEBOL1",
       "BASQUETEBOL2"
+      ],
+      "ZEBRA": [
+        "CAVALO",
+        "RISCAS"
+      ],
+      "MELANCIA": [
+        "VERMELHO",
+        "MELÃO"
       ]
     }
 }
