@@ -81,7 +81,10 @@ async def post_handler(request):
         translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data, negativa_irregular, gestos_compostos)
         print(translated_sentence)
 
-        translated_sentence = {'glosas': ['RAPAZ', 'AQUELE', 'ESCREVER', 'NÃO_SABER', 'MAS', 'ELE', 'SABER', 'LER'], 'gestos_compostos': [False, False, False, False, False, False, False, False], 'pausas': ['false', 'false', 'false', 'oracao', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'3-4': ['negativa_headshake'], '0-4': ['olhos_franzidos']}}
+        translated_sentence = {'glosas': ['VERMELHO', 'MELÃO', 'TIAGO', 'COMER', 'NÃO'], 'gestos_compostos': [False, True, False, False, False], 'pausas': ['false', 'false', 'false', 'false', 'false'], 'adv_cond': [False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false']}
+        
+        # translated_sentence = {'glosas': ['RAPAZ', 'AQUELE', 'ESCREVER', 'NÃO_SABER', 'MAS', 'ELE', 'SABER', 'LER'], 'gestos_compostos': [False, False, False, False, False, False, False, False], 'pausas': ['false', 'false', 'false', 'oracao', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'3-4': ['negativa_headshake'], '0-4': ['olhos_franzidos']}}
+
     except IndexError as err:
         print('Error translating sentence')
         translated_sentence = "Erro"
