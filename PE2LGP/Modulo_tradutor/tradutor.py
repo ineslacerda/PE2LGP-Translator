@@ -723,6 +723,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Ele gosta de jogar basquetebol." # tens uma caneca de bebé em casa
+# sentence = "Um rapaz surdo estava a andar pelo supermercado quando chocou com uma rapariga" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)

@@ -12,6 +12,18 @@
       "MELANCIA": [
         "VERMELHO",
         "MELÃO"
+      ],
+      "AFILHADO": [
+        "PADRINHO",
+        "FILHO"
+      ],
+      "PROFISSÃO": [
+        "TRABALHO",
+        "PROFISSÃO"
+      ],
+      "URSO": [
+        "FOCINHO1",
+        "URSO2"
       ]
     }
 }

@@ -96,7 +96,7 @@ def tempo_verbal(i):
 	:return:
 	"""
 	pronomes = {"1S": "eu", "2S": "tu", "3S": "ele", "1P": "nós", "2P": "vós", "3P": "eles"}
-	indice_tempo = list(filter(lambda x: x[1][2] == "RGT" or x[1][2] == "RGTP" or x[1][2] == "RGTF", enumerate(i.traducao)))
+	indice_tempo = list(filter(lambda x: x[1][2] == "RGT" or x[1][2] == "RGTP" or x[1][2] == "RGTF" or x[1][2] == "RG", enumerate(i.traducao)))
 
 	# Adiciona tempo verbal no início da frase
 	if indice_tempo:
@@ -470,6 +470,8 @@ def expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compo
 		#coverte gestos compostos
 		print("GESTOS COMPOSTOSSS")
 		print(gestos_compostos)
+		print(palavra)
+		print(palavra.upper() in gestos_compostos)
 		if palavra.upper() in gestos_compostos:
 			del i.traducao[indice]
 			for index, value in enumerate(gestos_compostos[palavra.upper()]):
@@ -477,6 +479,7 @@ def expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compo
 					classe += "_COMP"
 				i.traducao.insert(indice, (palavra, value, classe))
 				indice += 1
+			indice -= 1
 
 		indice += 1
 
@@ -490,6 +493,7 @@ def converte_glosas(i, counter):
 	adverbio_negacao =  False
 	indice = 0
 	gest_comp_frase = [False] * len(i.traducao)
+	print(gest_comp_frase)
 	while indice < len(i.traducao):
 		valor = i.traducao[indice]
 	# for indice, valor in enumerate(i.traducao):
