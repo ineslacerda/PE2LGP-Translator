@@ -78,8 +78,8 @@ async def post_handler(request):
     post_data = await request.text()
 
     try:
-        # translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data, negativa_irregular, gestos_compostos)
-        # print(translated_sentence)
+        translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data, negativa_irregular, gestos_compostos)
+        print(translated_sentence)
 
         # translated_sentence =  {'glosas': ['BOA', 'TARDE', 'NOME', 'MEU_NO_EXPR', 'MARIANA'], 'fonemas': [['BOA', 'CA', 'CE'], ['CA', 'CE'], ['CO', 'BE'], ['BAU'], ['BA', 'CEA', 'CA']], 'gestos_compostos': [False, False, False, False, False], 'pausas': ['false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false']}
         
@@ -109,7 +109,7 @@ async def post_handler(request):
 
         # translated_sentence = {'glosas': ['CINEMA', 'TU', 'GOSTAR', 'NÃO', 'PORQUÊ'], 'fonemas': [['CE', 'CA', 'BA'], ['CU'], ['CO', 'CA'], ['CAU'], ['BU', 'CA']], 'gestos_compostos': [False, False, False, False, False], 'pausas': ['false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'4-5': ['interrogativa_parcial'], '0-5': ['olhos_franzidos']}}
 
-        translated_sentence = {'glosas': ['SUPERMERCADO', 'RAPAZ', 'ANDAR', 'QUANDO', 'MULHER', 'RAPAZ', 'ELE', 'CHOCAR_COM_PESSOA'], 'fonemas': [['CU', 'BA', 'BE', 'CA', 'CU'], ['CA', 'BA'], ['AC', 'CA'], ['CUA', 'CU'], ['BU', 'CA'], ['CA', 'BA'], ['A', 'CE'], ['CU', 'COU']], 'gestos_compostos': [False, False, False, False, False, True, False, False], 'pausas': ['false', 'false', 'oracao', 'false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']}
+        # translated_sentence = {'glosas': ['SUPERMERCADO', 'RAPAZ', 'ANDAR', 'QUANDO', 'MULHER', 'RAPAZ', 'ELE', 'CHOCAR_COM_PESSOA'], 'fonemas': [['CU', 'BA', 'BE', 'CA', 'CU'], ['CA', 'BA'], ['AC', 'CA'], ['CUA', 'CU'], ['BU', 'CA'], ['CA', 'BA'], ['A', 'CE'], ['CU', 'COU']], 'gestos_compostos': [False, False, False, False, False, True, False, False], 'pausas': ['false', 'false', 'oracao', 'false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']}
 
     except IndexError as err:
         print('Error translating sentence')
