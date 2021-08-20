@@ -563,18 +563,18 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 			print(pausas)
 
 			#identifica clausulas adverbiais condicionais com o "se"
-			adv_cond_frase = [False] * len(f_lgp)
+			adv_cond_frase = ["false"] * len(f_lgp)
 
 			if i.clausula_adv_cond and i.clausula_adv_cond[0][1].upper() in traducao_lgp.split(" "):
 				indices = [index for index, e in enumerate(traducao_lgp.split(" ")) if e == i.clausula_adv_cond[0][1].upper()]
 				print(indices)
 				for index in indices:
-					adv_cond_frase[index] = True
+					adv_cond_frase[index] = "true"
 			
 			if "SE" in traducao_lgp.split(" "):
 				indices = [index for index, e in enumerate(traducao_lgp.split(" ")) if e == "SE"]
 				for index in indices:
-					adv_cond_frase[index] = True
+					adv_cond_frase[index] = "true"
 			
 			adv_cond_frases += adv_cond_frase
 
@@ -723,6 +723,6 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "Um rapaz surdo estava a andar pelo supermercado quando chocou com uma rapariga" # tens uma caneca de bebé em casa
+# sentence = "ola" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
 # translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)

@@ -111,9 +111,9 @@ def tempo_verbal(i):
 			if i.obj_verb_trans and valor[1].lower() == "chocar":
 				index = list(i.obj_verb_trans.keys())[0]
 				if i.obj_verb_trans[index] == "obl":
-					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_com_pessoa", classe)
+					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_pessoa", classe)
 				elif i.obj_verb_trans[index] == "obj" and index.lower() == "parede":
-					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_com_parede", classe)
+					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_parede", classe)
 			# if indice==0 or indice > 0 and not (i.traducao[indice-1][2].startswith("PP") or i.traducao[indice-1][2].startswith("NC")): # or traducao[indice-1][2].startswith("NC")
 			if not i.classes_suj and (valor[1].lower() != "começar" and valor[1].lower() != "haver"):
 				pronome = classe[4] + classe[5]
@@ -492,7 +492,7 @@ def converte_glosas(i, counter):
 	verbo_neg_irregular = False
 	adverbio_negacao =  False
 	indice = 0
-	gest_comp_frase = [False] * len(i.traducao)
+	gest_comp_frase = ["false"] * len(i.traducao)
 	print(gest_comp_frase)
 	while indice < len(i.traducao):
 		valor = i.traducao[indice]
@@ -522,7 +522,7 @@ def converte_glosas(i, counter):
 		print(palavra)
 		
 		if "COMP" in classe:
-			gest_comp_frase[indice] = True
+			gest_comp_frase[indice] = "true"
 
 		print(gest_comp_frase)			
 
