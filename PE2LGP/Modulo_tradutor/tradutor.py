@@ -20,6 +20,7 @@ import time
 import json
 # import pyphen --> silabas
 # epitran --> fonemas
+import traceback
 
 from separate_syllables import silabizer
 
@@ -723,6 +724,9 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "ola" # tens uma caneca de bebé em casa
+# sentence = "ol´a" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
-# translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)
+# try:
+# 	translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)
+# except:
+# 	print(traceback.format_exc())

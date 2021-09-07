@@ -6,6 +6,7 @@ from tradutor import tradutor_main, translate_sentence
 from _thread import start_new_thread
 import json
 import os
+import traceback
 
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -114,6 +115,7 @@ async def post_handler(request):
         # translated_sentence = {'glosas': ['SUPERMERCADO', 'SURDO', 'RAPAZ', 'ANDAR', 'QUANDO', 'MULHER', 'RAPAZ', 'ELE', 'CHOCAR_PESSOA', 'ELES', 'CAIR'], 'fonemas': [['CU', 'BA', 'BE', 'CA', 'CU'], [], ['CA', 'BA'], ['AC', 'CA'], ['CUA', 'CU'], ['BU', 'CA'], ['CA', 'BA'], ['A', 'CE'], ['CU', 'COU'], ['A', 'CE'], ['CAE', 'CAU']], 'gestos_compostos': [False, False, False, False, False, False, True, False, False, False, False], 'pausas': ['false', 'false', 'false', 'oracao', 'false', 'false', 'false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']}
 
     except IndexError as err:
+        print(traceback.format_exc())
         print('Error translating sentence')
         translated_sentence = "Erro"
 
@@ -125,9 +127,9 @@ async def post_handler(request):
         print('Error sending sentence')
     return web.Response(status=200, body=response)
 
-#@routes.put('/')
-#async def put_handler(request):
- #   print("putttt")
+# @routes.put('/')
+# async def put_handler(request):
+#    print("putttt")
 
 if __name__ == "__main__":
     freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
@@ -147,8 +149,8 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)  # /register will be added twice and will raise error
 
-    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    ssl_context.load_cert_chain('../localhost.pem', '../localhost.pem')
+    # ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    # ssl_context.load_cert_chain('../localhost.pem', '../localhost.pem')
     web.run_app(app, port=PORT) #ssl_context=ssl_context
 
     print("serving at port", PORT)
