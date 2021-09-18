@@ -77,6 +77,7 @@ async def post_handler(request):
     print("posttttt")
     print(request)
     post_data = await request.text()
+    post_data =  "ola"
 
     try:
         translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data, negativa_irregular, gestos_compostos)
@@ -113,6 +114,8 @@ async def post_handler(request):
         # translated_sentence = {'glosas': ['SUPERMERCADO', 'RAPAZ', 'ANDAR', 'QUANDO', 'MULHER', 'RAPAZ', 'ELE', 'CHOCAR_COM_PESSOA'], 'fonemas': [['CU', 'BA', 'BE', 'CA', 'CU'], ['CA', 'BA'], ['AC', 'CA'], ['CUA', 'CU'], ['BU', 'CA'], ['CA', 'BA'], ['A', 'CE'], ['CU', 'COU']], 'gestos_compostos': [False, False, False, False, False, True, False, False], 'pausas': ['false', 'false', 'oracao', 'false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']}
         
         # translated_sentence = {'glosas': ['SUPERMERCADO', 'SURDO', 'RAPAZ', 'ANDAR', 'QUANDO', 'MULHER', 'RAPAZ', 'ELE', 'CHOCAR_PESSOA', 'ELES', 'CAIR'], 'fonemas': [['CU', 'BA', 'BE', 'CA', 'CU'], [], ['CA', 'BA'], ['AC', 'CA'], ['CUA', 'CU'], ['BU', 'CA'], ['CA', 'BA'], ['A', 'CE'], ['CU', 'COU'], ['A', 'CE'], ['CAE', 'CAU']], 'gestos_compostos': [False, False, False, False, False, False, True, False, False, False, False], 'pausas': ['false', 'false', 'false', 'oracao', 'false', 'false', 'false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']}
+
+        {'glosas': ['ELE', 'LER', 'NÃO_SABER', 'MAS', 'ESCREVER', 'ELE', 'SABER'], 'fonemas': [['A', 'CE'], ['CA'], ['CAU'], ['BA'], ['CE', 'FA'], ['A', 'CE'], ['CA', 'BE']], 'gestos_compostos': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'pausas': ['false', 'false', 'oracao', 'false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'2-3': ['negativa_headshake'], '0-3': ['olhos_franzidos']}}
 
     except IndexError as err:
         print(traceback.format_exc())
