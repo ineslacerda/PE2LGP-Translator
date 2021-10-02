@@ -11,7 +11,7 @@ from Corpus import Info_Corpus
 import os
 import xml.etree.ElementTree as ET
 from collections import defaultdict
-
+import lxml.html
 
 def readTable(frases, root):
 
@@ -33,10 +33,9 @@ def readTable(frases, root):
 					if text:
 						frase_pt = text
 						frase.set_frase_pt(frase_pt)
+						frases.append(frase)
 						index += 1
 						myDict[index].append(text)
-
-		frases.append(frase)
 
 	#tipo de frase
 	for i in root.findall(".//*[@class='ti-1']"):
@@ -58,24 +57,33 @@ def readTable(frases, root):
 			col = "colspan=" + '"' + str(n) + '"'
 			if i.findall("*[@" + col + "]"):
 				for l, j in enumerate(i.findall("*[@" + col + "]")):
-
+					print(l)
+					print(j.text)
 					glosa = j.text
 					if glosa:
-						glosas.append(glosa)
+						print(glosa)
 						frase.append_frase_lgp(glosa)
 						index += 1
 						myDict[index].append(glosa)
-
+					glosas.append(glosa)
+	
 	# M1_clasgram
 	for i in root.findall(".//*[@class='ti-3']"):
 		index = 0
+		print(glosas)
 		for n in range(100):
 			col = "colspan=" + '"' + str(n) + '"'
 			if i.findall("*[@" + col + "]"):
 				for l, j in enumerate(i.findall("*[@" + col + "]")):
+					print(l)
 					text = j.text
+					print(j)
+					print(j.text)
 					if text:
+						print(glosas[l])
+						print(text)
 						frase.append_classes_gramaticais(glosas[l], text)
+						print(frase)
 						index += 1
 						myDict[index].append(text)
 
@@ -106,17 +114,22 @@ def parse_file(ficheiro_html):
 	inputfile = open(ficheiro_html, "r", encoding='utf-8')
 	file = open("aux_file.html", "w+", encoding='utf-8')
 
+	html_file = ""
 	for line in inputfile:
 		if "nbsp;" in line:
 			line = ""
+		html_file += line		
 		file.write(line)
 
-
 	file.seek(0)
-	tree = ET.parse(file)
-	root = tree.getroot()
+	# tree = ET.parse(file)
+	# root = tree.getroot()
+	# print(html_file)
+	root = lxml.html.fromstring(html_file)
+	# print(root)
 
 	frases = []
+	print(root.findall(".//td/table"))
 	for j in root.findall(".//td/table"): #processa as frases todas de uma vez
 		frases = readTable(frases, j)
 

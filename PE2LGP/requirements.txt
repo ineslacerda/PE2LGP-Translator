@@ -6,3 +6,5 @@ matplotlib
 pyjarowinkler
 phonemizer
 unidecode
+aiohttp
+aiohttp_cors

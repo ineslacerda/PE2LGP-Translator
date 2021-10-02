@@ -62,6 +62,7 @@ def identifica_elementos(dependency_pt, dependency_filhos):
 	ind = [i for i, x in enumerate(dependency_pt) if x == "ROOT"]
 	ind_root_vazio = -1
 	ind_root = -1
+	filhos_root = None
 	for i in ind:
 		filhos_root = dependency_filhos[i]
 		if not filhos_root:
@@ -72,8 +73,9 @@ def identifica_elementos(dependency_pt, dependency_filhos):
 			ind_root = i
 
 	filhos = []
-	for i in filhos_root:
-		filhos.append(procura_filhos(i, dependency_filhos))
+	if filhos_root:
+		for i in filhos_root:
+			filhos.append(procura_filhos(i, dependency_filhos))
 
 	dependency_tags = funcao_sintatica(filhos, dependency_pt)
 	if ind_root_vazio!= -1:

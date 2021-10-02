@@ -20,9 +20,10 @@ def criar_objeto(info_lingua, lingua):
 
 		if lingua == "lgp":
 			info.tipo_de_frase(j.get_tipo_frase())
-
+		print(j.analise_sintatica)
 		for m,v in j.analise_sintatica.items():
-
+			print("m " + m)
+			print("v " + v)
 			if "ARG_EXT" in v:
 				info.append_sujeito(m.lower(), j.lemmas[m], j.classes_gramaticais[m])
 
