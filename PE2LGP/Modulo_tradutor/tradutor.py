@@ -724,9 +724,11 @@ def tradutor_main():
 	except KeyboardInterrupt:
 		pass
 
-# sentence = "A tua irmã conduz?" # tens uma caneca de bebé em casa
+
+
+# sentence = "O joão não quer ir ao cinema" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
 # try:
 # 	translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)
-# except:
+# except Exception as e:
 # 	print(traceback.format_exc())

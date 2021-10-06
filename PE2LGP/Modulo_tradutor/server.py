@@ -54,6 +54,7 @@ import ssl
 
 from aiohttp import web
 import aiohttp_cors
+import pandas as pd
 
 # AIOHTTP
 
@@ -77,9 +78,10 @@ async def post_handler(request):
     print("posttttt")
     print(request)
     post_data = await request.text()
-    post_data =  "ola"
 
     try:
+        df = pd.read_csv("error_log.csv", index_col=False)
+
         translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data, negativa_irregular, gestos_compostos)
         print(translated_sentence)
 
@@ -115,10 +117,19 @@ async def post_handler(request):
         
         # translated_sentence = {'glosas': ['SUPERMERCADO', 'SURDO', 'RAPAZ', 'ANDAR', 'QUANDO', 'MULHER', 'RAPAZ', 'ELE', 'CHOCAR_PESSOA', 'ELES', 'CAIR'], 'fonemas': [['CU', 'BA', 'BE', 'CA', 'CU'], [], ['CA', 'BA'], ['AC', 'CA'], ['CUA', 'CU'], ['BU', 'CA'], ['CA', 'BA'], ['A', 'CE'], ['CU', 'COU'], ['A', 'CE'], ['CAE', 'CAU']], 'gestos_compostos': [False, False, False, False, False, False, True, False, False, False, False], 'pausas': ['false', 'false', 'false', 'oracao', 'false', 'false', 'false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']}
 
-        translated_sentence = {'glosas': ['ELE', 'ESCREVER', 'NÃO_SABER', 'MAS', 'LER', 'ELE', 'SABER'], 'fonemas': [['A', 'CE'], ['CE', 'FA'], ['CAU'], ['BA'], ['CA'], ['A', 'CE'], ['CA', 'BE']], 'gestos_compostos': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'pausas': ['false', 'false', 'oracao', 'false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'2-3': ['negativa_headshake'], '0-3': ['olhos_franzidos']}}
+        # translated_sentence = {'glosas': ['ELE', 'ESCREVER', 'NÃO_SABER', 'MAS', 'LER', 'ELE', 'SABER'], 'fonemas': [['A', 'CE'], ['CE', 'FA'], ['CAU'], ['BA'], ['CA'], ['A', 'CE'], ['CA', 'BE']], 'gestos_compostos': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'pausas': ['false', 'false', 'oracao', 'false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'2-3': ['negativa_headshake'], '0-3': ['olhos_franzidos']}}
 
-    except IndexError as err:
-        print(traceback.format_exc())
+    except Exception as e:
+        lines = traceback.format_exc().splitlines()
+        exception_type = " " + lines[-1]
+        filename = " " + lines[len(lines)-3].split(",")[0].split("/")[-1].replace('"', '')
+        line_number = lines[len(lines)-3].split(",")[1]
+        
+        tempDf = pd.DataFrame(columns=['InputSentence','ErrorName','ErrorFile','ErrorLine'], data = [[sentence, exception_type, filename, line_number]])
+
+        df = pd.concat([df,tempDf])
+        print(df)
+        df.to_csv("error_log.csv", index=False)
         print('Error translating sentence')
         translated_sentence = "Erro"
 
