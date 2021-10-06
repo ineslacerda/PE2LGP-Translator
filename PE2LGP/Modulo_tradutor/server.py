@@ -82,6 +82,8 @@ async def post_handler(request):
     try:
         df = pd.read_csv("error_log.csv", index_col=False)
 
+        print(df)
+
         translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data, negativa_irregular, gestos_compostos)
         print(translated_sentence)
 
