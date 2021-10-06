@@ -115,7 +115,7 @@ def tempo_verbal(i):
 				elif i.obj_verb_trans[index] == "obj" and index.lower() == "parede":
 					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_parede", classe)
 			# if indice==0 or indice > 0 and not (i.traducao[indice-1][2].startswith("PP") or i.traducao[indice-1][2].startswith("NC")): # or traducao[indice-1][2].startswith("NC")
-			if not i.classes_suj and (valor[1].lower() != "começar" and valor[1].lower() != "haver"):
+			if ("PRON" not in i.classes_suj and "N" not in i.classes_suj) and (valor[1].lower() != "começar" and valor[1].lower() != "haver"):
 				pronome = classe[4] + classe[5]
 				if pronome in pronomes:
 					temp = (pronomes[pronome], pronomes[pronome], "PP")
@@ -468,10 +468,6 @@ def expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compo
 			indice -= 1		
 
 		#coverte gestos compostos
-		print("GESTOS COMPOSTOSSS")
-		print(gestos_compostos)
-		print(palavra)
-		print(palavra.upper() in gestos_compostos)
 		if palavra.upper() in gestos_compostos:
 			del i.traducao[indice]
 			for index, value in enumerate(gestos_compostos[palavra.upper()]):
