@@ -128,7 +128,7 @@ async def post_handler(request):
         filename = " " + lines[len(lines)-3].split(",")[0].split("/")[-1].replace('"', '')
         line_number = lines[len(lines)-3].split(",")[1]
         
-        tempDf = pd.DataFrame(columns=['InputSentence','ErrorName','ErrorFile','ErrorLine'], data = [[sentence, exception_type, filename, line_number]])
+        tempDf = pd.DataFrame(columns=['InputSentence','ErrorName','ErrorFile','ErrorLine'], data = [[post_data, exception_type, filename, line_number]])
 
         df = pd.concat([df,tempDf])
         print(df)
