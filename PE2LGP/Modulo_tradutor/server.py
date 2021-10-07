@@ -88,7 +88,7 @@ async def post_handler(request):
         translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, "ola", negativa_irregular, gestos_compostos)
         print(translated_sentence)
 
-        translated_sentence = {'glosas': ['NOME', 'DELE', 'QUAL'], 'fonemas': [['CO', 'BE'], ['CA', 'CE'], ['CUA']], 'gestos_compostos': ["false", "false", "false"], 'pausas': ['false', 'false', 'frase'], 'adv_cond': ["false", "false", "false"], 'adv_intensidade': ['false', 'false', 'false'], 'exprFaciais': {'2-3': ['interrogativa_parcial'], '0-3': ['olhos_franzidos']}}
+        # translated_sentence = {'glosas': ['NOME', 'DELE', 'QUAL'], 'fonemas': [['CO', 'BE'], ['CA', 'CE'], ['CUA']], 'gestos_compostos': ["false", "false", "false"], 'pausas': ['false', 'false', 'frase'], 'adv_cond': ["false", "false", "false"], 'adv_intensidade': ['false', 'false', 'false'], 'exprFaciais': {'2-3': ['interrogativa_parcial'], '0-3': ['olhos_franzidos']}}
 
         #translated_sentence = {'glosas': ['MULHER', 'IRMÃO', 'TEU', 'CONDUZIR'], 'fonemas': [['BU', 'CA'], ['EC', 'BAU'], ['CUA'], ['CU', 'CU']], 'gestos_compostos': ['false', 'true', 'false', 'false'], 'pausas': ['false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false'], 'adv_intensidade': ['false', 'false', 'false', 'false'], 'exprFaciais': {'3-4': ['interrogativa_total'], '0-4': ['olhos_franzidos']}}
 
@@ -102,7 +102,7 @@ async def post_handler(request):
         
         # translated_sentence = {'glosas': ['SUPERMERCADO', 'SURDO', 'RAPAZ', 'ANDAR', 'QUANDO', 'MULHER', 'RAPAZ', 'ELE', 'CHOCAR_PESSOA', 'ELES', 'CAIR'], 'fonemas': [['CU', 'BA', 'BE', 'CA', 'CU'], [], ['CA', 'BA'], ['AC', 'CA'], ['CUA', 'CU'], ['BU', 'CA'], ['CA', 'BA'], ['A', 'CE'], ['CU', 'COU'], ['A', 'CE'], ['CAE', 'CAU']], 'gestos_compostos': [False, False, False, False, False, False, True, False, False, False, False], 'pausas': ['false', 'false', 'false', 'oracao', 'false', 'false', 'false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false']}
 
-        # translated_sentence = {'glosas': ['ELE', 'ESCREVER', 'NÃO_SABER', 'MAS', 'LER', 'ELE', 'SABER'], 'fonemas': [['A', 'CE'], ['CE', 'FA'], ['CAU'], ['BA'], ['CA'], ['A', 'CE'], ['CA', 'BE']], 'gestos_compostos': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'pausas': ['false', 'false', 'oracao', 'false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'2-3': ['negativa_headshake'], '0-3': ['olhos_franzidos']}}
+        translated_sentence = {'glosas': ['ELE', 'ESCREVER', 'NÃO_SABER', 'MAS', 'LER', 'ELE', 'SABER'], 'fonemas': [['A', 'CE'], ['CE', 'FA'], ['CAU'], ['BA'], ['CA'], ['A', 'CE'], ['CA', 'BE']], 'gestos_compostos': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'pausas': ['false', 'false', 'oracao', 'false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'2-3': ['negativa_headshake'], '0-3': ['olhos_franzidos']}}
 
     except Exception as e:
         lines = traceback.format_exc().splitlines()
