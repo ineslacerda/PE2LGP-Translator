@@ -85,27 +85,13 @@ async def post_handler(request):
 
         print(df)
 
-        translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, post_data, negativa_irregular, gestos_compostos)
+        translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, "ola", negativa_irregular, gestos_compostos)
         print(translated_sentence)
 
-        # translated_sentence =  {'glosas': ['BOA', 'TARDE', 'NOME', 'MEU_NO_EXPR', 'MARIANA'], 'fonemas': [['BOA', 'CA', 'CE'], ['CA', 'CE'], ['CO', 'BE'], ['BAU'], ['BA', 'CEA', 'CA']], 'gestos_compostos': [False, False, False, False, False], 'pausas': ['false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false']}
-        
-        # translated_sentence =  {'glosas': ['BOA', 'TARDE', 'NOME', 'MEU_NO_EXPR', 'TATIANA'], 'fonemas': [['BOA', 'CA', 'CE'], ['CA', 'CE'], ['CO', 'BE'], ['BAU'], ['CA', 'CEA', 'CA']], 'gestos_compostos': [False, False, False, False, False], 'pausas': ['false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false']}
+        translated_sentence = {'glosas': ['NOME', 'DELE', 'QUAL'], 'fonemas': [['CO', 'BE'], ['CA', 'CE'], ['CUA']], 'gestos_compostos': ["false", "false", "false"], 'pausas': ['false', 'false', 'frase'], 'adv_cond': ["false", "false", "false"], 'adv_intensidade': ['false', 'false', 'false'], 'exprFaciais': {'2-3': ['interrogativa_parcial'], '0-3': ['olhos_franzidos']}}
 
-        # translated_sentence =  {'glosas': ['BOA', 'TARDE', 'NOME', 'MEU_NO_EXPR', 'MATILDE'], 'fonemas': [['BOA', 'CA', 'CE'], ['CA', 'CE'], ['CO', 'BE'], ['BAU'], ['BA', 'CE', 'CE']], 'gestos_compostos': [False, False, False, False, False], 'pausas': ['false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false']}
+        #translated_sentence = {'glosas': ['MULHER', 'IRMÃO', 'TEU', 'CONDUZIR'], 'fonemas': [['BU', 'CA'], ['EC', 'BAU'], ['CUA'], ['CU', 'CU']], 'gestos_compostos': ['false', 'true', 'false', 'false'], 'pausas': ['false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false'], 'adv_intensidade': ['false', 'false', 'false', 'false'], 'exprFaciais': {'3-4': ['interrogativa_total'], '0-4': ['olhos_franzidos']}}
 
-        # translated_sentence = {'glosas': ['IDADE', 'MEU_NO_EXPR', '25'], 'fonemas': [['E', 'CA', 'CE'], ['BE', 'CA'], ['FE', 'CE', 'CE', 'CU']], 'gestos_compostos': [False, False, False], 'pausas': ['false', 'false', 'frase'], 'adv_cond': [False, False, False], 'adv_intensidade': ['false', 'false', 'false']}
-
-        # translated_sentence = {'glosas': ['IDADE', 'MEU_NO_EXPR', '35'], 'fonemas': [['E', 'CA', 'CE'], ['BE', 'CA'], ['CE', 'CA', 'CE', 'CU']], 'gestos_compostos': [False, False, False], 'pausas': ['false', 'false', 'frase'], 'adv_cond': [False, False, False], 'adv_intensidade': ['false', 'false', 'false']}
-
-        # translated_sentence = {'glosas': ['CARRO', 'MEU_NO_EXPR', 'VERMELHO_NO_EXPR'], 'fonemas': [['CA', 'CU'], ['BAU'], ['FA', 'BA', 'CU']], 'gestos_compostos': [False, False, False], 'pausas': ['false', 'false', 'frase'], 'adv_cond': [False, False, False], 'adv_intensidade': ['false', 'false', 'false']}
-
-        # translated_sentence = {'glosas': ['CARRO', 'MEU_NO_EXPR', 'AZUL'], 'fonemas': [['CA', 'CU'], ['BAU'], ['A', 'CU']], 'gestos_compostos': [False, False, False], 'pausas': ['false', 'false', 'frase'], 'adv_cond': [False, False, False], 'adv_intensidade': ['false', 'false', 'false']}
-
-        # translated_sentence = {'glosas': ['MULHER', 'IRMÃO', 'MEU_NO_EXPR'], 'fonemas': [['BU', 'CA'], ['EC', 'BA'], ['BE', 'CA']], 'gestos_compostos': [False, True, False], 'pausas': ['false', 'false', 'frase'], 'adv_cond': [False, False, False], 'adv_intensidade': ['false', 'false', 'false']}
-
-        # translated_sentence = {'glosas': ['MULHER', 'IRMÃO', 'DELE_NO_EXPR'], 'fonemas': [['BU', 'CA'], ['EC', 'BA'], ['CA', 'CE']], 'gestos_compostos': [False, True, False], 'pausas': ['false', 'false', 'frase'], 'adv_cond': [False, False, False], 'adv_intensidade': ['false', 'false', 'false']}
-        
         # translated_sentence = {'glosas': ['RAPAZ', 'AQUELE', 'ESCREVER', 'GOSTAR', 'NÃO', 'MAS', 'LER', 'ELE', 'GOSTAR'], 'fonemas': [['CA', 'BA'], ['A', 'CA', 'CE'], ['CE', 'FA'], ['CO', 'CA'], ['CAU'], ['BA'], ['CA'], ['A', 'CE'], ['CO', 'CA']], 'gestos_compostos': [False, False, False, False, False, False, False, False, False], 'pausas': ['false', 'false', 'false', 'false', 'oracao', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'0-5': ['olhos_franzidos']}}
 
         # translated_sentence = {'glosas': ['CASA', 'ARRUMAR', 'MULHER', 'PRIMO', 'MEU_NO_EXPR', 'AJUDAR_EU'], 'fonemas': [['CA', 'CA'], ['A', 'CU', 'BA'], ['BU', 'CA'], ['BCE', 'BA'], ['BE', 'CA'], ['A', 'CU', 'COU', 'BE']], 'gestos_compostos': [False, False, False, True, False, False], 'pausas': ['false', 'false', 'false', 'false', 'false', 'frase'], 'adv_cond': [False, False, False, False, False, False], 'adv_intensidade': ['false', 'false', 'false', 'false', 'false', 'false']}

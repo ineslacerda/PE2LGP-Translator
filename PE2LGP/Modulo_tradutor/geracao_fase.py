@@ -111,7 +111,7 @@ def tempo_verbal(i):
 	sujeito = False
 	for indice, valor in enumerate(i.traducao):
 		classe = valor[2]
-		if classe.startswith("PP"):
+		if classe.startswith("PP") or classe.startswith("NC"):
 			sujeito = True
 		if classe.startswith("V"):
 			if i.obj_verb_trans and valor[1].lower() == "chocar":
