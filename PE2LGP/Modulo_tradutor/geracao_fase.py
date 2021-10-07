@@ -104,9 +104,15 @@ def tempo_verbal(i):
 		del i.traducao[indice_tempo[0][0]]
 		i.traducao.insert(0, temp)
 	
+	print("SUJEITOOOO")
+	print(i.classes_suj)
+	
 	# Adiciona o pronome pessoal se este ou o sujeito não exisitir e se o pronome não foi o da primeira pessoa no singular
+	sujeito = False
 	for indice, valor in enumerate(i.traducao):
 		classe = valor[2]
+		if classe.startswith("PP"):
+			sujeito = True
 		if classe.startswith("V"):
 			if i.obj_verb_trans and valor[1].lower() == "chocar":
 				index = list(i.obj_verb_trans.keys())[0]
@@ -115,7 +121,7 @@ def tempo_verbal(i):
 				elif i.obj_verb_trans[index] == "obj" and index.lower() == "parede":
 					i.traducao[indice] =  (valor[0], i.traducao[indice][1] + "_parede", classe)
 			# if indice==0 or indice > 0 and not (i.traducao[indice-1][2].startswith("PP") or i.traducao[indice-1][2].startswith("NC")): # or traducao[indice-1][2].startswith("NC")
-			if ("PRON" not in i.classes_suj and "N" not in i.classes_suj) and (valor[1].lower() != "começar" and valor[1].lower() != "haver"):
+			if ("PRON" not in i.classes_suj and "N" not in i.classes_suj and not sujeito) and (valor[1].lower() != "começar" and valor[1].lower() != "haver"):
 				pronome = classe[4] + classe[5]
 				if pronome in pronomes:
 					temp = (pronomes[pronome], pronomes[pronome], "PP")
@@ -340,8 +346,8 @@ def remove_prep(traducao):
 			traducao[indice] =  (valor[0], traducao[indice][1].replace("de ", "").replace("para ", ""), classe)
 		
 		if classe.startswith("SP") or classe.startswith("PR"):
-			if valor[1] == "de" and traducao[indice+1][2].startswith("PP"):
-				traducao[indice+1] =  ("d" + traducao[indice+1][0], "d" + traducao[indice+1][1], traducao[indice+1][2])
+			# if valor[1] == "de" and traducao[indice+1][2].startswith("PP"):
+			# 	traducao[indice+1] =  ("d" + traducao[indice+1][0], "d" + traducao[indice+1][1], traducao[indice+1][2])
 			del traducao[indice]
 			indice -= 1
 		indice +=1

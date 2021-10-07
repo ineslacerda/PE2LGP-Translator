@@ -20,12 +20,18 @@ def retirar_pontuacao(pred_tags):
 
 
 
-def retirar_determinante(pred_tags, words):
+def retirar_determinante(pred_tags, words, lemmas):
 	ind = []
 
 	for indx, val in enumerate(pred_tags):
 		if val.startswith("DA") or (val.startswith("DI") and (words[indx].lower() == "um" or words[indx].lower() == "uma")):
 				ind.append(indx)
+		if val == "SP":
+			ind.append(indx)
+			if pred_tags[indx+1].startswith("PP") and indx < len(pred_tags):
+				lemmas[indx+1] = "d" + lemmas[indx+1]
+				pred_tags[indx+1] = "DP"
+
 
 	for i in sorted(ind, reverse=True) :
 		del pred_tags[i]
@@ -379,7 +385,7 @@ def preprocessar(f, freeling_values, frase_indice):
 
 		frase_input.set_dep_tags(dep_tags)
 
-		ind_eliminado = retirar_determinante(sub_frases_pred_tags[index], sub_frases_words[index])
+		ind_eliminado = retirar_determinante(sub_frases_pred_tags[index], sub_frases_words[index], sub_frases_lemmas[index])
 
 		atualiza_listas(dep_tags, ind_eliminado)
 		atualiza_listas(sub_frases_lemmas[index], indx_remo)

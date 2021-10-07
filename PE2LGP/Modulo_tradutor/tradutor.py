@@ -726,7 +726,7 @@ def tradutor_main():
 
 
 
-# sentence = "O joão não quer ir ao cinema" # tens uma caneca de bebé em casa
+# sentence = "O primo dela não sabe escrever" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
 # try:
 # 	translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)
