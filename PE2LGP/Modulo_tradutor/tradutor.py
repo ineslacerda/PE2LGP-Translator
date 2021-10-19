@@ -471,7 +471,7 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 			else:
 				int_suj = False
 
-			estrutura = "osv" #default é o sov
+			# estrutura = "osv" #default é o sov
 
 			if estrutura.startswith('svo'):
 				i.set_traducao(suj, i.traducao_regras_verbo, i.traducao_regras_obj)
@@ -603,6 +603,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 
 	fonemas = phonemize(mouthing, language="pt-pt", backend="espeak")
 	print(fonemas)
+	# fonemas = "u gatu ɡɔʃtɐ dɨ kumeɾ"
+
 	table = {
 			ord('ɐ'): 'a',
 			ord('ʎ'): 'l',
@@ -626,6 +628,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 	fonemas = fonemas.replace("re", "r")
 	print(fonemas)
 	fonemas = unidecode.unidecode(fonemas)
+	print("unicode")
+	print(fonemas)
 	fonemas = fonemas.split(" ")
 	fonemas = list(filter(None, fonemas))
 
@@ -641,8 +645,10 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 
 	# print(syllables)
 
+	# 'adv_intensidade': adv_intensidade_frases
+
 	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos_frases,
-	'pausas': pausas, 'adv_cond': adv_cond_frases, 'adv_intensidade': adv_intensidade_frases}
+	'pausas': pausas, 'adv_cond': adv_cond_frases}
 	if exprFaciais:
 		dictionary['exprFaciais'] = exprFaciais
 
@@ -726,7 +732,7 @@ def tradutor_main():
 
 
 
-# sentence = "qual é o nome dele?" # tens uma caneca de bebé em casa
+# sentence = "Qual é o nome dele?" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
 # try:
 # 	translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)

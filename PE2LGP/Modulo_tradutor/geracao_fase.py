@@ -503,7 +503,7 @@ def converte_glosas(i, counter):
 		lema = valor[1]
 		palavra = valor[0]
 		# Se não tiver um quantificador numeral então faz-se o plural
-		if ((classe.startswith("NC") and classe[3] == "P") or (classe.startswith("AQ") and classe[4] == "P")) and "NUM" not in i.classes:
+		if ((classe.startswith("NC") and classe[3] == "P") or (classe.startswith("AQ") and classe[4] == "P")) and "NUM" not in i.classes or classe.startswith("RGQ"):
 			i.traducao[indice] = palavra.upper()
 		else:
 			i.traducao[indice] = lema.upper()
