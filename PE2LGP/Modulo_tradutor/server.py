@@ -88,7 +88,7 @@ async def post_handler(request):
         translated_sentence = translate_sentence(freeling_model, palavras_glosas, freq_dic, "ola", negativa_irregular, gestos_compostos)
         print(translated_sentence)
 
-        translated_sentence = {'glosas': ['BOA', 'TARDE', 'NOME', 'DELE', 'QUAL'], 'fonemas': [['BOA'], ['CA', 'CE'], ['CO', 'BE'], ['A', 'CE'], ['CUA']], 'gestos_compostos': ['false', 'false', 'false', 'false'], 'pausas': ['false', 'false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'3-4': ['interrogativa_parcial'], '0-5': ['olhos_franzidos']}}
+        translated_sentence = {'glosas': ['BOA', 'TARDE', 'NOME', 'DELE', 'QUAL'], 'fonemas': [['BOA'], ['CA', 'CE'], ['CO', 'BE'], ['A', 'CE'], ['CUA']], 'gestos_compostos': ['false', 'false', 'false', 'false', 'false'], 'pausas': ['false', 'false', 'false', 'false', 'frase'], 'adv_cond': ['false', 'false', 'false', 'false', 'false'], 'exprFaciais': {'3-4': ['interrogativa_parcial'], '0-5': ['olhos_franzidos']}}
 
         # translated_sentence = {'glosas': ['NOME', 'DELE', 'QUAL'], 'fonemas': [['CO', 'BE'], ['CA', 'CE'], ['CUA']], 'gestos_compostos': ["false", "false", "false"], 'pausas': ['false', 'false', 'frase'], 'adv_cond': ["false", "false", "false"], 'adv_intensidade': ['false', 'false', 'false'], 'exprFaciais': {'2-3': ['interrogativa_parcial'], '0-3': ['olhos_franzidos']}}
 
