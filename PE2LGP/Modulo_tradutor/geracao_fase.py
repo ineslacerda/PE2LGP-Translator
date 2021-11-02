@@ -614,6 +614,7 @@ def geracao(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 	traducao_glosas = traducao_glosas.split(" ")
 
 	# adicionar a expressao "olhos franzidos" à frase toda se for uma interrogativa e/ou negativa
-	expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
+	if len(traducao_glosas) > 1:
+		expressao_olhos_franzidos(i.tipo, traducao_glosas, counter, exprFaciais)
 
 	return list(filter(None, traducao_glosas)), exprFaciais, " ".join(i.traducao_palavras), gest_comp_frase
