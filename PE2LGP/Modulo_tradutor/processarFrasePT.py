@@ -103,8 +103,13 @@ def converte_classes(frase, map_corpus_tags):
 	return novas_classes
 
 def atualiza_listas(lista, indices):
+	print(lista)
+	print(indices)
 	for l in sorted(indices, reverse=True):
 		del lista[l]
+	
+	print(lista)
+	print("end")
 
 
 def palavra_composta(words):
@@ -411,7 +416,7 @@ def preprocessar(f, freeling_values, frase_indice):
 		dependency_pt = list(filter(lambda a: a != 'punct', dep_tags))
 
 		atualiza_listas(dep_words, ind_eliminado)
-		atualiza_listas(dependency_pt, ind_eliminado)
+		#atualiza_listas(dependency_pt, ind_eliminado)
 		frase_input.set_palavras(dep_words)
 		frase_input.set_frase_sem_det(dep_words, sub_frases_lemmas[index], pred_tags_antes)
 		frase_input.set_frase_sem_det_lemmas_verd(dep_words, lemma_verdadeiro, pred_tags_antes)
