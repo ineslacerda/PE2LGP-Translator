@@ -13,14 +13,11 @@ def ordena_dets_num_adverq(traducao):
 
 	indice = 0
 
-	print("ordena_dets_num_adverqqqqqqqqqq")
-
 	while indice < len(traducao):
 
 		valor = traducao[indice]
 		classe = valor[2]
 
-		print(valor)
 		# classe.startswith("Z") 
 		if (classe.startswith("DP") or classe.startswith("RGQ")):
 			if indice!=len(traducao)-1 and (traducao[indice+1][2].startswith("N") or traducao[indice+1][2].startswith("AQ")):
@@ -104,14 +101,11 @@ def tempo_verbal(i):
 		del i.traducao[indice_tempo[0][0]]
 		i.traducao.insert(0, temp)
 	
-	print("SUJEITOOOO")
-	print(i.classes_suj)
-	
 	# Adiciona o pronome pessoal se este ou o sujeito não exisitir e se o pronome não foi o da primeira pessoa no singular
 	sujeito = False
 	for indice, valor in enumerate(i.traducao):
 		classe = valor[2]
-		if classe.startswith("PP") or classe.startswith("NC"):
+		if classe.startswith("PP") or classe.startswith("NP"):
 			sujeito = True
 		if classe.startswith("V"):
 			if i.obj_verb_trans and valor[1].lower() == "chocar":
@@ -209,10 +203,6 @@ def feminino(traducao, excepcoes):
 		palavra = valor[0]
 		classe = valor[2]
 		lema = valor[1]
-
-		print("femininooooo")
-		print(palavra)
-		print(lema)
 
 		if classe.startswith("NC"):
 
@@ -439,10 +429,6 @@ def expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compo
 				i.traducao[indice] = (palavra, lema.replace(" ", "_").upper(), classe)
 				adverbio_negacao = True	
 		
-		print("negaaaa")
-		print(verbo_neg_irregular and classe.startswith("RN"))
-		print(palavra)
-
 		# Remove a glosa NAO se for uma negativa irregular or um advérbio de negação
 		if (verbo_neg_irregular or adverbio_negacao) and classe.startswith("RN"):
 			del i.traducao[indice]
@@ -495,7 +481,7 @@ def converte_glosas(i, counter):
 	adverbio_negacao =  False
 	indice = 0
 	gest_comp_frase = ["false"] * len(i.traducao)
-	print(gest_comp_frase)
+
 	while indice < len(i.traducao):
 		valor = i.traducao[indice]
 	# for indice, valor in enumerate(i.traducao):
@@ -521,12 +507,8 @@ def converte_glosas(i, counter):
 				# Transforma numeros por exenso sem ser por extenso
 				i.traducao[indice] = str(ExtensoToInteiro(palavra))
 	
-		print(palavra)
-		
 		if "COMP" in classe:
 			gest_comp_frase[indice] = "true"
-
-		print(gest_comp_frase)			
 
 		indice += 1
 	
@@ -578,33 +560,20 @@ def geracao(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 	# transformar cliticos
 	cliticos(i.traducao)
 
-	print(i.traducao)
-
 	#advérbio de negação para o fim da oração
 	orden_neg(i, counter, exprFaciais, negativa_irregular)
 
 	#interrogativas parciais (pronomes e advérbios) para o fim da oração
 	orden_int(i, counter, exprFaciais, negativa_irregular)
 
-	print(i.traducao)
-
 	#Verbos
 	tempo_verbal(i)
-
-	print(i.traducao)
 
 	# adicionar expressão facial negativa e interrogativa, e converte gestos_compostos
 	expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compostos)
 
-	print("expreeeee: ")
-	print(i.traducao)
-
 	# passar para glosas, identifica gestos compostos
 	gest_comp_frase = converte_glosas(i, counter)
-	print("GESTOS COMPOSTOS:")
-	print(gest_comp_frase)
-
-	print(i.traducao)
 
 	# join das glosas da traducao
 	traducao_glosas = " ".join(i.traducao)

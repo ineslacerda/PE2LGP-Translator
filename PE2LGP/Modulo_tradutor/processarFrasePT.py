@@ -103,14 +103,9 @@ def converte_classes(frase, map_corpus_tags):
 	return novas_classes
 
 def atualiza_listas(lista, indices):
-	print(lista)
-	print(indices)
 	for l in sorted(indices, reverse=True):
 		del lista[l]
 	
-	print(lista)
-	print("end")
-
 
 def palavra_composta(words):
 	"""
@@ -150,13 +145,9 @@ def atualiza_tags(adv_quant, words, pred_tags, sub):
 
 def adverbial_mod(dep_tags, words):
 	verb_adv_mod = list(filter(lambda x: x[0]+1 < len(dep_tags) and dep_tags[x[0]] == "ROOT" and words[x[0]+1] == "muito" and dep_tags[x[0]+1] == "advmod", enumerate(words)))
-	print("verb_adv_mod")
-	print(verb_adv_mod)
 	
 	#Modificador adjetival do modificador averbial 
 	adj_adv_mod = list(filter(lambda x: x[0]-1 > 0 and dep_tags[x[0]] == "amod" and words[x[0]-1] == "muito" and dep_tags[x[0]-1] == "advmod", enumerate(words)))
-	print("adj_adv_mod")
-	print(adj_adv_mod)
 
 	adv_mod = {}
 	for verb in verb_adv_mod:
@@ -173,15 +164,15 @@ def obj_verb_transitivo(pred_tags, dep_tags, words):
 	objs_verbs_trans = {}
 	for verb in verbs:
 		objs_verbs_trans[str(words[verb[0]])] = dep_tags[verb[0]]
-	print("TRANSSSSSSSSSSSSS")
-	print(objs_verbs_trans)
+	# print("TRANSSSSSSSSSSSSS")
+	# print(objs_verbs_trans)
 	return objs_verbs_trans
 
 def clausula_adverbial_cond(pred_tags, dep_tags, words):
 	words = [word.lower() for word in words]
 	adv_cl = list(filter(lambda x: "se" in words and pred_tags[x[0]].startswith("V") and (dep_tags[x[0]] == "advcl" or dep_tags[x[0]] == "nsubj"), enumerate(words)))
-	print("advvvvvvv")
-	print(adv_cl)
+	# print("advvvvvvv")
+	# print(adv_cl)
 	advs_cl = []
 	for adv_cl in adv_cl:
 		adv_cl = (adv_cl[0], adv_cl[1].lower())
@@ -208,15 +199,10 @@ def preprocessar(f, freeling_values, frase_indice):
 	# 2º constituintes com Freeling
 	words, lemmas, lemma_verdadeiro, pred_tags = freeling.main(f, freeling_values)
 
-	print("words")
-	print(words)
-	print("pred_tags")
-	print(pred_tags)
-
-	# dep_words, dep_tags, indices_filhos = dependencies_spacy("um rapaz estava a andar pelo supermercado quando uma rapariga chocou contra ele", freeling_values)
-	# print("SPACYYYYY")
-	# print(dep_words)
-	# print(dep_tags)
+	# print("words")
+	# print(words)
+	# print("pred_tags")
+	# print(pred_tags)
 
 	# palavras_compostas, indices_compostas = palavra_composta(words)
 
@@ -241,13 +227,13 @@ def preprocessar(f, freeling_values, frase_indice):
 	atualiza_tags(adv_neg, words, pred_tags, "NEGA")
 	atualiza_tags(pron_relativo, words, pred_tags, "PR") #pronomes relativos
 
-	print("words")
-	print(words)
-	print("pred_tags")
-	print(pred_tags)
+	# print("words")
+	# print(words)
+	# print("pred_tags")
+	# print(pred_tags)
 
-	print("lemmas")
-	print(lemmas)
+	# print("lemmas")
+	# print(lemmas)
 
 	sub_frases_words = []
 	sub_frases_lemmas = []
@@ -279,8 +265,6 @@ def preprocessar(f, freeling_values, frase_indice):
 			pred_tags_aux = pred_tags[m:len(pred_tags)]
 			verbs = list(filter(lambda x: pred_tags_aux[x[0]].startswith("V"), enumerate(pred_tags_aux)))
 
-			print("verbsss")
-			print(verbs)
 			if verbs and words[m] != ",":
 				sub_frases_words.append(words[index:m])
 				sub_frases_lemmas.append(lemmas[index:m])
@@ -315,7 +299,7 @@ def preprocessar(f, freeling_values, frase_indice):
 	sub_frases_lemmas = list(filter(None, sub_frases_lemmas))
 	sub_frases_lemma_verdadeiro = list(filter(None, sub_frases_lemma_verdadeiro))
 
-	print(sub_frases_words)
+	# print(sub_frases_words)
 	frase = []
 	if delimiters:
 		frase = re.split(string_delimiters, f)
@@ -333,9 +317,6 @@ def preprocessar(f, freeling_values, frase_indice):
 
 	frase = list(filter(None, frase))
 
-	print(frase)
-
-	
 	frases = []
 	for index in range(0, len(sub_frases_words)):
 
@@ -355,11 +336,11 @@ def preprocessar(f, freeling_values, frase_indice):
 
 		atualiza_listas(sub_frases_words[index], indx_remo)
 
-		print("dep_words")
-		print(dep_words)
+		# print("dep_words")
+		# print(dep_words)
 
-		print("dep_tags")
-		print(dep_tags)
+		# print("dep_tags")
+		# print(dep_tags)
 
 		# Guarda verbo/modificador adjectival a que o adverbio de modo "muito" está a ser aplicado
 		
@@ -376,24 +357,10 @@ def preprocessar(f, freeling_values, frase_indice):
 		# modifica dep_tags
 		dependencies_tags = identifica_elementos(dep_tags, indices_filhos)
 
-		print("dep_words")
-		print(dep_words)
-
-		print("dep_tags")
-		print(dep_tags)
-
-		print("FILHOSSSS")
-		print(indices_filhos)
-
-		print("dependencies_tags")
-		print(dependencies_tags)
 
 		frase_input.set_dep_tags(dep_tags)
 
 		ind_eliminado = retirar_determinante(sub_frases_pred_tags[index], sub_frases_words[index], sub_frases_lemmas[index])
-
-		print("indice eliminadoo")
-		print(ind_eliminado)
 
 		atualiza_listas(dep_tags, ind_eliminado)
 		atualiza_listas(sub_frases_lemmas[index], indx_remo)
