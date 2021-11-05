@@ -28,7 +28,7 @@ def retirar_determinante(pred_tags, words, lemmas):
 				ind.append(indx)
 		if val == "SP":
 			# ind.append(indx)
-			if pred_tags[indx+1].startswith("PP") and indx < len(pred_tags):
+			if lemmas[indx+1] == "ele" and indx < len(pred_tags):
 				lemmas[indx+1] = "d" + lemmas[indx+1]
 				pred_tags[indx+1] = "DP"
 
