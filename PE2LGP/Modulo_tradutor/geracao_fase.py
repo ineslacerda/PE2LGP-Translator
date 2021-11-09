@@ -48,7 +48,10 @@ def orden_neg(i, counter, exprFaciais, negativa_irregular):
 			# if i.traducao[indice_verbo][1] not in negativa_irregular:
 			i.traducao.append(valor)
 			del i.traducao[indice]
-			i.traducao.append(('não', 'não', 'RN'))
+			print("valorrrr")
+			print(valor[1])
+			if valor[1] not in negativa_irregular:
+				i.traducao.append(('não', 'não', 'RN'))
 			count += 1
 			indice = -1
 
@@ -411,7 +414,7 @@ def expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compo
 			key = str(indice+counter) + "-" + str(indice+counter+1)
 				
 			# Adiciona a expressao negativa no verbo se for negação irregular
-			if classe.startswith("VMI") and "NEGA" in classe and lema in negativa_irregular:
+			if classe.startswith("VM") and "NEGA" in classe and lema in negativa_irregular:
 				if key in exprFaciais:
 					exprFaciais[key].append("negativa_headshake")
 				else:
@@ -567,6 +570,9 @@ def geracao(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 
 	#advérbio de negação para o fim da oração
 	orden_neg(i, counter, exprFaciais, negativa_irregular)
+
+	print("traducao_negg")
+	print(i.traducao)
 
 	#interrogativas parciais (pronomes e advérbios) para o fim da oração
 	orden_int(i, counter, exprFaciais, negativa_irregular)
