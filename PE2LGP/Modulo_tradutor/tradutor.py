@@ -339,8 +339,6 @@ def abre_corpus_teste(corpus):
 
 def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos):
 
-	print("GESTOS COMPOSTOSSS")
-	print(gestos_compostos)
 	frase_lgp = []
 	start_time = time.time()
 
@@ -360,33 +358,34 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 
 	indice = 0
 	for f in frases:
-		if verifica_frase(f, frases_comuns) and len(f.lower().translate(str.maketrans('', '', string.punctuation)).split())< 3:
-			lgp = f.upper().translate(str.maketrans('', '', string.punctuation))
-			lgp = "-".join(lgp.split())
-			#frase_lgp = [lgp.upper()]
-			frase_lgp.append(lgp.upper())
-		else:
-			if verifica_frase(f, frases_comuns):
-				for i in frases_comuns:
-					except_palavra = re.search(i, f[:-1].lower())
-					if except_palavra:
-						glosa = "-".join(except_palavra.group(0).split())
-						f = f.lower().replace(except_palavra.group(0), glosa)
+		# if verifica_frase(f, frases_comuns) and len(f.lower().translate(str.maketrans('', '', string.punctuation)).split())< 3:
+		# 	lgp = f.upper().translate(str.maketrans('', '', string.punctuation))
+		# 	lgp = "-".join(lgp.split())
+		# 	#frase_lgp = [lgp.upper()]
+		# 	print("lgpp")
+		# 	print(lgp)
+		# 	frase_lgp.append(lgp.upper())
+		# else:
+		# 	if verifica_frase(f, frases_comuns):
+		# 		for i in frases_comuns:
+		# 			except_palavra = re.search(i, f[:-1].lower())
+		# 			if except_palavra:
+		# 				glosa = "-".join(except_palavra.group(0).split())
+		# 				f = f.lower().replace(except_palavra.group(0), glosa)
 
-				# nova_frase = retira_cor_de(f, palavras_unidas)
-				# frases_input.append(preprocessar(nova_frase, freeling_model)) #fase de análise
-			else:
-				if len(f.lower().translate(str.maketrans('', '', string.punctuation)).split()) == 1:
-					#frase_lgp = [f.upper().translate(str.maketrans('', '', string.punctuation))]
-					frase_lgp.append(f.upper().translate(str.maketrans('', '', string.punctuation)))
-				# else:
+		# 		# nova_frase = retira_cor_de(f, palavras_unidas)
+		# 		# frases_input.append(preprocessar(nova_frase, freeling_model)) #fase de análise
+		# 	else:
+		# 		if len(f.lower().translate(str.maketrans('', '', string.punctuation)).split()) == 1:
+		# 			#frase_lgp = [f.upper().translate(str.maketrans('', '', string.punctuation))]
+		# 			frase_lgp.append(f.upper().translate(str.maketrans('', '', string.punctuation)))
 			#fase de análise
-			nova_frase = retira_cor_de(f, palavras_unidas)
-			frases_input += preprocessar(nova_frase, freeling_model, indice)
+		nova_frase = retira_cor_de(f, palavras_unidas)
+		frases_input += preprocessar(nova_frase, freeling_model, indice)
 
 		indice += 1
 		
-	print("--- %s fraseeesss ---" % (time.time() - start_time))
+	print("--- %s pre-processamento ---" % (time.time() - start_time))
 	exprFaciais = {}
 	indice = 0
 	frase_lgp = []
@@ -416,19 +415,10 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 			print("traducaoooo")
 			print(traducao_ordenado)
 
-			print("pred_lgpppp")
-			print(pred_lgp)
-
 			i.set_traducao_regras_pred(traducao_ordenado)
 
 			objs, verbos = set_traducao_regras(i.classes_antes_verbo, i.traducao_regras_pred)
-			print("regraaaaaaaaaaa")
-			print( i.classes_pred)
-			print("mappp")
-			print(map_valor)
-			
-			print("objsss")
-			print(objs)
+
 			i.set_traducao_regras_obj(objs)
 			i.set_traducao_regras_verbo(verbos)
 
@@ -454,8 +444,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 
 		estrutura = max_keys.lower()
 
-		print("--- %s regrass elemento frásicoo ---" % (time.time() - start_time))
-
+		print("--- %s ordena elemento frásicos dentro de cada constituinte ---" % (time.time() - start_time))
+		print(i.traducao)
 
 		#Ordenar os elementos frásicos consoante a ordem frásica
 		if modo !="": #Ordem SOV
@@ -519,13 +509,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 					i.set_traducao(suj, i.traducao_regras_obj, i.traducao_regras_verbo)
 				ordena_palavras(i)
 		
+		print("--- %s ordenar consituinte frásicoo ---" % (time.time() - start_time))
 		print(i.traducao)
-		print("--- %s ordenar elemento frásicoo ---" % (time.time() - start_time))
-
-		print("sujeitoooo")
-		print(suj)
-		print(i.traducao_regras_outro)
-		print(i.traducao_regras_suj)
 
 		#fase de geracao
 		f_lgp, exprFaciais, traducao_lgp, gest_comp_frase  = geracao(i, indice, exprFaciais, negativa_irregular, gestos_compostos)
@@ -537,7 +522,6 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 			# gestos_compostos += gest_comp_frase
 
 			#gestos_compostos
-			print("gestosssssss compostosss")
 			# gest_comp_frase = [False] * len(f_lgp)
 			# if "MULHER" in f_lgp:
 			# 	indices = [i for i, e in enumerate(f_lgp) if e == "MULHER"]
@@ -561,14 +545,11 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 
 			pausas += pausas_frase
 
-			print(pausas)
-
 			#identifica clausulas adverbiais condicionais com o "se"
 			adv_cond_frase = ["false"] * len(f_lgp)
 
 			if i.clausula_adv_cond and i.clausula_adv_cond[0][1].upper() in traducao_lgp.split(" "):
 				indices = [index for index, e in enumerate(traducao_lgp.split(" ")) if e == i.clausula_adv_cond[0][1].upper()]
-				print(indices)
 				for index in indices:
 					adv_cond_frase[index] = "true"
 			
@@ -588,11 +569,9 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 					indices = [(index, i.adverbial_mod[adv]) for index, e in enumerate(traducao_lgp.split(" ")) if e == adv.upper()]
 					for index in indices:
 						adv_int_frase[index[0]] = index[1]
-			print("adv_intttttttttttttt_frase")
-			print(adv_int_frase)
 			adv_intensidade_frases += adv_int_frase
 
-		print("--- %s frase de geracaooo ---" % (time.time() - start_time))
+		print("--- %s fase de geracaooo ---" % (time.time() - start_time))
 	# traducao_lgp = " ".join(frase_lgp)
 
 	print("frase_lgp")
@@ -624,12 +603,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 		}
 		
 	fonemas = fonemas.translate(table)
-	print(fonemas)
 	fonemas = fonemas.replace("re", "r")
-	print(fonemas)
 	fonemas = unidecode.unidecode(fonemas)
-	print("unicode")
-	print(fonemas)
 	fonemas = fonemas.split(" ")
 	fonemas = list(filter(None, fonemas))
 
@@ -646,6 +621,8 @@ def translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, nega
 	# print(syllables)
 
 	# 'adv_intensidade': adv_intensidade_frases
+
+	print(visemas)
 
 	dictionary = {'glosas': frase_lgp, 'fonemas': visemas, 'gestos_compostos': gestos_compostos_frases,
 	'pausas': pausas, 'adv_cond': adv_cond_frases}
@@ -732,7 +709,7 @@ def tradutor_main():
 
 
 
-# sentence = "Qual é o nome dele?" # tens uma caneca de bebé em casa
+# sentence = "bom dia" # tens uma caneca de bebé em casa
 # freeling_model, palavras_glosas, freq_dic, negativa_irregular, gestos_compostos = tradutor_main()
 # try:
 # 	translate_sentence(freeling_model, palavras_glosas, freq_dic, sentence, negativa_irregular, gestos_compostos)

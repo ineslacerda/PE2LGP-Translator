@@ -52,7 +52,7 @@ def orden_neg(i, counter, exprFaciais, negativa_irregular):
 			count += 1
 			indice = -1
 
-		elif classe.startswith("RN"):
+		elif classe.startswith("RN") and len(i.traducao) > 1:
 			del i.traducao[indice]
 			indice = -1
 		
@@ -538,6 +538,8 @@ def geracao(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 	:param i: Frase em português (objeto).
 	:return: Frase em LGP
 	"""
+	print("traducao11")
+	print(i.traducao)
 
 	classes = list(list(zip(*i.traducao))[2])
 
@@ -560,6 +562,9 @@ def geracao(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 	# transformar cliticos
 	cliticos(i.traducao)
 
+	print("traducao_cli")
+	print(i.traducao)
+
 	#advérbio de negação para o fim da oração
 	orden_neg(i, counter, exprFaciais, negativa_irregular)
 
@@ -572,13 +577,17 @@ def geracao(i, counter, exprFaciais, negativa_irregular, gestos_compostos):
 	# adicionar expressão facial negativa e interrogativa, e converte gestos_compostos
 	expressoes_faciais(i, counter, exprFaciais, negativa_irregular, gestos_compostos)
 
+	print("traducao33")
+	print(i.traducao)
+
 	# passar para glosas, identifica gestos compostos
 	gest_comp_frase = converte_glosas(i, counter)
 
+	print("traducao44")
+	print(i.traducao)
+
 	# join das glosas da traducao
 	traducao_glosas = " ".join(i.traducao)
-
-	# print(i.traducao)
 
 	traducao_glosas = traducao_glosas.split(" ")
 
