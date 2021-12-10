@@ -1,9 +1,3 @@
-
-# def ExtensoToInteiro(extenso):
-    # if (NumDict == null)
-        # NumDict = new Dictionary<string,int>();
-        # MilharDict = new Dictionary<string,int>();
-
 def ExtensoToInteiro(extenso):
     NumDict = {}
     MilharDict = {}
@@ -72,4 +66,3 @@ def ExtensoToInteiro(extenso):
 
     return resultado
 
-# ExtensoToInteiro("trinta mil e um")
