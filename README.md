@@ -1,6 +1,6 @@
 # PE2LGP: translating Portuguese to Portuguese Sign Language
 
-PE2LGP is a translation system for European Portuguese text into Portuguese sign language.
+PE2LGP is a translation system from European Portuguese text into Portuguese sign language.
 
 ## Description
 
