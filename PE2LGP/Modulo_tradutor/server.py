@@ -138,7 +138,7 @@ if __name__ == "__main__":
 
     app = web.Application()
     # cors = aiohttp_cors.setup(app)
-    corsconfig = {"https://web.tecnico.ulisboa.pt": aiohttp_cors.ResourceOptions(allow_credentials=True,
+    corsconfig = {"https://portallgp.ics.lisboa.ucp.pt": aiohttp_cors.ResourceOptions(allow_credentials=True,
                                                     expose_headers=("Authorization", "ETag"),
                                                     allow_headers="*")}
     cors = aiohttp_cors.setup(app, defaults=corsconfig)
