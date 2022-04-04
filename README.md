@@ -79,7 +79,7 @@ python aval_automatica.py corpus_teste.csv traducoes.csv
 `traducoes.csv` is the file with the translations of the Portuguese sentences from the test corpus in the machine translation system. This file can be found in `/Avaliacao/traducoes.csv`.
 
 **Enter Virtual Machine**
-- install "virt-viewer"
+- install "virt-viewer" -- https://virt-manager.org/download/sources/virt-viewer/virt-viewer-x64-2.0.msi
 - Create SSL Tunnel to address: "localhost:5920":
 ```bash
 sudo ssh -f -L localhost:5920:v07.hlt.inesc-id.pt:5900 username@ssh.hlt.inesc-id.pt -N
