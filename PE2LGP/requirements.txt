@@ -4,7 +4,7 @@ gensim==3.8.1
 spacy==2.3.2
 matplotlib
 pyjarowinkler
-phonemizer
+phonemizer==2.2.1
 unidecode
 aiohttp
 aiohttp_cors
