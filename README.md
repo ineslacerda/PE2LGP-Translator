@@ -22,6 +22,21 @@ pip install -r requirements.txt
 ```
 
 3. Install the library [Freeling 4.1](https://freeling-user-manual.readthedocs.io/en/v4.1/toc/)
+  3.1. Install Freeling Requirements:
+  ```bash
+  sudo apt-get install build-essential
+  sudo apt-get install cmake
+  sudo apt install libboost-all-dev
+  sudo apt-get -y install swig
+  ```
+  3.2. Download Freeling folder from source and then Build FreeLing:
+    ```bash
+  mkdir build
+  cd build
+  cmake .. -DPYTHON3_API=ON
+  make install
+  ```
+
 
 
 4. Download SpaCy pre-trained model for dependency analysis:
