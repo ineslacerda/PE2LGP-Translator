@@ -38,9 +38,12 @@ pip install -r requirements.txt
   make install
   ```
 
+4. Download espeak:
+ ```bash
+ sudo apt-get install espeak-ng
+ ```
 
-
-4. Download SpaCy pre-trained model for dependency analysis:
+5. Download SpaCy pre-trained model for dependency analysis:
 
 ```bash
 python -m spacy download pt_core_news_sm
