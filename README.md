@@ -29,6 +29,7 @@ pip install -r requirements.txt
   sudo apt install libboost-all-dev
   sudo apt-get -y install swig
   ```
+
   3.2. Download Freeling folder from source and then Build FreeLing:
     ```bash
   mkdir build
