@@ -8,3 +8,4 @@ phonemizer==2.2.1
 unidecode
 aiohttp
 aiohttp_cors
+pandas
